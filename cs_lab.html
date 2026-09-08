@@ -3,770 +3,477 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Computing Lab — Grade 4 · Term 1 2026</title>
+<title>Computing Quest — Grade 4 · Term 1 2026</title>
 <style>
-  :root{
-    --bg:#0f1424; --panel:#1b2340; --panel2:#222c4e; --line:#2c3760;
-    --ink:#e9edfb; --mut:#95a0c8;
-    --teal:#3fd0c9; --amber:#ffb347; --green:#5fd08a; --coral:#ff6b8a; --violet:#a78bff; --blue:#5b8cff;
-    --sans:system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    --mono:"SF Mono",ui-monospace,"JetBrains Mono",Consolas,monospace;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{height:100%;}
-  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.5;}
-  button{font-family:inherit;}
+  :root{--cyan:#22e0ff;--magenta:#ff3ea5;--gold:#ffd23f;--green:#3ce88b;--red:#ff4d5e;--violet:#a78bff;--orange:#ff8c42;
+    --bg:#0a0a1f;--panel:#151438;--panel2:#1e1c4a;--line:#2d2a66;--ink:#e9ecff;--mut:#9aa3d6;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;color:var(--ink);min-height:100dvh;
+    background:radial-gradient(900px 500px at 20% -10%,rgba(34,224,255,.14),transparent 60%),radial-gradient(900px 500px at 90% 110%,rgba(255,62,165,.14),transparent 60%),var(--bg);background-attachment:fixed;}
+  button{font-family:inherit;cursor:pointer;}
   a{color:inherit;}
 
-  /* ---------- header ---------- */
-  .bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:10px 18px;
-    background:rgba(15,20,36,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
-  .bar .back{font-size:13px;color:var(--mut);text-decoration:none;white-space:nowrap;}
-  .bar .back:hover{color:var(--ink);}
-  .titles{display:flex;flex-direction:column;line-height:1.15;}
-  .titles .ttl{font-weight:800;font-size:17px;letter-spacing:-.2px;}
-  .titles .sub{font-family:var(--mono);font-size:11px;color:var(--teal);}
-  .prog{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:5px;font-size:12px;color:var(--mut);white-space:nowrap;}
-  .track{width:150px;height:6px;background:var(--panel2);border-radius:99px;overflow:hidden;}
-  .fill{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--green));transition:width .4s;}
-  .icon{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--panel);
-    color:var(--ink);cursor:pointer;font-size:16px;display:grid;place-items:center;}
-  #menu{display:none;}
+  /* header */
+  .top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(10,10,31,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .icon{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:17px;display:grid;place-items:center;}
+  .brand{font-weight:900;font-size:17px;letter-spacing:.3px;background:linear-gradient(90deg,var(--cyan),var(--magenta));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .brand small{display:block;font-size:10px;color:var(--mut);-webkit-text-fill-color:var(--mut);letter-spacing:1.5px;font-weight:700;}
+  .player{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:700;}
+  .lvl{background:var(--gold);color:#2a1d00;padding:4px 10px;border-radius:999px;font-weight:900;font-size:12px;}
+  .xpbar{width:120px;height:8px;background:var(--panel2);border-radius:99px;overflow:hidden;}
+  .xpfill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--green));transition:width .5s;}
+  .startot{color:var(--gold);}
+  .backlink{font-size:12px;color:var(--mut);text-decoration:none;}
 
-  /* ---------- layout ---------- */
-  .app{display:grid;grid-template-columns:290px 1fr;min-height:calc(100dvh - 58px);}
-  .side{border-right:1px solid var(--line);padding:14px 10px;background:#121830;
-    position:sticky;top:58px;height:calc(100dvh - 58px);overflow:auto;}
-  .navitem{width:100%;display:grid;grid-template-columns:34px 1fr 12px;align-items:center;gap:10px;
-    text-align:left;padding:10px 10px;border-radius:12px;border:1px solid transparent;background:transparent;
-    color:var(--ink);cursor:pointer;margin-bottom:4px;}
-  .navitem:hover{background:var(--panel);}
-  .navitem.on{background:var(--panel);border-color:var(--line);}
-  .navitem .no{font-family:var(--mono);font-size:12px;color:var(--mut);}
-  .navitem.on .no{color:var(--teal);}
-  .ninfo{display:flex;flex-direction:column;line-height:1.2;}
-  .navitem .t{font-weight:700;font-size:14px;}
-  .navitem .tag{font-size:11px;color:var(--mut);margin-top:2px;}
-  .navdot{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--line);}
-  .navdot.done{background:var(--green);border-color:var(--green);box-shadow:0 0 8px rgba(95,208,138,.6);}
+  main{max-width:960px;margin:0 auto;padding:22px 16px 60px;}
 
-  .main{padding:26px clamp(16px,4vw,44px) 60px;max-width:980px;}
+  /* home */
+  .hero{text-align:center;margin:8px 0 26px;}
+  .hero h1{font-size:clamp(28px,6vw,46px);letter-spacing:-.5px;line-height:1.05;}
+  .hero p{color:var(--mut);margin-top:6px;}
+  .world{margin-bottom:28px;}
+  .wtitle{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;}
+  .wtitle h2{font-size:20px;} .wtitle span{color:var(--mut);font-size:13px;}
+  .nodes{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;}
+  .node{position:relative;text-align:left;background:linear-gradient(180deg,var(--panel),#100f2e);border:2px solid var(--line);border-radius:18px;padding:16px;color:var(--ink);transition:transform .12s,border-color .2s;}
+  .node:not(:disabled):hover{transform:translateY(-3px);border-color:var(--cyan);box-shadow:0 10px 30px rgba(34,224,255,.15);}
+  .node:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.6);}
+  .node .nem{font-size:36px;} .node .nno{position:absolute;top:10px;right:12px;font-size:11px;color:var(--mut);font-weight:800;}
+  .node .nt{font-weight:900;font-size:16px;margin-top:6px;} .node .ntag{font-size:11.5px;color:var(--mut);margin-top:2px;}
+  .node .nstars{margin-top:10px;font-size:15px;letter-spacing:2px;color:#3a3a6e;} .node .nstars b{color:var(--gold);}
+  .node.boss{grid-column:1/-1;border-color:var(--magenta);background:linear-gradient(135deg,#2a0f2e,#150f3a);}
+  .node.boss .nem{font-size:52px;} .node.boss:not(:disabled):hover{border-color:var(--magenta);box-shadow:0 10px 30px rgba(255,62,165,.25);}
+  .lock{position:absolute;bottom:14px;right:14px;font-size:20px;}
+  .shelf{display:flex;flex-wrap:wrap;gap:10px;}
+  .bdg{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-size:26px;background:var(--panel);border:2px solid var(--line);position:relative;}
+  .bdg.gold{border-color:var(--gold);box-shadow:0 0 16px rgba(255,210,63,.5);}
+  .bdg.empty{opacity:.25;} .bdg .bs{position:absolute;bottom:-6px;font-size:9px;background:var(--bg);padding:0 4px;border-radius:6px;color:var(--gold);letter-spacing:1px;}
+  .champ{margin-top:8px;background:linear-gradient(90deg,rgba(255,210,63,.15),rgba(255,62,165,.15));border:1px solid var(--gold);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 
-  /* ---------- lab ---------- */
-  .lab-head{margin-bottom:18px;}
-  .lab-no{font-family:var(--mono);font-size:12px;color:var(--teal);letter-spacing:1px;}
-  .lab-head h2{font-size:clamp(24px,3.5vw,32px);letter-spacing:-.5px;margin:2px 0 4px;}
-  .lab-obj{color:var(--mut);max-width:70ch;}
-  .seg{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:18px;}
-  .seg-btn{border:none;background:transparent;color:var(--mut);padding:8px 18px;border-radius:9px;cursor:pointer;font-weight:700;font-size:14px;}
-  .seg-btn.on{background:var(--panel2);color:var(--ink);}
-  .pane>*+*{margin-top:14px;}
+  /* mission */
+  .mhead{margin-bottom:14px;}
+  .mtitle{font-size:clamp(22px,4vw,30px);font-weight:900;}
+  .mbrief{color:var(--mut);margin-top:2px;}
+  .pips{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap;}
+  .pip{width:14px;height:6px;border-radius:99px;background:var(--panel2);} .pip.done{background:var(--green);} .pip.cur{background:var(--gold);}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;}
+  .card>*+*{margin-top:12px;} .card.center{text-align:center;}
+  .lbl{font-size:12.5px;font-weight:800;color:var(--mut);letter-spacing:.3px;}
+  .mut{color:var(--mut);} .mono{font-family:ui-monospace,Consolas,monospace;}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;} .row.center{justify-content:center;}
+  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--ink);padding:11px 18px;border-radius:12px;font-weight:800;font-size:15px;transition:transform .06s;}
+  .btn:active{transform:scale(.97);} .btn:disabled{opacity:.45;cursor:default;}
+  .btn.primary{background:linear-gradient(90deg,var(--cyan),#6df1ff);color:#06122a;border:none;box-shadow:0 6px 18px rgba(34,224,255,.3);}
+  .btn.ghost{background:transparent;} .btn.huge{font-size:22px;padding:18px 40px;} .btn.arrow{font-size:22px;padding:10px 18px;}
+  .ti{background:#0b0b26;border:2px solid var(--line);color:var(--ink);padding:10px 12px;border-radius:12px;font-size:18px;font-family:ui-monospace,Consolas,monospace;width:130px;text-align:center;}
+  .ti.big{font-size:26px;width:150px;} .ti:focus{outline:none;border-color:var(--cyan);}
+  .msg{min-height:24px;font-weight:700;font-size:15px;}
+  .bigcmd{font-family:ui-monospace,Consolas,monospace;font-size:clamp(26px,6vw,40px);font-weight:800;color:var(--gold);padding:8px 0;}
+  .bigcmd.sm{font-size:clamp(18px,4vw,24px);font-family:inherit;color:var(--ink);}
+  .tbar{height:8px;background:var(--panel2);border-radius:99px;overflow:hidden;} .tfill{height:100%;width:100%;background:linear-gradient(90deg,var(--green),var(--gold),var(--red));transition:width .05s linear;}
+  .flash-ok{animation:fok .5s;} .flash-no{animation:fno .5s;}
+  @keyframes fok{0%{box-shadow:0 0 0 0 rgba(60,232,139,.8);}100%{box-shadow:0 0 0 18px rgba(60,232,139,0);}}
+  @keyframes fno{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .shake{animation:fno .4s;}
 
-  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;}
-  .panel>*+*{margin-top:10px;}
-  .lbl{font-size:12px;font-weight:700;color:var(--mut);letter-spacing:.3px;}
-  .prose{max-width:72ch;}
-  .prose p{margin-bottom:10px;}
-  .prose ul{margin:6px 0 10px 20px;}
-  .prose li{margin-bottom:4px;}
-  .prose code{font-family:var(--mono);background:var(--panel2);padding:1px 6px;border-radius:5px;font-size:.92em;}
-  .prose .k{display:inline-block;padding:2px 8px;border-radius:6px;font-family:var(--mono);font-size:.9em;}
-  .k.in{background:rgba(63,208,201,.15);color:var(--teal);} .k.pr{background:rgba(255,179,71,.15);color:var(--amber);} .k.out{background:rgba(95,208,138,.15);color:var(--green);}
-  .mut{color:var(--mut);} .sm{font-size:13px;}
-  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
-
-  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--ink);padding:9px 16px;border-radius:10px;
-    cursor:pointer;font-weight:700;font-size:14px;}
-  .btn:hover{border-color:var(--mut);}
-  .btn.primary{background:var(--blue);border-color:var(--blue);color:#fff;}
-  .btn.primary:hover{filter:brightness(1.08);}
-  .btn.ghost{background:transparent;}
-  .btn:disabled{opacity:.5;cursor:default;}
-  .ti{background:#0f1528;border:1px solid var(--line);color:var(--ink);padding:9px 12px;border-radius:10px;font-size:15px;
-    font-family:var(--mono);width:150px;}
-  .ti.wide{width:100%;font-family:var(--sans);}
-  .ti:focus,.sel:focus{outline:2px solid var(--blue);outline-offset:1px;}
-  .sel{background:#0f1528;border:1px solid var(--line);color:var(--ink);padding:8px 10px;border-radius:9px;font-size:13.5px;width:100%;}
-
-  /* variables / code */
-  .varrow{display:flex;flex-wrap:wrap;gap:12px;}
-  .varbox{min-width:86px;background:#0f1528;border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-align:center;}
-  .vb-name{font-family:var(--mono);font-size:12px;color:var(--teal);}
-  .vb-val{font-family:var(--mono);font-size:26px;font-weight:700;margin-top:2px;}
-  .pop{animation:pop .35s ease;}
-  @keyframes pop{0%{transform:scale(1.35);color:var(--amber);}100%{transform:scale(1);}}
-  .code{background:#0f1528;border:1px solid var(--line);border-radius:12px;padding:8px;font-family:var(--mono);font-size:14.5px;}
-  .codeline{display:flex;gap:12px;padding:8px 10px;border-radius:8px;border-left:3px solid transparent;}
-  .codeline .ln{color:var(--mut);width:18px;text-align:right;flex:none;}
-  .codeline.on{background:rgba(255,179,71,.12);border-left-color:var(--amber);}
-  .codeline.branch{border-left-color:var(--violet);}
-  .codeline.click{cursor:pointer;} .codeline.click:hover{background:var(--panel2);}
-  .codeline.sel{background:rgba(91,140,255,.15);border-left-color:var(--blue);}
-  .codeline.bad{background:rgba(255,107,138,.14);border-left-color:var(--coral);}
-  .codeline.goodline{background:rgba(95,208,138,.12);border-left-color:var(--green);}
-  .goal{background:rgba(91,140,255,.1);border:1px solid rgba(91,140,255,.3);border-radius:12px;padding:12px 14px;}
-  .goal .lbl{margin-right:8px;color:var(--blue);}
-
-  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;}
-  .opt{text-align:left;border:1px solid var(--line);background:#0f1528;color:var(--ink);padding:12px 14px;border-radius:11px;
-    cursor:pointer;font-size:14px;font-weight:600;}
-  .opt:hover:not(:disabled){border-color:var(--mut);}
-  .opt.good{border-color:var(--green);background:rgba(95,208,138,.14);}
-  .opt.bad{border-color:var(--coral);background:rgba(255,107,138,.14);}
-  .opt:disabled{cursor:default;}
-  .fb{border-radius:11px;padding:11px 14px;font-size:14px;border:1px solid;}
-  .fb.ok{background:rgba(95,208,138,.12);border-color:rgba(95,208,138,.5);}
-  .fb.no{background:rgba(255,107,138,.12);border-color:rgba(255,107,138,.5);}
-  .fb.info2{background:rgba(63,208,201,.1);border-color:rgba(63,208,201,.4);}
-  .note{margin-top:10px;font-size:14px;min-height:20px;}
-  .levtabs{display:flex;flex-wrap:wrap;gap:8px;}
-  .lev{border:1px solid var(--line);background:transparent;color:var(--mut);padding:7px 13px;border-radius:999px;cursor:pointer;font-weight:700;font-size:13px;}
-  .lev.on{background:var(--panel2);color:var(--ink);border-color:var(--mut);}
-  .qmeta{font-family:var(--mono);font-size:12px;color:var(--mut);}
-  .qtext{font-size:18px;font-weight:700;margin:6px 0 12px;max-width:65ch;}
-  .qtext.sm{font-size:16px;}
-  .result{text-align:center;padding:26px;}
-  .result>*+*{margin-top:12px;}
-  .score{font-family:var(--mono);font-size:46px;font-weight:800;color:var(--green);}
-
-  /* IPO flow */
-  .flow{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr;gap:8px;align-items:center;}
-  .node{border:2px solid var(--line);border-radius:14px;padding:12px;background:#0f1528;transition:border-color .25s, box-shadow .25s;}
-  .node .nkind{font-size:12px;font-weight:800;margin-bottom:6px;}
-  .node.input .nkind{color:var(--teal);} .node.process .nkind{color:var(--amber);} .node.output .nkind{color:var(--green);}
-  .node.active.input{border-color:var(--teal);box-shadow:0 0 18px rgba(63,208,201,.35);}
-  .node.active.process{border-color:var(--amber);box-shadow:0 0 18px rgba(255,179,71,.35);}
-  .node.active.output{border-color:var(--green);box-shadow:0 0 18px rgba(95,208,138,.35);}
-  .node.wrong{border-color:var(--coral);}
-  .arrow{height:3px;background:var(--line);position:relative;border-radius:3px;}
-  .arrow::after{content:"";position:absolute;right:-2px;top:-5px;border:6px solid transparent;border-left:8px solid var(--line);}
-  .arrow.active{background:var(--amber);} .arrow.active::after{border-left-color:var(--amber);}
-
-  /* devices */
-  .devgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
-  .devcard{background:#0f1528;border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;text-align:left;color:var(--ink);}
-  .devcard .em{font-size:30px;} .devcard .nm{font-weight:800;margin-top:6px;}
-  .devcard .detail{display:none;font-size:13px;color:var(--mut);margin-top:8px;line-height:1.45;}
-  .devcard.open{border-color:var(--teal);} .devcard.open .detail{display:block;}
-  .devcard .detail b{color:var(--teal);}
-
-  /* memory */
-  .memrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  .membox{border-radius:12px;padding:12px;border:2px solid;min-height:88px;}
-  .membox.ram{border-color:var(--amber);background:rgba(255,179,71,.07);}
-  .membox.store{border-color:var(--green);background:rgba(95,208,138,.07);}
-  .mlbl{font-size:12px;font-weight:700;color:var(--mut);}
-  .mval{font-family:var(--mono);font-size:16px;margin-top:6px;word-break:break-word;}
-  .mval.big{font-size:30px;font-weight:800;color:var(--amber);}
+  .varrow{display:flex;justify-content:center;gap:14px;}
+  .varbox{min-width:96px;background:#0b0b26;border:2px solid var(--cyan);border-radius:14px;padding:10px;box-shadow:0 0 14px rgba(34,224,255,.2);}
+  .vb-name{font-family:ui-monospace,Consolas,monospace;color:var(--cyan);font-size:13px;font-weight:800;} .vb-val{font-family:ui-monospace,Consolas,monospace;font-size:32px;font-weight:900;}
+  .pop{animation:pop .35s;} @keyframes pop{0%{transform:scale(1.4);color:var(--gold);}100%{transform:scale(1);}}
+  .oprow{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+  .opbtn{width:70px;height:70px;border-radius:18px;border:2px solid var(--line);background:var(--panel2);color:var(--ink);font-size:32px;font-weight:900;} .opbtn.wide{width:auto;padding:0 26px;font-size:26px;}
+  .opbtn:hover:not(:disabled){border-color:var(--gold);}
+  .rulebox{font-size:17px;background:#0b0b26;border:2px solid var(--violet);border-radius:14px;padding:12px;} .rulebox b{color:var(--violet);}
+  .rulebox.newrule{animation:pop .5s;}
+  .item{font-family:ui-monospace,Consolas,monospace;font-size:56px;font-weight:900;color:var(--gold);}
+  .item.drop{animation:drop .35s;} @keyframes drop{0%{transform:translateY(-30px);opacity:0;}100%{transform:none;opacity:1;}}
+  .bins{display:grid;grid-template-columns:1fr 1fr;gap:12px;} .bins3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+  .bin{padding:18px 10px;border-radius:16px;font-weight:900;font-size:16px;border:2px solid;color:var(--ink);background:var(--panel2);}
+  .bin.left{border-color:var(--cyan);} .bin.right{border-color:var(--gold);} .bin.mid{border-color:var(--violet);}
+  .bin:disabled{opacity:.5;}
+  .maze{display:grid;gap:4px;max-width:340px;margin:0 auto;}
+  .cell{aspect-ratio:1;background:#0b0b26;border:1px solid var(--line);border-radius:8px;display:grid;place-items:center;font-size:22px;}
+  .cell.wall{background:#3a2a5c;border-color:#5a4a8c;}
+  .prog{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;min-height:36px;}
+  .step{width:34px;height:34px;border-radius:9px;background:var(--panel2);border:1px solid var(--line);display:grid;place-items:center;font-size:18px;font-weight:900;}
+  .step.on{background:var(--gold);color:#000;} .step.bad{background:var(--red);}
+  .symrow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .symbtn{background:#0b0b26;border:2px solid var(--line);border-radius:14px;padding:14px 6px;color:var(--ink);display:grid;place-items:center;min-height:96px;}
+  .symbtn:hover:not(:disabled){border-color:var(--gold);} .symbtn.good{border-color:var(--green);background:rgba(60,232,139,.12);} .symbtn.bad{border-color:var(--red);}
+  .sym{width:64px;height:40px;border:3px solid var(--gold);}
+  .sym-oval{border-radius:999px;} .sym-rect{border-radius:2px;} .sym-dia{width:42px;height:42px;transform:rotate(45deg);border-radius:4px;} .sym-para{transform:skewX(-18deg);border-radius:2px;}
+  .devbig{padding:8px;} .dev-em{font-size:64px;} .dev-nm{font-size:20px;font-weight:900;}
+  .memrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left;}
+  .membox{border-radius:14px;padding:12px;border:2px solid;min-height:90px;}
+  .membox.ram{border-color:var(--orange);background:rgba(255,140,66,.08);} .membox.store{border-color:var(--green);background:rgba(60,232,139,.08);}
+  .mlbl{font-size:11.5px;font-weight:800;color:var(--mut);} .mval{font-family:ui-monospace,Consolas,monospace;font-size:15px;margin-top:6px;} .mval.big{font-size:34px;font-weight:900;color:var(--gold);margin:0;}
   .bits{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;}
-  .bit{border:1px solid var(--line);background:#0f1528;color:var(--ink);border-radius:10px;padding:8px 4px;cursor:pointer;text-align:center;}
-  .bit.on{background:rgba(255,179,71,.2);border-color:var(--amber);}
-  .bit .bv{font-family:var(--mono);font-size:20px;font-weight:800;} .bit .bw{font-size:11px;color:var(--mut);}
-
-  /* data table */
-  .tablewrap{overflow:auto;}
-  .datatable{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:14px;}
-  .datatable th,.datatable td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;}
-  .datatable th{cursor:pointer;color:var(--mut);font-weight:700;user-select:none;}
-  .datatable th:hover{color:var(--ink);} .datatable th.sorted{color:var(--teal);}
-  .datatable th:first-child,.datatable td:first-child{text-align:left;}
-  .totcell{color:var(--amber);font-weight:800;}
-
-  /* smart city */
-  .ctrl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px;}
-  .range{flex:1;min-width:140px;accent-color:var(--teal);}
-  .mono{font-family:var(--mono);} .val{min-width:60px;}
-  .check{display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0f1528;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-family:var(--mono);font-size:13.5px;}
-  .check input{accent-color:var(--amber);width:16px;height:16px;}
+  .bit{border:2px solid var(--line);background:#0b0b26;color:var(--ink);border-radius:10px;padding:8px 2px;} .bit.on{background:rgba(255,210,63,.2);border-color:var(--gold);}
+  .bv{font-family:ui-monospace,Consolas,monospace;font-size:20px;font-weight:900;} .bw{font-size:10px;color:var(--mut);}
+  .chart{display:flex;gap:10px;align-items:flex-end;height:170px;justify-content:center;padding:0 10px;}
+  .bar{flex:1;max-width:70px;display:flex;flex-direction:column;justify-content:flex-end;height:100%;}
+  .barfill{background:linear-gradient(180deg,var(--cyan),#1b7fa8);border-radius:8px 8px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:4px;font-weight:900;font-size:14px;color:#06122a;transition:height .3s;}
+  .bar.click{cursor:pointer;} .bar.click:hover .barfill{background:linear-gradient(180deg,var(--gold),#b8901d);}
+  .barlbl{font-size:12px;color:var(--mut);margin-top:6px;text-align:center;}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+  .opt{text-align:left;border:2px solid var(--line);background:#0b0b26;color:var(--ink);padding:13px 14px;border-radius:13px;font-size:15px;font-weight:700;}
+  .opt.good{border-color:var(--green);background:rgba(60,232,139,.15);} .opt.bad{border-color:var(--red);background:rgba(255,77,94,.15);} .opt:disabled{cursor:default;}
+  .pet{font-size:64px;} .iqbar{height:12px;background:var(--panel2);border-radius:99px;overflow:hidden;max-width:320px;margin:0 auto;} .iqfill{height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--cyan));transition:width .4s;}
+  .slots{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+  .slot{border:2px dashed var(--line);border-radius:14px;padding:10px;background:#0b0b26;color:var(--ink);min-height:70px;}
+  .slot .sk{font-size:11px;font-weight:900;} .slot .sv{font-size:13.5px;margin-top:4px;color:var(--mut);}
+  .slot.in .sk{color:var(--cyan);} .slot.pr .sk{color:var(--gold);} .slot.out .sk{color:var(--green);}
+  .slot.filled{border-style:solid;} .slot.filled .sv{color:var(--ink);font-weight:700;}
+  .slot.lit{box-shadow:0 0 16px rgba(60,232,139,.5);border-color:var(--green);} .slot.wrong{border-color:var(--red);}
+  .tray{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .tile{border:1px solid var(--line);background:var(--panel2);color:var(--ink);padding:9px 13px;border-radius:10px;font-weight:700;font-size:13.5px;} .tile:disabled{opacity:.3;}
+  .ctrl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:700;font-size:14px;} .range{flex:1;min-width:140px;accent-color:var(--cyan);}
+  .check{display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0b0b26;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:14px;font-weight:700;} .check input{width:18px;height:18px;accent-color:var(--gold);}
   .scene{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-  .sceneitem{background:#0f1528;border:2px solid var(--line);border-radius:14px;padding:14px;text-align:center;transition:.25s;}
-  .sceneitem.on{border-color:var(--green);background:rgba(95,208,138,.1);box-shadow:0 0 16px rgba(95,208,138,.3);}
-  .se-emoji{font-size:34px;} .se-lbl{font-size:12.5px;font-weight:700;margin-top:6px;}
+  .sceneitem{background:#0b0b26;border:2px solid var(--line);border-radius:14px;padding:12px;text-align:center;transition:.25s;}
+  .sceneitem.on{border-color:var(--green);background:rgba(60,232,139,.12);box-shadow:0 0 16px rgba(60,232,139,.35);}
+  .se-emoji{font-size:32px;} .se-lbl{font-size:12px;font-weight:800;margin-top:4px;}
+  .goals{display:flex;flex-direction:column;gap:6px;} .goal{background:#0b0b26;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-weight:700;} .goal.done{border-color:var(--green);color:var(--green);}
+  .boss{font-size:72px;transition:transform .15s;} .boss.hit{transform:scale(.8) rotate(-8deg);filter:brightness(2);}
+  .hpbar{width:220px;height:14px;background:var(--panel2);border-radius:99px;overflow:hidden;border:1px solid var(--line);} .hpfill{height:100%;width:100%;background:linear-gradient(90deg,var(--red),var(--magenta));transition:width .3s;}
+  .hearts{font-size:22px;letter-spacing:4px;} .qtop{font-size:12px;font-weight:900;color:var(--magenta);letter-spacing:1px;}
+  .fb{border-radius:12px;padding:11px 14px;font-size:14.5px;border:1px solid;text-align:left;}
+  .fb.ok{background:rgba(60,232,139,.12);border-color:rgba(60,232,139,.5);} .fb.no{background:rgba(255,77,94,.12);border-color:rgba(255,77,94,.5);}
 
-  .chips{display:flex;flex-wrap:wrap;gap:8px;}
-  .chip{border:1px solid var(--line);background:#0f1528;color:var(--mut);padding:7px 13px;border-radius:999px;cursor:pointer;font-weight:700;font-size:13px;}
-  .chip.on{border-color:var(--violet);color:var(--ink);background:rgba(167,139,255,.15);}
-  .train{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;}
-  .tr-item{background:#0f1528;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:12.5px;text-align:center;}
-  .tr-item.hit{border-color:var(--violet);background:rgba(167,139,255,.14);}
-  .tr-item .em{font-size:24px;} .tr-item .lab{font-weight:800;margin-top:2px;} .tr-item .ft{color:var(--mut);font-family:var(--mono);font-size:11px;}
-
-  @media (max-width:820px){
-    .app{grid-template-columns:1fr;}
-    #menu{display:grid;}
-    .bar .back{display:none;}
-    .prog{display:none;}
-    .side{position:fixed;left:0;top:58px;width:280px;transform:translateX(-100%);transition:transform .25s;z-index:15;box-shadow:0 0 40px rgba(0,0,0,.5);}
-    body.navopen .side{transform:translateX(0);}
-    .memrow,.scene{grid-template-columns:1fr;}
-    .flow{grid-template-columns:1fr;} .arrow{display:none;}
-  }
-  @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important;} }
+  /* results */
+  .results{text-align:center;padding:26px 10px;} .results>*+*{margin-top:14px;}
+  .rtitle{font-size:clamp(26px,5vw,38px);font-weight:900;}
+  .starrow{font-size:60px;letter-spacing:6px;} .bigstar{color:#2c2a5a;display:inline-block;} .bigstar.lit{color:var(--gold);animation:starpop .5s both;text-shadow:0 0 22px rgba(255,210,63,.7);}
+  @keyframes starpop{0%{transform:scale(0) rotate(-40deg);}70%{transform:scale(1.3);}100%{transform:scale(1);}}
+  .rscore{font-family:ui-monospace,Consolas,monospace;font-size:22px;color:var(--mut);}
+  .xpgain{font-size:26px;font-weight:900;color:var(--green);}
+  .badge-earned{display:inline-flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--gold);border-radius:999px;padding:8px 18px;font-weight:800;} .bemoji{font-size:22px;}
+  .cert{background:#fffdf5;color:#1a1a2e;border-radius:16px;padding:34px;text-align:center;border:8px double var(--gold);max-width:640px;margin:0 auto;}
+  .cert h2{font-size:30px;margin:8px 0;} .cert .cname{font-size:26px;font-weight:900;border-bottom:2px solid #1a1a2e;display:inline-block;padding:0 20px;margin:10px 0;}
+  #confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:50;}
+  .cf{position:absolute;top:-10px;width:10px;height:14px;border-radius:2px;animation:fall 2.2s linear forwards;}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.2;}}
+  @media (max-width:640px){ .memrow,.bins3{grid-template-columns:1fr;} .scene{grid-template-columns:1fr;} .xpbar{width:70px;} .slots{grid-template-columns:1fr;} }
+  @media print{ .top,.noprint{display:none!important;} body{background:#fff;} }
 </style>
 </head>
 <body>
-<header class="bar">
-  <button id="menu" class="icon" title="Labs">☰</button>
-  <a class="back" href="index.html">← Subjects</a>
-  <div class="titles"><div class="ttl">Computing Lab</div><div class="sub">GRADE 4 · TERM 1 · 2026</div></div>
-  <div class="prog"><span id="progress">0 / 10 labs complete</span><div class="track"><div id="bar" class="fill"></div></div></div>
-  <button id="reset" class="icon" title="Reset progress">↺</button>
+<header class="top">
+  <button class="icon" id="homeBtn" title="Mission map">🗺️</button>
+  <div class="brand">Computing Quest<small>GRADE 4 · TERM 1 · 2026</small></div>
+  <div class="player">
+    <span class="lvl" id="lvl">LVL 1</span>
+    <div class="xpbar"><div class="xpfill" id="xpfill"></div></div>
+    <span id="xptxt">0 XP</span>
+    <span class="startot">★ <span id="starTot">0</span>/30</span>
+  </div>
+  <button class="icon" id="mute" title="Sound">🔊</button>
+  <button class="icon" id="unlock" title="Teacher: unlock all missions">🔓</button>
+  <a class="backlink" href="index.html">Subjects</a>
 </header>
-<div class="app">
-  <nav id="nav" class="side"></nav>
-  <main id="main" class="main"></main>
-</div>
+<main id="screen"></main>
+<div id="confetti"></div>
 
 <script>
-/* ===================== helpers ===================== */
-function el(tag, attrs, ...kids){
-  const n=document.createElement(tag);
-  for(const [k,v] of Object.entries(attrs||{})){
-    if(k==='class') n.className=v;
-    else if(k==='html') n.innerHTML=v;
-    else if(k==='style' && typeof v==='object') Object.assign(n.style,v);
-    else if(k.startsWith('on') && typeof v==='function') n.addEventListener(k.slice(2).toLowerCase(),v);
-    else if(v!=null) n.setAttribute(k,v);
-  }
-  for(const kid of kids.flat()){ if(kid==null) continue; n.appendChild(typeof kid==='object'?kid:document.createTextNode(String(kid))); }
-  return n;
-}
-function fb(ok,msgHtml){ const d=el('div',{class:'fb '+(ok?'ok':'no')}); d.appendChild(el('strong',{},ok?'✓ ':'✗ ')); const s=el('span'); s.innerHTML=msgHtml; d.appendChild(s); return d; }
-function safeStorage(){
-  try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t');
-    return {get:k=>{try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}, set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
-  }catch(e){ const m={}; return {get:k=>(k in m?m[k]:null), set:(k,v)=>{m[k]=v;}}; }
-}
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+function el(tag,attrs,...kids){ const n=document.createElement(tag); for(const [k,v] of Object.entries(attrs||{})){ if(k==='class')n.className=v; else if(k==='html')n.innerHTML=v; else if(k==='style'&&typeof v==='object')Object.assign(n.style,v); else if(k.startsWith('on')&&typeof v==='function')n.addEventListener(k.slice(2).toLowerCase(),v); else if(v!=null)n.setAttribute(k,v);} for(const kid of kids.flat()){ if(kid==null)continue; n.appendChild(typeof kid==='object'?kid:document.createTextNode(String(kid))); } return n; }
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+let timers=[]; const later=(fn,ms)=>{const t=setTimeout(fn,ms);timers.push(t);return t;}; const every=(fn,ms)=>{const t=setInterval(fn,ms);timers.push(t);return t;};
+function clearTimers(){ timers.forEach(t=>{clearTimeout(t);clearInterval(t);}); timers=[]; }
+function fb(ok,html){ const d=el('div',{class:'fb '+(ok?'ok':'no')}); d.innerHTML=html; return d; }
+function flash(n,ok){ n.classList.remove('flash-ok','flash-no'); void n.offsetWidth; n.classList.add(ok?'flash-ok':'flash-no'); }
+function varBox(name,value){ const v=el('div',{class:'vb-val'},String(value)); const node=el('div',{class:'varbox'},el('div',{class:'vb-name'},name),v); return {node,set(x){v.textContent=String(x);v.classList.remove('pop');void v.offsetWidth;v.classList.add('pop');}}; }
+function timerBar(sec,onEnd){ const fill=el('div',{class:'tfill'}); const bar=el('div',{class:'tbar'},fill); const start=Date.now(); let ended=false; const t=every(()=>{ const r=1-(Date.now()-start)/(sec*1000); fill.style.width=Math.max(0,r*100)+'%'; if(r<=0&&!ended){ended=true;clearInterval(t);onEnd();} },50); return {bar,stop(){ended=true;clearInterval(t);}}; }
+function setPips(i,n){ const p=$('#pips'); if(!p)return; p.innerHTML=''; for(let k=0;k<n;k++)p.appendChild(el('span',{class:'pip'+(k<i?' done':k===i?' cur':'')})); }
+function confetti(){ const c=$('#confetti'); const cols=['#22e0ff','#ff3ea5','#ffd23f','#3ce88b','#a78bff']; for(let i=0;i<60;i++){ const d=el('div',{class:'cf',style:{left:Math.random()*100+'vw',background:cols[i%cols.length],animationDelay:(Math.random()*0.6)+'s'}}); c.appendChild(d); setTimeout(()=>d.remove(),3000); } }
+/* sound */
+let muted=false,actx=null; function ensureAudio(){ if(!actx){ try{actx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){} } if(actx&&actx.state==='suspended')actx.resume(); }
+function beep(f,dur=0.08,type='square',vol=0.05){ if(muted||!actx)return; try{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type;o.frequency.value=f;g.gain.value=vol;o.connect(g);g.connect(actx.destination);o.start(); g.gain.exponentialRampToValueAtTime(0.0001,actx.currentTime+dur);o.stop(actx.currentTime+dur);}catch(e){} }
+const sHit=()=>beep(320,0.05), sGood=()=>{beep(660,0.1,'sine',0.07);setTimeout(()=>beep(880,0.14,'sine',0.07),100);}, sBad=()=>beep(150,0.22,'sawtooth',0.06);
+const sFanfare=()=>{[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,0.16,'square',0.06),i*110));};
+$('#mute').addEventListener('click',()=>{muted=!muted;$('#mute').textContent=muted?'🔇':'🔊';});
+
+/* ---------- state ---------- */
+function safeStorage(){ try{ localStorage.setItem('__t','1');localStorage.removeItem('__t'); return {get:k=>{try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}}; }catch(e){ const m={}; return {get:k=>(k in m?m[k]:null),set:(k,v)=>{m[k]=v;}}; } }
 const store=safeStorage();
-const state={progress: store.get('cslab_progress')||{}};
-function markComplete(id){ state.progress[id]=true; store.set('cslab_progress',state.progress); refreshNav(); }
+const state=Object.assign({xp:0,stars:{},unlockAll:false,name:''},store.get('csquest')||{});
+const save=()=>store.set('csquest',state);
+const stars=id=>state.stars[id]||0;
+const level=()=>Math.floor(state.xp/300)+1;
+function refreshHeader(){ $('#lvl').textContent='LVL '+level(); $('#xpfill').style.width=((state.xp%300)/3)+'%'; $('#xptxt').textContent=state.xp+' XP'; $('#starTot').textContent=MISSIONS.reduce((s,m)=>s+stars(m.id),0); $('#unlock').style.opacity=state.unlockAll?1:.5; }
 
-/* ---- tiny program evaluator (used by Be the CPU) ---- */
-function val(t,vars){ if(typeof t==='number')return t; if(/^-?\d+(\.\d+)?$/.test(t))return Number(t); return (t in vars)?vars[t]:0; }
-function applyOp(a,op,b){ switch(op){case'+':return a+b;case'-':return a-b;case'*':return a*b;case'/':return b===0?0:a/b;} return 0; }
-function evalExprArr(e,vars){ return e.length===1?val(e[0],vars):applyOp(val(e[0],vars),e[1],val(e[2],vars)); }
-function evalCond(c,vars){ const a=val(c[0],vars),b=val(c[2],vars); switch(c[1]){case'>':return a>b;case'<':return a<b;case'>=':return a>=b;case'<=':return a<=b;case'==':return a===b;case'!=':return a!==b;} return false; }
-function runProgram(program,init){ const vars={...init}; for(const st of program){ if(st.t==='assign'){vars[st.var]=evalExprArr(st.expr,vars);} else{ const ch=evalCond(st.cond,vars)?st.then:st.else; vars[ch.var]=evalExprArr(ch.expr,vars);} } return {vars}; }
-function stmtText(st){ return st.t==='assign' ? `${st.var} = ${st.expr.join(' ')}` : `IF ${st.cond.join(' ')} THEN ${st.then.var} = ${st.then.expr.join(' ')} ELSE ${st.else.var} = ${st.else.expr.join(' ')}`; }
-
-/* ---- lab shell ---- */
-function labShell(root,sec){
-  const wrap=el('div',{class:'lab'});
-  wrap.appendChild(el('div',{class:'lab-head'}, el('div',{class:'lab-no'},'LAB '+String(sec.n).padStart(2,'0')), el('h2',{},sec.title), el('p',{class:'lab-obj'},sec.obj)));
-  const seg=el('div',{class:'seg'});
-  const panes={learn:el('div',{class:'pane'}),try:el('div',{class:'pane'}),challenge:el('div',{class:'pane'})};
-  const body=el('div',{class:'lab-body'});
-  [['learn','Learn'],['try','Try'],['challenge','Challenge']].forEach(([k,label],idx)=>{
-    const b=el('button',{class:'seg-btn'+(idx===0?' on':'')},label);
-    b.addEventListener('click',()=>{ [...seg.children].forEach(c=>c.classList.remove('on')); b.classList.add('on'); Object.entries(panes).forEach(([kk,p])=>p.style.display=kk===k?'':'none'); });
-    seg.appendChild(b); if(idx!==0)panes[k].style.display='none'; body.appendChild(panes[k]);
-  });
-  wrap.append(seg,body); root.appendChild(wrap); return panes;
+/* ================= MISSIONS ================= */
+/* 1 — Variable Vault */
+function playVault(body,done){
+  const N=8; let i=0,score=0,streak=0; const vars={A:rnd(1,9),B:rnd(1,9)}; const boxes={}; const boxRow=el('div',{class:'varrow'});
+  ['A','B'].forEach(n=>{boxes[n]=varBox(n,vars[n]);boxRow.appendChild(boxes[n].node);});
+  const cmd=el('div',{class:'bigcmd'}), input=el('input',{type:'number',class:'ti big',placeholder:'?'}), btn=el('button',{class:'btn primary'},'Set it!'), msg=el('div',{class:'msg'});
+  body.append(el('div',{class:'card center'},el('div',{class:'lbl'},'Memory boxes — each holds ONE value'),boxRow),el('div',{class:'card center'},el('div',{class:'lbl'},'The CPU says… what goes in the box?'),cmd,el('div',{class:'row center'},input,btn),msg));
+  let cur;
+  function gen(){ const kinds=i<2?['lit','lit','copy']:['add','sub','mul','copy','lit','addlit']; const k=kinds[rnd(0,kinds.length-1)]; const tgt=['A','B'][rnd(0,1)],oth=tgt==='A'?'B':'A'; let text,val;
+    if(k==='lit'){val=rnd(1,9);text=`${tgt} = ${val}`;} else if(k==='copy'){val=vars[oth];text=`${tgt} = ${oth}`;} else if(k==='add'){val=vars[tgt]+vars[oth];text=`${tgt} = ${tgt} + ${oth}`;} else if(k==='addlit'){const c=rnd(1,5);val=vars[tgt]+c;text=`${tgt} = ${tgt} + ${c}`;} else if(k==='sub'){ if(vars[tgt]>=vars[oth]){val=vars[tgt]-vars[oth];text=`${tgt} = ${tgt} - ${oth}`;} else {val=vars[tgt]+vars[oth];text=`${tgt} = ${tgt} + ${oth}`;} } else {val=vars[tgt]*2;text=`${tgt} = ${tgt} * 2`;}
+    cur={tgt,val,text}; cmd.textContent=text; input.value=''; input.disabled=false; btn.disabled=false; input.focus(); setPips(i,N); }
+  function answer(){ if(input.value===''||btn.disabled)return; const ok=Number(input.value)===cur.val; input.disabled=true; btn.disabled=true; vars[cur.tgt]=cur.val; boxes[cur.tgt].set(cur.val); flash(boxes[cur.tgt].node,ok);
+    if(ok){score++;streak++;sGood();msg.textContent=streak>=3?`🔥 ${streak} in a row!`:'✓ Box updated!';} else {streak=0;sBad();msg.textContent=`✗ ${cur.tgt} becomes ${cur.val} — work out the right side, then put it in the box.`;}
+    i++; if(i>=N)later(()=>done(score,N),900); else later(gen,ok?500:1600); }
+  btn.addEventListener('click',answer); input.addEventListener('keydown',e=>{if(e.key==='Enter')answer();}); gen();
+}
+/* 2 — Operator Blaster */
+function playBlaster(body,done){
+  const plan=['op','op','op','op','eval','op','cmp','eval','cmp','cmp','cmp','cmp']; const N=plan.length; let i=0,score=0,tb; const ops=['+','-','×','÷'];
+  const q=el('div',{class:'bigcmd'}),sub=el('div',{class:'mut'}),opRow=el('div',{class:'oprow'}),msg=el('div',{class:'msg'}),tslot=el('div');
+  body.append(el('div',{class:'card center'},el('div',{class:'lbl'},'Fire the operator that makes the statement TRUE — before the bar runs out'),tslot,q,sub,opRow,msg));
+  const calc=(a,o,b)=>o==='+'?a+b:o==='-'?a-b:o==='×'?a*b:(b&&a%b===0?a/b:null);
+  const names={'+':'add','-':'subtract','×':'multiply','÷':'divide','>':'greater than','<':'less than','=':'equal to'};
+  function gen(){ setPips(i,N); opRow.innerHTML=''; msg.textContent=''; sub.textContent=''; const mode=plan[i];
+    if(mode==='eval'){ const a=rnd(2,6),b=rnd(2,5),c=rnd(2,4),ok=a+b*c,bad=(a+b)*c; q.textContent=`${a} + ${b} × ${c} = ?`; sub.textContent='Order of operations: × before +';
+      shuffle([ok,bad]).forEach(v=>{const btn=el('button',{class:'opbtn wide'},v);btn.addEventListener('click',()=>pick(v===ok,`× comes first: ${b} × ${c} = ${b*c}, then + ${a} = ${ok}.`,'Direct hit!'));opRow.appendChild(btn);}); }
+    else if(mode==='cmp'){ if(i===6)msg.textContent='🆕 COMPARISON operators — they compare two values.'; let a=rnd(1,20),b=rnd(1,20); if(Math.random()<0.3)b=a; const o=a>b?'>':a<b?'<':'='; q.textContent=`${a}  ?  ${b}`; sub.textContent='Comparison operator: which sign makes this TRUE?';
+      ['>','<','='].forEach(x=>{const btn=el('button',{class:'opbtn'},x);btn.addEventListener('click',()=>pick(x===o,`${a} ${o} ${b} — "${o}" means ${names[o]}.`,`"${o}" means ${names[o]}.`));opRow.appendChild(btn);}); }
+    else { const hard=i>=3; let a,b,o,t; do{ a=rnd(hard?4:2,hard?12:9); b=rnd(2,hard?9:6); o=ops[rnd(0,3)]; if(o==='÷')a=b*rnd(2,hard?9:5); if(o==='-'&&a<b)[a,b]=[b,a]; t=calc(a,o,b); }while(t===null||ops.filter(x=>calc(a,x,b)===t).length!==1);
+      q.textContent=`${a}  ?  ${b}  =  ${t}`; sub.textContent='Arithmetic operator: + − × ÷'; ops.forEach(x=>{const btn=el('button',{class:'opbtn'},x);btn.addEventListener('click',()=>pick(x===o,`${a} ${o} ${b} = ${t}.`,`"${o}" means ${names[o]}.`));opRow.appendChild(btn);}); }
+    tb=timerBar(mode==='eval'?12:7,()=>pick(false,mode==='eval'?'Too slow! Multiply before you add.':'Too slow! Try each sign in your head quickly.')); tslot.innerHTML=''; tslot.appendChild(tb.bar); }
+  function pick(ok,why,okMsg){ tb.stop(); [...opRow.children].forEach(b=>b.disabled=true); if(ok){score++;sGood();msg.textContent='✓ '+(okMsg||'Direct hit!');} else {sBad();msg.textContent='✗ '+why;} i++; if(i>=N)later(()=>done(score,N),900); else later(gen,ok?600:1600); }
+  gen();
+}
+/* 3 — IF/ELSE Sorter */
+function playSorter(body,done){
+  const rules=[{text:'IF number > 10',test:n=>n>10,left:'BIG bin',right:'small bin',gen:()=>rnd(1,20)},{text:'IF number is EVEN',test:n=>n%2===0,left:'EVEN bin',right:'ODD bin',gen:()=>rnd(1,30)},{text:'IF number < 5',test:n=>n<5,left:'tiny bin',right:'other bin',gen:()=>rnd(1,9)},{text:'IF number ends in 0',test:n=>n%10===0,left:'tens bin',right:'other bin',gen:()=>rnd(1,50)}];
+  const per=4,N=rules.length*per; let i=0,score=0,tb,cur,rule; const ruleEl=el('div',{class:'rulebox'}),item=el('div',{class:'item'}),msg=el('div',{class:'msg'}),tslot=el('div'); const L=el('button',{class:'bin left'}),R=el('button',{class:'bin right'});
+  body.append(el('div',{class:'card center'},el('div',{class:'lbl'},'Read the rule. Sort each number into the right bin.'),ruleEl,tslot,item,el('div',{class:'bins'},L,R),msg));
+  function gen(){ setPips(i,N); const r=rules[Math.floor(i/per)]; const fresh=r!==rule; rule=r; cur=r.gen(); ruleEl.innerHTML=`<b>${r.text}</b> → ${r.left}, &nbsp;<b>ELSE</b> → ${r.right}`; if(fresh){ruleEl.classList.remove('newrule');void ruleEl.offsetWidth;ruleEl.classList.add('newrule');}
+    L.textContent='⬅ '+r.left; R.textContent=r.right+' ➡'; item.textContent=cur; item.classList.remove('drop');void item.offsetWidth;item.classList.add('drop'); msg.textContent=''; L.disabled=R.disabled=false;
+    tb=timerBar(fresh?7:5,()=>pick(null)); tslot.innerHTML=''; tslot.appendChild(tb.bar); }
+  function pick(side){ tb.stop(); L.disabled=R.disabled=true; const truth=rule.test(cur); const ok=side!==null&&((side==='L')===truth);
+    if(ok){score++;sGood();msg.textContent='✓ Sorted!';} else {sBad();msg.textContent=(side===null?'⏱ Too slow! ':'✗ ')+`${cur}: "${rule.text}" is ${truth?'TRUE':'FALSE'} → ${truth?rule.left:rule.right}.`;}
+    i++; if(i>=N)later(()=>done(score,N),900); else later(gen,ok?450:1700); }
+  L.addEventListener('click',()=>pick('L')); R.addEventListener('click',()=>pick('R')); gen();
+}
+/* 4 — Maze Bot */
+const mazeLevels=[{w:5,h:5,start:[0,2],goal:[4,2],walls:[]},{w:5,h:5,start:[0,0],goal:[4,4],walls:[[1,0],[1,1],[3,3],[3,4]]},{w:6,h:5,start:[0,4],goal:[5,0],walls:[[1,4],[1,3],[3,1],[3,2],[3,3],[4,1]]},{w:6,h:6,start:[0,0],goal:[5,5],walls:[[1,0],[1,1],[3,1],[3,2],[3,3],[1,4],[1,5],[4,4]]}];
+function playMaze(body,done){
+  let li=0,total=0,program=[],attempts=0,running=false; const max=mazeLevels.length*3+6; const dirs={'↑':[0,-1],'↓':[0,1],'←':[-1,0],'→':[1,0]};
+  const gridEl=el('div',{class:'maze'}),prog=el('div',{class:'prog'}),msg=el('div',{class:'msg'}),ctrl=el('div',{class:'row center'}),lbl=el('div',{class:'lbl'});
+  body.append(el('div',{class:'card center'},lbl,gridEl,el('div',{class:'lbl'},'Your program — plan the whole route, then run it'),prog,ctrl,msg));
+  function drawGrid(bot){ const lv=mazeLevels[li]; gridEl.style.gridTemplateColumns=`repeat(${lv.w},1fr)`; gridEl.innerHTML=''; for(let y=0;y<lv.h;y++)for(let x=0;x<lv.w;x++){ const wall=lv.walls.some(w=>w[0]===x&&w[1]===y); const c=el('div',{class:'cell'+(wall?' wall':'')}); if(x===lv.goal[0]&&y===lv.goal[1])c.textContent='🏁'; if(x===bot[0]&&y===bot[1])c.textContent='🤖'; gridEl.appendChild(c);} }
+  function drawProg(){ prog.innerHTML=''; if(!program.length)prog.appendChild(el('span',{class:'mut'},'Tap arrows to add steps')); program.forEach((d,k)=>prog.appendChild(el('span',{class:'step',id:'st'+k},d))); }
+  function setup(){ program=[];attempts=0; lbl.textContent=`Level ${li+1} of ${mazeLevels.length} — guide 🤖 to 🏁 without hitting walls`; setPips(li,mazeLevels.length); drawGrid(mazeLevels[li].start); drawProg(); msg.textContent=''; }
+  Object.keys(dirs).forEach(d=>{const b=el('button',{class:'btn arrow'},d);b.addEventListener('click',()=>{if(running||program.length>=24)return;program.push(d);drawProg();sHit();});ctrl.appendChild(b);});
+  const undo=el('button',{class:'btn ghost'},'Undo'),clr=el('button',{class:'btn ghost'},'Clear'),run=el('button',{class:'btn primary'},'▶ Run');
+  undo.addEventListener('click',()=>{if(!running){program.pop();drawProg();}}); clr.addEventListener('click',()=>{if(!running){program=[];drawProg();}}); ctrl.append(undo,clr,run);
+  run.addEventListener('click',()=>{ if(running||!program.length)return; running=true; attempts++; const lv=mazeLevels[li]; let pos=[...lv.start],k=0; msg.textContent='';
+    (function step(){ [...prog.children].forEach(c=>c.classList.remove('on'));
+      if(k>=program.length){ running=false; if(pos[0]===lv.goal[0]&&pos[1]===lv.goal[1]){ const pts=attempts===1?3:attempts<=3?2:1; total+=pts; sGood(); msg.textContent=`✓ Goal reached in ${attempts} attempt${attempts>1?'s':''}! +${pts} points`; later(()=>{li++; if(li>=mazeLevels.length)flowPhase(); else setup();},1200); } else {sBad();msg.textContent='✗ Program finished but 🤖 is not at 🏁. Add or fix steps and run again.';} return; }
+      const d=dirs[program[k]],nx=pos[0]+d[0],ny=pos[1]+d[1]; const s=document.getElementById('st'+k); if(s)s.classList.add('on');
+      if(nx<0||ny<0||nx>=lv.w||ny>=lv.h||lv.walls.some(w=>w[0]===nx&&w[1]===ny)){ running=false; sBad(); if(s)s.classList.add('bad'); msg.textContent=`✗ Bumped at step ${k+1} (${program[k]}). That is the bug — fix that step and run again.`; gridEl.classList.add('shake'); later(()=>gridEl.classList.remove('shake'),400); return; }
+      pos=[nx,ny]; drawGrid(pos); k++; later(step,320); })(); });
+  function flowPhase(){ body.innerHTML=''; const syms={start:{name:'Start / End',cls:'sym-oval',shape:'oval'},proc:{name:'Process',cls:'sym-rect',shape:'rectangle'},dec:{name:'Decision',cls:'sym-dia',shape:'diamond'},io:{name:'Input / Output',cls:'sym-para',shape:'parallelogram'}};
+    const qs=[{q:'Tap the symbol that shows a DECISION (a yes/no question)',type:'shape',ans:'dec'},{q:'Tap the symbol that marks the START or END of a flowchart',type:'shape',ans:'start'},{q:'Tap the symbol that shows a PROCESS (an action step)',type:'shape',ans:'proc'},
+      {q:'"Is it raining?" — which symbol would you use?',type:'name',ans:'dec',why:'A yes/no question is a decision — the diamond.'},{q:'"Put on your coat" — which symbol?',type:'name',ans:'proc',why:'An action step is a process — the rectangle.'},{q:'"Ask the user for their name" — which symbol?',type:'name',ans:'io',why:'Getting or showing data is input/output — the parallelogram.'}];
+    let k=0; const stage=el('div'); body.appendChild(el('div',{class:'card center'},el('div',{class:'lbl'},'FLOWCHART FIXER — planners draw algorithms with these symbols'),stage));
+    function show(){ stage.innerHTML=''; if(k>=qs.length){later(()=>done(total,max),700);return;} setPips(k,qs.length); const it=qs[k],msg=el('div',{class:'msg'}); const shape=it.type==='shape'; const row=el('div',{class:shape?'symrow':'opts'}); const keys=shuffle(Object.keys(syms));
+      keys.forEach(key=>{ const b=el('button',{class:shape?'symbtn':'opt'},shape?el('div',{class:'sym '+syms[key].cls}):syms[key].name); b.addEventListener('click',()=>{[...row.children].forEach(x=>x.disabled=true);const ok=key===it.ans;if(ok){total++;sGood();b.classList.add('good');}else{sBad();b.classList.add('bad');row.children[keys.indexOf(it.ans)].classList.add('good');} msg.textContent=(ok?'✓ ':'✗ ')+(it.why||`${syms[it.ans].name} = the ${syms[it.ans].shape}.`); k++; later(show,ok?700:1700);}); row.appendChild(b); });
+      stage.append(el('div',{class:'bigcmd sm'},it.q),row,msg); }
+    show(); }
+  setup();
+}
+/* 5 — Device Rush */
+const deviceDeck=[['⌨️','Keyboard','in'],['🖱️','Mouse','in'],['🖥️','Monitor','out'],['🔊','Speaker','out'],['🎤','Microphone','in'],['🖨️','Printer','out'],['📷','Camera','in'],['📱','Touchscreen','both'],['🌡️','Temperature sensor','in'],['💡','Light sensor','in'],['🚶','Motion sensor','in'],['🎧','Headphones','out'],['📏','Distance sensor','in'],['🕹️','Game controller','in'],['🔔','Alarm siren','out'],['🎮','Handheld console screen','both']];
+function playDevices(body,done){
+  const deck=shuffle(deviceDeck).slice(0,12); let i=0,score=0,tb; const card=el('div',{class:'devbig'}),msg=el('div',{class:'msg'}),tslot=el('div'),row=el('div',{class:'bins3'});
+  const mk=(l,t,c)=>{const b=el('button',{class:'bin '+c},l);b.addEventListener('click',()=>pick(t));row.appendChild(b);return b;}; const bIn=mk('⬇ INPUT','in','left'),bBoth=mk('BOTH','both','mid'),bOut=mk('OUTPUT ⬆','out','right');
+  body.append(el('div',{class:'card center'},el('div',{class:'lbl'},'Does data go IN to the computer, OUT to you, or BOTH?'),tslot,card,row,msg));
+  function gen(){ setPips(i,12); const d=deck[i]; card.innerHTML=`<div class="dev-em">${d[0]}</div><div class="dev-nm">${d[1]}</div>`; msg.textContent=''; [bIn,bBoth,bOut].forEach(b=>b.disabled=false); tb=timerBar(5,()=>pick(null)); tslot.innerHTML=''; tslot.appendChild(tb.bar); }
+  function pick(t){ tb.stop(); [bIn,bBoth,bOut].forEach(b=>b.disabled=true); const d=deck[i],ok=t===d[2]; const nm={in:'an INPUT',out:'an OUTPUT',both:'BOTH — input and output'}[d[2]];
+    if(ok){score++;sGood();msg.textContent='✓ '+(/sensor/i.test(d[1])?'Sensors are remote input devices — they send data IN.':'Correct!');} else {sBad();msg.textContent=(t===null?'⏱ Too slow! ':'✗ ')+`${d[1]} is ${nm}.`;}
+    i++; if(i>=12)later(()=>done(score,12),900); else later(gen,ok?450:1500); }
+  gen();
+}
+/* 6 — Save It! + Bit Flipper */
+function playStorage(body,done){
+  let score=0; const max=17; const items=['Homework essay','Holiday photo','Game save','Science notes','Birthday video','Song playlist']; let i=0,tb; const saved=[];
+  const ram=el('div',{class:'membox ram'}),sto=el('div',{class:'membox store'}),msg=el('div',{class:'msg'}),tslot=el('div'),saveBtn=el('button',{class:'btn primary huge'},'💾 SAVE');
+  body.appendChild(el('div',{class:'card center'},el('div',{class:'lbl'},'Power cuts incoming! Save each file from RAM into storage before the power dies.'),tslot,el('div',{class:'memrow'},ram,sto),saveBtn,msg));
+  function drawMem(cur){ ram.innerHTML=`<div class="mlbl">RAM — working memory (forgets when power is off)</div><div class="mval">${cur||'—'}</div>`; sto.innerHTML=`<div class="mlbl">STORAGE — saved files (remembers)</div><div class="mval">${saved.length?saved.map(s=>'✓ '+s).join('<br>'):'—'}</div>`; }
+  function gen1(){ if(i>=items.length){later(phase2,900);return;} setPips(i,items.length); drawMem(items[i]); msg.textContent=''; saveBtn.disabled=false; tb=timerBar(rnd(2,4),()=>{saveBtn.disabled=true;sBad();drawMem('');msg.textContent=`⚡ POWER CUT! "${items[i]}" was only in RAM — it is gone.`;i++;later(gen1,1600);}); tslot.innerHTML=''; tslot.appendChild(tb.bar); }
+  saveBtn.addEventListener('click',()=>{ if(saveBtn.disabled)return; tb.stop(); saveBtn.disabled=true; saved.push(items[i]); score++; sGood(); drawMem(''); msg.textContent='✓ Saved to storage — safe even when the power goes.'; i++; later(gen1,700); });
+  gen1();
+  function phase2(){ body.innerHTML=''; const bits=[128,64,32,16,8,4,2,1]; let j=0,bstate=bits.map(()=>0),tb2; const targets=[5,10,20,37]; const tgt=el('div',{class:'bigcmd'}),row=el('div',{class:'bits'}),out=el('div',{class:'mval big'},'0'),m2=el('div',{class:'msg'}),ts=el('div');
+    const cells=bits.map((b,idx)=>{const c=el('button',{class:'bit'},el('div',{class:'bv'},'0'),el('div',{class:'bw'},b));c.addEventListener('click',()=>{if(c.disabled)return;bstate[idx]^=1;c.classList.toggle('on',!!bstate[idx]);c.querySelector('.bv').textContent=bstate[idx];const v=bstate.reduce((s,x,k)=>s+x*bits[k],0);out.textContent=v;sHit();if(v===targets[j]){tb2.stop();cells.forEach(x=>x.disabled=true);score++;sGood();m2.textContent='✓ Binary hit! '+targets[j]+' = '+bits.filter(bb=>targets[j]&bb).join(' + ');j++;later(gen2,900);}});row.appendChild(c);return c;});
+    body.appendChild(el('div',{class:'card center'},el('div',{class:'lbl'},'Bit Flipper — computers store numbers as 0s and 1s. Flip switches to make the target.'),ts,tgt,row,el('div',{class:'row center'},el('span',{class:'mut'},'Your byte ='),out),m2));
+    function gen2(){ if(j>=targets.length){later(phase3,800);return;} setPips(j,targets.length); bstate=bits.map(()=>0); cells.forEach(c=>{c.disabled=false;c.classList.remove('on');c.querySelector('.bv').textContent='0';}); out.textContent='0'; tgt.textContent='Target: '+targets[j]; m2.textContent=''; tb2=timerBar(20,()=>{cells.forEach(x=>x.disabled=true);sBad();m2.textContent=`⏱ Time! ${targets[j]} = ${bits.filter(bb=>targets[j]&bb).join(' + ')}.`;j++;later(gen2,1800);}); ts.innerHTML=''; ts.appendChild(tb2.bar); }
+    gen2(); }
+  function phase3(){ body.innerHTML=''; const qs=[
+      {q:'💽 Hard drive',opts:['Permanent storage','Temporary memory'],ans:0,why:'A hard drive keeps files even when the power is off.'},
+      {q:'🧠 RAM',opts:['Permanent storage','Temporary memory'],ans:1,why:'RAM is fast working memory — it forgets when switched off.'},
+      {q:'🔌 USB stick',opts:['Permanent storage','Temporary memory'],ans:0,why:'A USB stick is portable permanent storage you can carry between computers.'},
+      {q:'☁️ Cloud storage',opts:['Permanent storage','Temporary memory'],ans:0,why:'The cloud stores files on internet servers — permanent, and reachable from any device.'},
+      {q:'How many bits make ONE byte?',opts:['8','10','100'],ans:0,why:'8 bits = 1 byte — you just built bytes in the Bit Flipper.'},
+      {q:'Which is the BIGGEST unit?',opts:['KB (kilobyte)','MB (megabyte)','GB (gigabyte)'],ans:2,why:'Smallest to biggest: bit → byte → KB → MB → GB.'},
+      {q:'Put these in order, smallest first:',opts:['byte → KB → MB','MB → KB → byte','KB → byte → MB'],ans:0,why:'byte → kilobyte → megabyte → gigabyte.'}];
+    let k=0; const stage=el('div'); body.appendChild(el('div',{class:'card center'},el('div',{class:'lbl'},'STORAGE SORTER — where does data live, and how big is it?'),stage));
+    function show(){ stage.innerHTML=''; if(k>=qs.length){later(()=>done(score,max),700);return;} setPips(k,qs.length); const it=qs[k],msg=el('div',{class:'msg'}),row=el('div',{class:'opts'});
+      it.opts.forEach((o,idx)=>{const b=el('button',{class:'opt'},o);b.addEventListener('click',()=>{[...row.children].forEach(x=>x.disabled=true);const ok=idx===it.ans;if(ok){score++;sGood();b.classList.add('good');}else{sBad();b.classList.add('bad');row.children[it.ans].classList.add('good');}msg.textContent=(ok?'✓ ':'✗ ')+it.why;k++;later(show,ok?700:1700);});row.appendChild(b);});
+      stage.append(el('div',{class:'bigcmd sm'},it.q),row,msg); }
+    show(); }
+}
+/* 7 — Data Dash */
+function playData(body,done){
+  const N=8; let i=0,score=0,tb,data,cur; const days=['Mon','Tue','Wed','Thu','Fri']; const chart=el('div',{class:'chart'}),q=el('div',{class:'bigcmd sm'}),ans=el('div',{class:'row center'}),msg=el('div',{class:'msg'}),tslot=el('div');
+  body.append(el('div',{class:'card center'},el('div',{class:'lbl'},'Canteen sales — raw data. Process it to find the answer, fast.'),tslot,chart,q,ans,msg));
+  function draw(clickable){ chart.innerHTML=''; const mx=Math.max(...data); data.forEach((v,k)=>{const bar=el('div',{class:'bar'+(clickable?' click':'')},el('div',{class:'barfill',style:{height:(v/mx*100)+'%'}},v),el('div',{class:'barlbl'},days[k]));if(clickable)bar.addEventListener('click',()=>pick(k));chart.appendChild(bar);}); }
+  function typeAns(){ const inp=el('input',{type:'number',class:'ti big',placeholder:'?'}),b=el('button',{class:'btn primary'},'Go'); b.addEventListener('click',()=>{if(inp.value!=='')pick(Number(inp.value));}); inp.addEventListener('keydown',e=>{if(e.key==='Enter')b.click();}); ans.append(inp,b); inp.focus(); }
+  function gen(){ setPips(i,N); data=shuffle([...Array(19)].map((_,k)=>k+2)).slice(0,5); ans.innerHTML=''; msg.textContent=''; const kind=['max','min','total','diff'][i%4];
+    if(kind==='max'){cur={kind,ans:data.indexOf(Math.max(...data))};q.textContent='Tap the day with the MOST sales';draw(true);}
+    else if(kind==='min'){cur={kind,ans:data.indexOf(Math.min(...data))};q.textContent='Tap the day with the FEWEST sales';draw(true);}
+    else if(kind==='total'){cur={kind,ans:data.reduce((a,b)=>a+b,0)};q.textContent='Add them all: what is the TOTAL for the week?';draw(false);typeAns();}
+    else {const a=rnd(0,4);let b=rnd(0,4);while(b===a)b=rnd(0,4);const hi=data[a]>=data[b]?a:b,lo=hi===a?b:a;cur={kind,ans:data[hi]-data[lo]};q.textContent=`How many MORE on ${days[hi]} than on ${days[lo]}?`;draw(false);typeAns();}
+    tb=timerBar(kind==='total'?20:12,()=>pick(null)); tslot.innerHTML=''; tslot.appendChild(tb.bar); }
+  function pick(v){ tb.stop(); [...chart.children].forEach(c=>c.classList.remove('click')); ans.querySelectorAll('button,input').forEach(x=>x.disabled=true); const ok=v!==null&&v===cur.ans; const show=(cur.kind==='max'||cur.kind==='min')?days[cur.ans]:cur.ans;
+    if(ok){score++;sGood();msg.textContent='✓ '+({max:'Finding the biggest',min:'Finding the smallest',total:'Adding up',diff:'Comparing'})[cur.kind]+' = processing data into information!';} else {sBad();msg.textContent=(v===null?'⏱ Too slow! ':'✗ ')+`Answer: ${show}.`;}
+    i++; if(i>=N)later(()=>done(score,N),900); else later(gen,ok?500:1600); }
+  gen();
+}
+/* 8 — Train Your AI Pet */
+function playAI(body,done){
+  const F={apple:{em:'🍎',c:'red',s:'round',l:'Apple'},banana:{em:'🍌',c:'yellow',s:'long',l:'Banana'},lemon:{em:'🍋',c:'yellow',s:'round',l:'Lemon'},orange:{em:'🍊',c:'orange',s:'round',l:'Orange'},gapple:{em:'🍏',c:'green',s:'round',l:'Apple'}};
+  const labels=['Apple','Banana','Lemon','Orange','Pear']; let score=0,iq=0; const max=19; const train=[];
+  const pet=el('div',{class:'pet'},'🤖💤'),iqbar=el('div',{class:'iqbar'},el('div',{class:'iqfill'})),iqtxt=el('div',{class:'mut'},'IQ 0'),stage=el('div');
+  body.appendChild(el('div',{class:'card center'},pet,iqbar,iqtxt,stage));
+  function setIQ(v){ iq=Math.max(0,v); iqbar.firstChild.style.width=Math.min(100,iq)+'%'; iqtxt.textContent='IQ '+iq; pet.textContent=iq>=80?'🤖✨':iq>=35?'🤖':'🤖💤'; }
+  const teachSet=[F.apple,F.banana,F.lemon,F.apple,F.orange,F.banana,F.apple,F.lemon]; let i=0;
+  function teach(){ stage.innerHTML=''; if(i>=teachSet.length){later(test,700);return;} setPips(i,teachSet.length); const f=teachSet[i]; const row=el('div',{class:'opts'});
+    labels.forEach(l=>{const b=el('button',{class:'opt'},l);b.addEventListener('click',()=>{[...row.children].forEach(x=>x.disabled=true);const ok=l===f.l;train.push({c:f.c,s:f.s,l});if(ok){score++;setIQ(iq+10);sGood();b.classList.add('good');}else{setIQ(iq-5);sBad();b.classList.add('bad');}i++;later(teach,ok?450:1100);});row.appendChild(b);});
+    stage.append(el('div',{class:'lbl'},'TEACH your AI — label this fruit'),el('div',{class:'dev-em'},f.em),el('div',{class:'mut'},`${f.c} · ${f.s}`),row); }
+  const guess=f=>{const m=train.filter(t=>t.c===f.c&&t.s===f.s);if(!m.length)return null;const c={};m.forEach(t=>c[t.l]=(c[t.l]||0)+1);return Object.keys(c).sort((a,b)=>c[b]-c[a])[0];};
+  const testSet=[F.banana,F.apple,F.orange,F.gapple]; let j=0;
+  function test(){ stage.innerHTML=''; if(j>=testSet.length){later(spot,700);return;} setPips(j,testSet.length); const f=testSet[j],g=guess(f); const show=el('div',{class:'msg'}),nextB=el('button',{class:'btn primary'},'Next'); nextB.disabled=true;
+    stage.append(el('div',{class:'lbl'},'TEST — your AI makes a guess'),el('div',{class:'dev-em'},f.em),el('div',{class:'mut'},`${f.c} · ${f.s}`),show,nextB);
+    later(()=>{ nextB.disabled=false;
+      if(g===f.l){score++;setIQ(iq+8);sGood();show.innerHTML=`🤖 says <b>${g}</b> — correct! It matched the ${f.c} + ${f.s} examples you taught it.`;nextB.onclick=()=>{j++;test();};}
+      else if(f===F.gapple){sBad();show.innerHTML=`🤖 says <b>${g||'??? never seen this'}</b>. Wrong! It is a green apple — but you only ever showed it <b>red</b> apples. That is <b>bias</b>: a gap in the training data. Fix it by teaching one.`;nextB.textContent='Teach: 🍏 = Apple';nextB.onclick=()=>{train.push({c:'green',s:'round',l:'Apple'});score++;setIQ(iq+15);sGood();show.innerHTML='✓ Now 🤖 says <b>Apple</b>. More varied examples = a smarter, fairer AI.';nextB.textContent='Finish';nextB.onclick=()=>{j++;test();};};}
+      else {sBad();show.innerHTML=`🤖 says <b>${g||'???'}</b>. Wrong — it only knows what you taught it. Garbage in, garbage out!`;nextB.onclick=()=>{j++;test();};} },500); }
+  function spot(){ stage.innerHTML=''; const qs=[
+      {q:'🗣️ A voice assistant answers "What is the weather?"',ai:true,why:'It learned to understand speech from millions of examples — AI.'},
+      {q:'🧮 A calculator works out 2 + 2',ai:false,why:'It follows fixed rules a programmer wrote. No learning — not AI.'},
+      {q:'📱 Your phone unlocks when it sees your face',ai:true,why:'Face recognition learned what your face looks like — AI.'},
+      {q:'💡 A light switch turns a lamp on',ai:false,why:'Just a circuit — no data, no learning, not AI.'},
+      {q:'🎬 A video app suggests what to watch next',ai:true,why:'It learned your taste from what you watched before — AI.'},
+      {q:'🚗 A self-driving car spots a stop sign',ai:true,why:'It was trained on thousands of road images — AI.'}];
+    let k=0; const s2=el('div'); stage.append(el('div',{class:'lbl'},'SPOT THE AI — which of these everyday things use artificial intelligence?'),s2);
+    function show(){ s2.innerHTML=''; if(k>=qs.length){later(()=>done(score,max),700);return;} setPips(k,qs.length); const it=qs[k],msg=el('div',{class:'msg'}),row=el('div',{class:'bins'});
+      [['🤖 Uses AI',true],['⚙️ Not AI — fixed rules',false]].forEach(([l,v],idx)=>{const b=el('button',{class:'bin '+(idx?'right':'left')},l);b.addEventListener('click',()=>{[...row.children].forEach(x=>x.disabled=true);const ok=v===it.ai;if(ok){score++;setIQ(iq+5);sGood();}else{sBad();}msg.textContent=(ok?'✓ ':'✗ ')+it.why;k++;later(show,ok?700:1700);});row.appendChild(b);});
+      s2.append(el('div',{class:'bigcmd sm'},it.q),row,msg); }
+    show(); }
+  setIQ(0); teach();
+}
+/* 9 — Sensor City (IPO) */
+function playIPO(body,done){
+  const scen=[{name:'Automatic door',parts:['Motion sensor','Is someone close?','Motor opens the door']},{name:'Voice assistant',parts:['Microphone','Understand the words','Speaker replies']},{name:'Burglar alarm',parts:['Motion sensor','Armed AND movement?','Siren sounds']},{name:'Digital thermometer',parts:['Temperature sensor','Turn reading into a number','Screen shows °C']}];
+  const distract=['Printer','Keyboard','Camera','Save the file','Mouse']; let i=0,score=0,finished=false; const max=scen.length+3; const stage=el('div'); body.appendChild(stage);
+  function chain(){ stage.innerHTML=''; if(i>=scen.length){later(city,700);return;} setPips(i,scen.length); const sc=scen[i],slots=[null,null,null];
+    const slotEls=['INPUT','PROCESS','OUTPUT'].map((k,idx)=>el('button',{class:'slot '+['in','pr','out'][idx]},el('div',{class:'sk'},k),el('div',{class:'sv'},'tap a tile'))); const tray=el('div',{class:'tray'}),msg=el('div',{class:'msg'});
+    shuffle([...sc.parts,...shuffle(distract).slice(0,2)]).forEach(t=>{const b=el('button',{class:'tile'},t);b.addEventListener('click',()=>{const k=slots.indexOf(null);if(k<0||b.disabled)return;slots[k]=t;slotEls[k].querySelector('.sv').textContent=t;slotEls[k].classList.add('filled');slotEls[k].classList.remove('wrong');b.disabled=true;sHit();if(k===2)check();});tray.appendChild(b);});
+    slotEls.forEach((s,k)=>s.addEventListener('click',()=>{if(slots[k]===null)return;const t=slots[k];slots[k]=null;s.querySelector('.sv').textContent='tap a tile';s.classList.remove('filled','wrong');const tile=[...tray.children].find(x=>x.textContent===t);if(tile)tile.disabled=false;}));
+    function check(){ const ok=slots.every((s,k)=>s===sc.parts[k]); if(ok){score++;sGood();msg.textContent='✓ Data flows: Input → Process → Output!';slotEls.forEach((s,k)=>later(()=>s.classList.add('lit'),k*250));later(()=>{i++;chain();},1300);} else {sBad();slotEls.forEach((s,k)=>s.classList.toggle('wrong',slots[k]!==sc.parts[k]));msg.textContent='✗ Not quite. Tap a red slot to put its tile back. Input = where data comes in · Process = the decision · Output = what you see, hear or feel.';} }
+    stage.appendChild(el('div',{class:'card center'},el('div',{class:'lbl'},`Build the IPO chain for: ${sc.name}`),el('div',{class:'slots'},...slotEls),tray,msg)); }
+  function city(){ stage.innerHTML=''; let light=80,motion=false,r1=false,r2=false,r3=false; const goals=[{t:'Make the street lights come ON',test:()=>r1&&light<40},{t:'Open the shop door',test:()=>r3&&motion},{t:'Sound the alarm',test:()=>r2&&motion}]; const doneG=goals.map(()=>false);
+    const lightS=el('input',{type:'range',min:'0',max:'100',value:'80',class:'range'}),lv=el('span',{class:'mono'}),mBtn=el('button',{class:'btn ghost'},'Motion: none'); const rule=(label,fn)=>{const cb=el('input',{type:'checkbox'});cb.addEventListener('change',()=>{fn(cb.checked);upd();});return el('label',{class:'check'},cb,el('span',{},label));};
+    const scene=el('div',{class:'scene'}),goalList=el('div',{class:'goals'}),msg=el('div',{class:'msg'}); lightS.addEventListener('input',()=>{light=+lightS.value;upd();}); mBtn.addEventListener('click',()=>{motion=!motion;upd();});
+    stage.appendChild(el('div',{class:'card'},el('div',{class:'lbl'},'SENSOR CITY — complete all 3 goals. Sensors are the INPUT, your rules are the PROCESS, the devices are the OUTPUT.'),goalList,el('div',{class:'ctrl'},el('span',{},'☀️ Light sensor'),lightS,lv),el('div',{class:'ctrl'},el('span',{},'🚶 Motion sensor'),mBtn),rule('IF it is dark (light < 40) → street lights ON',v=>r1=v),rule('IF motion → alarm ON',v=>r2=v),rule('IF motion → door OPENS',v=>r3=v),scene,msg));
+    const item=(em,l,on)=>el('div',{class:'sceneitem'+(on?' on':'')},el('div',{class:'se-emoji'},em),el('div',{class:'se-lbl'},l));
+    function upd(){ lv.textContent=light+(light<40?' 🌙 dark':' ☀️ bright'); mBtn.textContent=motion?'Motion: DETECTED':'Motion: none'; mBtn.className='btn'+(motion?' primary':' ghost'); const L=r1&&light<40,A=r2&&motion,D=r3&&motion; scene.innerHTML=''; scene.append(item('💡',L?'Lights ON':'Lights off',L),item(A?'🔔':'🔕',A?'Alarm ON':'Alarm off',A),item('🚪',D?'Door OPEN':'Door closed',D));
+      goals.forEach((g,k)=>{if(!doneG[k]&&g.test()){doneG[k]=true;score++;sGood();}}); goalList.innerHTML=''; goals.forEach((g,k)=>goalList.appendChild(el('div',{class:'goal'+(doneG[k]?' done':'')},(doneG[k]?'✅ ':'⬜ ')+g.t)));
+      if(doneG.every(Boolean)&&!finished){finished=true;msg.textContent='🏆 City online! Sensors → rules → devices — that is the IPO cycle.';later(()=>done(score,max),1200);} }
+    upd(); }
+  chain();
+}
+/* BOSS — Bug Lord */
+const bossQs=[
+  {topic:'Variables',type:'number',q:'A = 6, B = 2, A = A − B. What is A?',answer:4,why:'6 − 2 = 4 goes back into box A.'},
+  {topic:'Variables',type:'number',q:'X = 3, X = X + X. What is X?',answer:6,why:'3 + 3 = 6.'},
+  {topic:'Operators',type:'number',q:'C = 4 × 3 + 2. What is C?',answer:14,why:'× first: 12, then + 2 = 14.'},
+  {topic:'Operators',type:'number',q:'D = 20 ÷ 4 − 1. What is D?',answer:4,why:'÷ first: 5, then − 1 = 4.'},
+  {topic:'Selection',type:'choice',q:'A = 3, B = 9. IF A > B THEN R = 1 ELSE R = 2. What is R?',options:['1','2','9'],answer:1,why:'3 > 9 is FALSE → ELSE path → R = 2.'},
+  {topic:'Selection',type:'choice',q:'N = 10. IF N >= 10 THEN say "big" ELSE say "small". What is said?',options:['big','small'],answer:0,why:'10 >= 10 is TRUE → "big".'},
+  {topic:'Planning',type:'choice',q:'Algorithm: 1) Put on shoes 2) Put on socks 3) Go outside. What is the bug?',options:['Wrong order','Missing variable','No bug'],answer:0,why:'Socks before shoes — a sequencing bug.'},
+  {topic:'Planning',type:'choice',q:'Goal: fan ON when hot (30°C or more). Correct test?',options:['IF temp < 30','IF temp >= 30','IF temp == 0'],answer:1,why:'Hot means 30 or more.'},
+  {topic:'Devices',type:'choice',q:'Lights should switch on by themselves at dusk. Which sensor?',options:['Light sensor','Microphone','Mouse'],answer:0,why:'A light sensor measures brightness.'},
+  {topic:'Devices',type:'choice',q:'Which is an OUTPUT device?',options:['Camera','Speaker','Motion sensor'],answer:1,why:'A speaker sends sound OUT to you.'},
+  {topic:'Storage',type:'choice',q:'Unsaved work + a power cut =',options:['Safe in storage','Lost from RAM','Printed'],answer:1,why:'Unsaved work lives in RAM, which clears without power.'},
+  {topic:'Storage',type:'number',q:'In one byte only the 8 and 2 switches are ON. What number?',answer:10,why:'8 + 2 = 10.'},
+  {topic:'Processing',type:'number',q:'Scores: 4, 7, 2, 9, 3. What is the largest?',answer:9,why:'9 is the maximum.'},
+  {topic:'AI',type:'choice',q:'An AI trained only on red apples sees a green apple. Most likely?',options:['Recognises it easily','Might get it wrong — biased data','Gets faster'],answer:1,why:'A gap in training data causes mistakes.'},
+  {topic:'IPO',type:'choice',q:'Voice assistant: the microphone is the…',options:['Output','Process','Input'],answer:2,why:'Your voice enters through it — input.'},
+  {topic:'IPO',type:'choice',q:'IF light < 40 THEN lights ON. Sensor reads 60. Result?',options:['Lights ON','Lights OFF'],answer:1,why:'60 is not below 40 — condition FALSE.'},
+  {topic:'Planning',type:'choice',q:'Which flowchart symbol shows a DECISION?',options:['Rectangle','Diamond','Oval'],answer:1,why:'Diamond = decision (a yes/no question).'},
+  {topic:'Operators',type:'choice',q:'Which comparison sign makes this TRUE: 12 ? 7',options:['<','>','='],answer:1,why:'12 is greater than 7.'},
+  {topic:'Storage',type:'choice',q:'Which is a PERMANENT storage device?',options:['RAM','USB stick','The screen'],answer:1,why:'A USB stick keeps files without power.'},
+  {topic:'Storage',type:'choice',q:'Smallest to biggest?',options:['MB → KB → byte','byte → KB → MB','KB → MB → byte'],answer:1,why:'byte → KB → MB → GB.'},
+  {topic:'AI',type:'choice',q:'Which one uses AI?',options:['A light switch','A calculator','Face unlock on a phone'],answer:2,why:'Face recognition learned from data — the others follow fixed rules.'},
+];
+function playBoss(body,done){
+  let hp=10,hearts=3,qi=0,score=0; const qs=shuffle(bossQs); const boss=el('div',{class:'boss'},'👾'),hpfill=el('div',{class:'hpfill'}),heartsEl=el('div',{class:'hearts'}),stage=el('div');
+  body.appendChild(el('div',{class:'card center'},el('div',{class:'row center'},boss,el('div',{},el('div',{class:'lbl'},'THE BUG LORD'),el('div',{class:'hpbar'},hpfill))),heartsEl,stage));
+  function hud(){ hpfill.style.width=(hp/10*100)+'%'; heartsEl.textContent='❤️'.repeat(hearts)+'🖤'.repeat(3-hearts); }
+  function next(){ stage.innerHTML=''; if(hp<=0){boss.textContent='💥';sFanfare();later(()=>done(score+hearts*2,16),900);return;}
+    if(hearts<=0){stage.append(el('div',{class:'msg'},'💀 The Bug Lord wins this round. Replay a mission to sharpen up, then try again!'),el('button',{class:'btn primary',onClick:()=>{hp=10;hearts=3;qi=0;score=0;hud();next();}},'Retry'));return;}
+    if(qi>=qs.length)qi=0; const q=qs[qi],slot=el('div',{class:'msg'}); setPips(10-hp,10);
+    stage.append(el('div',{class:'qtop'},`⚔️ ${q.topic}`),el('div',{class:'bigcmd sm',html:q.q}));
+    if(q.type==='number'){const inp=el('input',{type:'number',class:'ti big'}),b=el('button',{class:'btn primary'},'Attack!');b.addEventListener('click',()=>{if(inp.value!==''&&!b.disabled){b.disabled=true;grade(Number(inp.value)===q.answer,q,slot);}});inp.addEventListener('keydown',e=>{if(e.key==='Enter')b.click();});stage.append(el('div',{class:'row center'},inp,b));inp.focus();}
+    else {const row=el('div',{class:'opts'});q.options.forEach((o,k)=>{const b=el('button',{class:'opt'},o);b.addEventListener('click',()=>{[...row.children].forEach(x=>x.disabled=true);const ok=k===q.answer;if(!ok)row.children[q.answer].classList.add('good');b.classList.add(ok?'good':'bad');grade(ok,q,slot);});row.appendChild(b);});stage.appendChild(row);}
+    stage.appendChild(slot); }
+  function grade(ok,q,slot){ qi++; if(ok){hp--;score++;sGood();boss.classList.add('hit');later(()=>boss.classList.remove('hit'),400);} else {hearts--;sBad();} hud(); slot.innerHTML=''; slot.appendChild(fb(ok,(ok?'💥 Hit! ':'💔 ')+q.why)); slot.appendChild(el('button',{class:'btn',style:{marginTop:'10px'},onClick:next},'Continue')); }
+  hud(); next();
 }
 
-/* ---- scored quiz ---- */
-function runQuiz(pane,sec,questions,opts={}){
-  pane.innerHTML=''; let i=0,correct=0; const topic={};
-  const holder=el('div'); pane.appendChild(holder); render();
-  function render(){
-    holder.innerHTML='';
-    if(i>=questions.length) return summary();
-    const q=questions[i];
-    holder.appendChild(el('div',{class:'qmeta'},`Question ${i+1} of ${questions.length}`+(q.topic?`  ·  ${q.topic}`:'')));
-    holder.appendChild(el('p',{class:'qtext',html:q.q}));
-    const slot=el('div');
-    if(q.type==='number'){
-      const inp=el('input',{type:'number',class:'ti',placeholder:'Answer'});
-      const go=el('button',{class:'btn primary'},'Check');
-      go.addEventListener('click',()=>{ if(inp.value==='')return; inp.disabled=true; go.disabled=true; grade(Number(inp.value)===Number(q.answer),q,slot); });
-      inp.addEventListener('keydown',e=>{ if(e.key==='Enter')go.click(); });
-      holder.appendChild(el('div',{class:'row'},inp,go));
-    }else{
-      const box=el('div',{class:'opts'});
-      q.options.forEach((o,idx)=>{ const b=el('button',{class:'opt'},o);
-        b.addEventListener('click',()=>{ [...box.children].forEach(c=>c.disabled=true); const ok=idx===q.answer; if(ok)b.classList.add('good'); else{b.classList.add('bad'); box.children[q.answer].classList.add('good');} grade(ok,q,slot); });
-        box.appendChild(b); });
-      holder.appendChild(box);
-    }
-    holder.appendChild(slot);
-  }
-  function grade(ok,q,slot){
-    if(q.topic){ topic[q.topic]=topic[q.topic]||{c:0,t:0}; topic[q.topic].t++; if(ok)topic[q.topic].c++; }
-    if(ok)correct++;
-    slot.appendChild(fb(ok,q.why));
-    slot.appendChild(el('div',{class:'row',style:{marginTop:'12px'}}, el('button',{class:'btn',onClick:()=>{i++;render();}}, i+1>=questions.length?'See results':'Next question')));
-  }
-  function summary(){
-    const pct=Math.round(100*correct/questions.length); markComplete(sec.id);
-    const kids=[el('div',{class:'score'},`${correct} / ${questions.length}`),
-      el('p',{class:'mut'},pct>=80?'Excellent work — this topic is solid.':pct>=50?'Good progress. A little more practice will lock it in.':'Keep going — revisit Learn and Try, then have another go.')];
-    if(opts.showTopics){
-      const weak=Object.keys(topic).filter(k=>topic[k].c/topic[k].t<0.6);
-      kids.push(weak.length? el('div',{class:'fb no'},el('strong',{},'Practise more: '),weak.join(', ')) : el('div',{class:'fb ok'},el('strong',{},'Strong across every topic. '),'Nicely done.'));
-    }
-    kids.push(el('button',{class:'btn primary',onClick:()=>{i=0;correct=0;for(const k in topic)delete topic[k];render();}},'Try again'));
-    holder.appendChild(el('div',{class:'result'},...kids));
-  }
-}
-function selectEl(options){ const s=el('select',{class:'sel'}); s.appendChild(el('option',{value:''},'— choose —')); options.forEach(o=>s.appendChild(el('option',{value:o},o))); return s; }
-function varBox(name,value){ const v=el('div',{class:'vb-val'},String(value)); const node=el('div',{class:'varbox'},el('div',{class:'vb-name'},name),v);
-  return {node,set(x){ v.textContent=String(x); v.classList.remove('pop'); void v.offsetWidth; v.classList.add('pop'); }}; }
+const MISSIONS=[
+  {id:'vault',world:1,n:1,emoji:'🗄️',title:'Variable Vault',tag:'1.1 Assigning variables',badge:'Vault Keeper',brief:'The CPU gives a command. You say what ends up in the box.',play:playVault},
+  {id:'blaster',world:1,n:2,emoji:'⚡',title:'Operator Blaster',tag:'1.2 Arithmetic & comparison operators',badge:'Operator Ace',brief:'Pick the operator that makes it true — arithmetic, then comparison.',play:playBlaster},
+  {id:'sorter',world:1,n:3,emoji:'🔀',title:'IF/ELSE Sorter',tag:'1.3 Selection',badge:'Decision Maker',brief:'Numbers roll in. Use the IF rule to sort them into bins.',play:playSorter},
+  {id:'maze',world:1,n:4,emoji:'🤖',title:'Maze Bot',tag:'1.4 Planning · flowcharts',badge:'Route Planner',brief:'Plan a route program, debug it, then master the flowchart symbols.',play:playMaze},
+  {id:'devices',world:2,n:5,emoji:'🎛️',title:'Device Rush',tag:'4.1 Input & output devices',badge:'Device Expert',brief:'Sort devices and sensors: input, output, or both.',play:playDevices},
+  {id:'storage',world:2,n:6,emoji:'💾',title:'Save It!',tag:'4.2 Storage · binary · units',badge:'Data Guardian',brief:'Beat the power cuts, build bytes from bits, sort storage devices and units.',play:playStorage},
+  {id:'data',world:2,n:7,emoji:'📊',title:'Data Dash',tag:'4.3 Processing data',badge:'Data Detective',brief:'Turn raw numbers into answers against the clock.',play:playData},
+  {id:'ai',world:2,n:8,emoji:'🧠',title:'Train Your AI Pet',tag:'4.4 Artificial intelligence',badge:'AI Trainer',brief:'Teach a baby AI, catch its bias, then spot AI in everyday life.',play:playAI},
+  {id:'ipo',world:2,n:9,emoji:'🏙️',title:'Sensor City',tag:'IPO cycle · sensors',badge:'City Engineer',brief:'Build Input → Process → Output chains, then bring a city online.',play:playIPO},
+  {id:'boss',world:3,n:10,emoji:'👾',title:'Boss: The Bug Lord',tag:'Everything, mixed',badge:'Computing Champion',brief:'Every correct answer deals damage. Three wrong and you fall.',play:playBoss,boss:true},
+];
+function unlocked(m){ if(state.unlockAll)return true; if(m.boss)return MISSIONS.filter(x=>!x.boss).every(x=>stars(x.id)>0); const k=MISSIONS.indexOf(m); return k===0||stars(MISSIONS[k-1].id)>0; }
+const nextMission=m=>{const k=MISSIONS.indexOf(m);return MISSIONS.slice(k+1).find(unlocked)||null;};
 
-/* ===================== LAB 1 — BE THE CPU ===================== */
-const cpuLevels=[
-  {vars:{A:5,B:3}, program:[{t:'assign',var:'A',expr:['A','+','B']}], ask:'A'},
-  {vars:{A:5,B:3}, program:[{t:'assign',var:'A',expr:['A','+','B']},{t:'assign',var:'A',expr:['A','*','2']}], ask:'A'},
-  {vars:{A:2,B:8}, program:[{t:'assign',var:'C',expr:['B','-','A']},{t:'if',cond:['C','>','5'],then:{var:'D',expr:['1']},else:{var:'D',expr:['0']}}], ask:'D'},
-  {vars:{A:7,B:7,C:0}, program:[{t:'if',cond:['A','==','B'],then:{var:'C',expr:['A','+','B']},else:{var:'C',expr:['0']}},{t:'assign',var:'C',expr:['C','+','1']}], ask:'C'},
-  {vars:{X:10,Y:4}, program:[{t:'assign',var:'X',expr:['X','-','Y']},{t:'if',cond:['X','<','Y'],then:{var:'Z',expr:['X','*','10']},else:{var:'Z',expr:['X','+','Y']}},{t:'assign',var:'Z',expr:['Z','-','1']}], ask:'Z'},
-];
-function cpuTry(pane){
-  let li=0; const host=el('div'); pane.appendChild(host); draw();
-  function draw(){
-    const lv=cpuLevels[li]; host.innerHTML='';
-    const tabs=el('div',{class:'levtabs'}); cpuLevels.forEach((_,k)=>{ const b=el('button',{class:'lev'+(k===li?' on':'')},'Level '+(k+1)); b.addEventListener('click',()=>{li=k;draw();}); tabs.appendChild(b); }); host.appendChild(tabs);
-    const names=[]; const push=n=>{ if(/^[A-Z]$/.test(n)&&!names.includes(n))names.push(n); };
-    Object.keys(lv.vars).forEach(push);
-    lv.program.forEach(st=>{ if(st.t==='assign'){push(st.var);st.expr.forEach(push);} else {st.cond.forEach(push);push(st.then.var);push(st.else.var);st.then.expr.forEach(push);st.else.expr.forEach(push);} });
-    const boxes={}; const boxRow=el('div',{class:'varrow'});
-    names.forEach(n=>{ const b=varBox(n,(n in lv.vars)?lv.vars[n]:'?'); boxes[n]=b; boxRow.appendChild(b.node); });
-    host.appendChild(el('div',{class:'panel'},el('div',{class:'lbl'},'Memory — each box is a variable'),boxRow));
-    const lineNodes=lv.program.map((st,idx)=>el('div',{class:'codeline'},el('span',{class:'ln'},idx+1),el('span',{},stmtText(st))));
-    const code=el('div',{class:'code'}); lineNodes.forEach(n=>code.appendChild(n));
-    host.appendChild(el('div',{class:'panel'},el('div',{class:'lbl'},'Program — the CPU runs one line at a time, top to bottom'),code));
-    let cur=0; const runVars={...lv.vars}; const noteSlot=el('div',{class:'note'});
-    function stepOnce(){
-      if(cur>=lv.program.length)return false;
-      lineNodes.forEach(n=>n.classList.remove('on')); const st=lv.program[cur], node=lineNodes[cur]; node.classList.add('on'); let note;
-      if(st.t==='assign'){ const v=evalExprArr(st.expr,runVars); runVars[st.var]=v; boxes[st.var].set(v); note=`Line ${cur+1}: work out ${st.expr.join(' ')} → put ${v} into box ${st.var}.`; }
-      else { const br=evalCond(st.cond,runVars); const ch=br?st.then:st.else; const v=evalExprArr(ch.expr,runVars); runVars[ch.var]=v; boxes[ch.var].set(v); node.classList.add('branch'); note=`Line ${cur+1}: is "${st.cond.join(' ')}" true? ${br?'YES':'NO'} → take the ${br?'THEN':'ELSE'} path → ${ch.var} becomes ${v}.`; }
-      noteSlot.textContent=note; cur++; return true;
-    }
-    const bStep=el('button',{class:'btn'},'Run one step'); bStep.addEventListener('click',()=>{ if(!stepOnce())noteSlot.textContent=`Finished. ${lv.ask} = ${runVars[lv.ask]}.`; });
-    const bAll=el('button',{class:'btn primary'},'Run all'); bAll.addEventListener('click',()=>{ while(stepOnce()){} lineNodes.forEach(n=>n.classList.remove('on')); noteSlot.textContent=`Finished. ${lv.ask} = ${runVars[lv.ask]}.`; });
-    const bReset=el('button',{class:'btn ghost'},'Reset'); bReset.addEventListener('click',draw);
-    const pred=el('input',{type:'number',class:'ti',placeholder:'Predict '+lv.ask});
-    const bCheck=el('button',{class:'btn'},'Check prediction'); bCheck.addEventListener('click',()=>{
-      if(pred.value==='')return; const fin=runProgram(lv.program,lv.vars).vars; const ok=Number(pred.value)===Number(fin[lv.ask]);
-      noteSlot.innerHTML=''; noteSlot.appendChild(fb(ok, ok?`Correct — ${lv.ask} ends as ${fin[lv.ask]}. Press "Run all" to watch the CPU do it.`:`Not yet. Press "Run one step" to trace each line and spot where your prediction went differently.`)); });
-    pred.addEventListener('keydown',e=>{ if(e.key==='Enter')bCheck.click(); });
-    host.appendChild(el('div',{class:'panel'},el('div',{class:'lbl'},'Predict first, then run'),el('p',{class:'mut sm'},`What will ${lv.ask} be when the program finishes?`),el('div',{class:'row'},pred,bCheck),el('div',{class:'row',style:{marginTop:'10px'}},bStep,bAll,bReset),noteSlot));
-  }
-}
-const cpuChallenge=[
-  {topic:'Variables',type:'number',q:'A = 4, then A = A + 6. What is A now?',answer:10,why:'A starts as 4. "A = A + 6" means: take what is in A, add 6, and put the result back in A. 4 + 6 = 10.'},
-  {topic:'Operators',type:'number',q:'P = 3, Q = 5, R = P × Q. What is R?',answer:15,why:'R = P × Q = 3 × 5 = 15.'},
-  {topic:'Selection',type:'choice',q:'A = 6, B = 4. IF A > B THEN C = 1 ELSE C = 0. What is C?',options:['0','1','6'],answer:1,why:'6 > 4 is TRUE, so the THEN path runs and C becomes 1.'},
-  {topic:'Variables',type:'number',q:'X = 10, X = X − 3, X = X − 3. What is X?',answer:4,why:'10 − 3 = 7, then 7 − 3 = 4. Each line updates the same box.'},
-  {topic:'Selection',type:'choice',q:'N = 9. IF N >= 10 THEN say "big" ELSE say "small". What is said?',options:['big','small'],answer:1,why:'9 is not 10 or more, so the condition is FALSE and the ELSE path runs: "small".'},
-  {topic:'Operators',type:'number',q:'M = 20, N = 4, K = M ÷ N + 1. What is K? (÷ before +)',answer:6,why:'20 ÷ 4 = 5, then 5 + 1 = 6.'},
-];
+/* ---------- screens ---------- */
+function showHome(){ clearTimers(); const s=$('#screen'); s.innerHTML='';
+  s.appendChild(el('div',{class:'hero'},el('h1',{},'Complete missions. Earn stars. Beat the Bug Lord.'),el('p',{},'Each mission is a mini-game. Get 3 stars for a perfect run. Unlock the boss by finishing every mission.')));
+  const bossDone=stars('boss')>0;
+  if(bossDone)s.appendChild(el('div',{class:'champ noprint'},el('span',{style:{fontSize:'28px'}},'🏆'),el('b',{},'Computing Champion!'),el('span',{class:'mut'},'You defeated the Bug Lord.'),el('button',{class:'btn primary',onClick:showCert},'View certificate')));
+  [[1,'World 1 · Code World','Unit 1 · Computational thinking & programming'],[2,'World 2 · Systems World','Unit 4 · Computer systems · IPO cycle'],[3,'Final Boss','Unlocks when every mission has at least one star']].forEach(([w,t,sub])=>{
+    const nodes=el('div',{class:'nodes'});
+    MISSIONS.filter(m=>m.world===w).forEach(m=>{ const un=unlocked(m),st=stars(m.id); const b=el('button',{class:'node'+(m.boss?' boss':'')},el('div',{class:'nem'},m.emoji),el('div',{class:'nno'},'MISSION '+m.n),el('div',{class:'nt'},m.title),el('div',{class:'ntag'},m.tag),el('div',{class:'nstars',html:'<b>'+'★'.repeat(st)+'</b>'+'★'.repeat(3-st)})); if(!un){b.disabled=true;b.appendChild(el('span',{class:'lock'},'🔒'));} b.addEventListener('click',()=>startMission(m.id)); nodes.appendChild(b); });
+    s.appendChild(el('section',{class:'world'},el('div',{class:'wtitle'},el('h2',{},t),el('span',{},sub)),nodes)); });
+  const shelf=el('div',{class:'shelf'}); MISSIONS.forEach(m=>{const st=stars(m.id);shelf.appendChild(el('div',{class:'bdg'+(st===3?' gold':st?'':' empty'),title:m.badge},m.emoji,st?el('span',{class:'bs'},'★'.repeat(st)):null));});
+  s.appendChild(el('section',{class:'world'},el('div',{class:'wtitle'},el('h2',{},'Badge shelf'),el('span',{},'Gold ring = 3-star run')),shelf));
+  refreshHeader(); window.scrollTo(0,0); }
+function startMission(id){ clearTimers(); ensureAudio(); const m=MISSIONS.find(x=>x.id===id); if(!unlocked(m)){showHome();return;} const s=$('#screen'); s.innerHTML='';
+  s.appendChild(el('div',{class:'mhead'},el('div',{class:'mtitle'},m.emoji+' '+m.title),el('div',{class:'mbrief'},m.brief),el('div',{class:'pips',id:'pips'})));
+  const body=el('div'); s.appendChild(body); window.scrollTo(0,0); m.play(body,(score,max)=>finishMission(m,score,max)); }
+function finishMission(m,score,max){ clearTimers(); const ratio=max?score/max:0; const st=ratio>=0.9?3:ratio>=0.6?2:1; const prev=stars(m.id); let gain; if(st>prev){gain=100*(st-prev)+50;state.stars[m.id]=st;} else gain=25; state.xp+=gain; save(); refreshHeader(); if(st===3)confetti(); sFanfare();
+  const s=$('#screen'); s.innerHTML=''; const starRow=el('div',{class:'starrow'}); for(let i=0;i<3;i++)starRow.appendChild(el('span',{class:'bigstar'+(i<st?' lit':''),style:{animationDelay:(i*0.25)+'s'}},'★'));
+  const nx=nextMission(m);
+  s.appendChild(el('div',{class:'results'},el('div',{class:'rtitle'},st===3?'Perfect run!':st===2?'Great work!':'Mission complete'),starRow,el('div',{class:'rscore'},`${score} / ${max}`),el('div',{class:'xpgain'},`+${gain} XP`),
+    el('div',{class:'badge-earned'},el('span',{class:'bemoji'},m.emoji),el('span',{},m.badge+(st===3?' — GOLD':''))),
+    st<3?el('p',{class:'mut'},'Replay for 3 stars and a gold badge.'):null,
+    el('div',{class:'row center'},el('button',{class:'btn',onClick:()=>startMission(m.id)},'↻ Replay'),m.boss?el('button',{class:'btn primary',onClick:showCert},'🏆 Certificate'):nx?el('button',{class:'btn primary',onClick:()=>startMission(nx.id)},'Next mission ▶'):null,el('button',{class:'btn ghost',onClick:showHome},'Map')))); }
+function showCert(){ clearTimers(); const s=$('#screen'); s.innerHTML=''; const tot=MISSIONS.reduce((a,m)=>a+stars(m.id),0); const nameIn=el('input',{type:'text',class:'ti',style:{width:'260px',fontFamily:'inherit'},placeholder:'Your name',value:state.name||''}); nameIn.addEventListener('input',()=>{state.name=nameIn.value;save();cn.textContent=state.name||'________';});
+  const cn=el('div',{class:'cname'},state.name||'________');
+  s.append(el('div',{class:'row center noprint',style:{marginBottom:'14px'}},nameIn,el('button',{class:'btn primary',onClick:()=>window.print()},'🖨️ Print'),el('button',{class:'btn ghost',onClick:showHome},'Map')),
+    el('div',{class:'cert'},el('div',{style:{fontSize:'44px'}},'🏆'),el('div',{style:{letterSpacing:'3px',fontSize:'12px',fontWeight:'800'}},'CERTIFICATE OF ACHIEVEMENT'),el('h2',{},'Computing Champion'),el('p',{},'This certifies that'),cn,el('p',{},'completed Computing Quest and defeated the Bug Lord'),el('p',{style:{fontWeight:'800',marginTop:'8px'}},`★ ${tot} / 30 stars · Level ${level()}`),el('p',{style:{color:'#555',fontSize:'13px',marginTop:'10px'}},'Grade 4 · Term 1 2026 · '+new Date().toLocaleDateString()))); }
 
-/* ===================== LAB 2 — DEBUG ===================== */
-const debugPuzzles=[
-  {goal:'Say "BIG" when the number N is 10 or more, otherwise say "small".',
-   steps:['Read the number N','IF N < 10 THEN say "BIG"','ELSE say "small"'],badIndex:1,
-   options:['IF N >= 10 THEN say "BIG"','IF N == 10 THEN say "BIG"','IF N < 100 THEN say "BIG"'],correct:0,
-   optWhy:['','That only works for exactly 10 — 11, 12, 50 would all be wrong.','Almost every number is under 100, so it would say BIG for 3.'],
-   okWhy:['Reading N first is right — you need the number before you can test it.','','The ELSE part is fine; it is the test above it that is backwards.'],
-   why:'"10 or more" is written N >= 10. The bug had the comparison the wrong way round.',
-   failMsg:'Test with N = 12: "N < 10" is FALSE, so it wrongly says "small". The condition is backwards.'},
-  {goal:'Make a slice of toast.',
-   steps:['Put bread in the toaster','Turn the toaster on','Pour a glass of juice','Take the toast out when it pops up'],badIndex:2,
-   options:['Wait for the toast to cook','Unplug the fridge','Open a book'],correct:0,
-   optWhy:['','That has nothing to do with toast.','Still nothing to do with making toast.'],
-   okWhy:['Bread first — correct.','Turning it on is needed.','','Taking it out at the end is right.'],
-   why:'Every step in an algorithm must help reach the goal. Juice was a distraction; the missing step is waiting for it to cook.',
-   failMsg:'The toaster is on, but nothing says to wait — so we grab the bread while it is still cold.'},
-  {goal:'Charge the child price if age is under 12, otherwise the adult price.',
-   steps:['Read age','IF age > 12 THEN price = child price','ELSE price = adult price'],badIndex:1,
-   options:['IF age < 12 THEN price = child price','IF age > 120 THEN price = child price','IF age == 12 THEN price = child price'],correct:0,
-   optWhy:['','Nobody is over 120 — no one would ever get the child price.','That only catches exactly 12, and 12 is not "under 12".'],
-   okWhy:['Reading age first is correct.','','The ELSE is fine — the test above it is wrong.'],
-   why:'"Under 12" is age < 12. The bug used > instead of <, which flips who gets the discount.',
-   failMsg:'Test with age = 10: "age > 12" is FALSE, so a 10-year-old is charged the adult price. Wrong!'},
-  {goal:'Find the biggest of three numbers A, B and C.',
-   steps:['Set biggest = A','IF B > biggest THEN biggest = B','Print biggest'],badIndex:2,
-   options:['IF C > biggest THEN biggest = C, then print biggest','Print A','Set biggest = 0'],correct:0,
-   optWhy:['','That ignores B and C completely.','That throws away the answer.'],
-   okWhy:['Starting with A is a sensible first guess.','Comparing B is correct.',''],
-   why:'C was never compared. To find the biggest of three, all three must be checked before printing.',
-   failMsg:'Test with A=2, B=5, C=9: it prints 5 because C was never looked at.'},
-];
-function debugTry(pane){
-  let pi=0; const host=el('div'); pane.appendChild(host); draw();
-  function draw(){
-    const p=debugPuzzles[pi]; host.innerHTML=''; let fixed=false;
-    const tabs=el('div',{class:'levtabs'}); debugPuzzles.forEach((_,k)=>{ const b=el('button',{class:'lev'+(k===pi?' on':'')},'Bug '+(k+1)); b.addEventListener('click',()=>{pi=k;draw();}); tabs.appendChild(b); }); host.appendChild(tabs);
-    host.appendChild(el('div',{class:'goal'},el('span',{class:'lbl'},'GOAL'),p.goal));
-    const stepNodes=p.steps.map((s,idx)=>{ const n=el('div',{class:'codeline click'},el('span',{class:'ln'},idx+1),el('span',{class:'st-txt'},s)); n.addEventListener('click',()=>{ if(!fixed)onPick(idx,n); }); return n; });
-    const code=el('div',{class:'code'}); stepNodes.forEach(n=>code.appendChild(n));
-    const msg=el('div',{class:'note'});
-    host.appendChild(el('div',{class:'panel'},el('div',{class:'lbl'},'The algorithm — click the step you think is wrong'),code,msg));
-    const run=el('button',{class:'btn primary'},'Run the algorithm'); run.addEventListener('click',runIt);
-    host.appendChild(el('div',{class:'row',style:{marginTop:'12px'}},run));
-    function onPick(idx,node){
-      stepNodes.forEach(n=>n.classList.remove('sel','bad')); node.classList.add('sel'); msg.innerHTML='';
-      if(idx===p.badIndex){
-        msg.appendChild(fb(true,'Good eye — this is the faulty step. Choose the correct replacement:'));
-        const opts=el('div',{class:'opts',style:{marginTop:'10px'}});
-        p.options.forEach((o,oi)=>{ const b=el('button',{class:'opt'},o); b.addEventListener('click',()=>{
-          if(oi===p.correct){ [...opts.children].forEach(c=>c.disabled=true); b.classList.add('good'); node.querySelector('.st-txt').textContent=o; node.classList.remove('sel'); node.classList.add('goodline'); fixed=true; msg.innerHTML=''; msg.appendChild(fb(true,p.why+' Now press "Run the algorithm" to see it work.')); }
-          else { b.classList.add('bad'); b.disabled=true; const w=el('div',{style:{marginTop:'8px'}}); w.appendChild(fb(false,(p.optWhy&&p.optWhy[oi])||'That still does not reach the goal. Try another.')); msg.appendChild(w); }
-        }); opts.appendChild(b); });
-        msg.appendChild(opts);
-      } else { node.classList.add('bad'); msg.appendChild(fb(false,(p.okWhy&&p.okWhy[idx])||'This step is actually fine. Look for the one that breaks the order or the logic.')); }
-    }
-    function runIt(){
-      msg.innerHTML=''; stepNodes.forEach(n=>n.classList.remove('on','bad')); let i=0;
-      (function tick(){ if(i>0)stepNodes[i-1].classList.remove('on');
-        if(i>=stepNodes.length){ msg.appendChild(fb(fixed,fixed?'The algorithm reaches the goal. Fixed!':'It ran to the end — but the goal was not met. Find the faulty step and fix it.')); return; }
-        stepNodes[i].classList.add('on');
-        if(!fixed&&i===p.badIndex){ stepNodes[i].classList.add('bad'); msg.appendChild(fb(false,p.failMsg)); return; }
-        i++; setTimeout(tick,600); })();
-    }
-  }
-}
-const debugChallenge=[
-  {topic:'Debugging',type:'choice',q:'Goal: turn a fan ON when it is hot (30°C or more). The algorithm says: IF temperature < 30 THEN fan ON. What is wrong?',options:['Nothing — it works','The test should be temperature >= 30','It should read the temperature twice'],answer:1,why:'Hot means 30 or above. The test is backwards — it turns the fan on when it is cool.'},
-  {topic:'Debugging',type:'choice',q:'To send a text message, which order is correct?',options:['Write message → Press Send → Choose contact','Choose contact → Write message → Press Send','Press Send → Write message → Choose contact'],answer:1,why:'You need both a recipient and a message before you can send. Order matters in algorithms.'},
-  {topic:'Debugging',type:'choice',q:'An algorithm to find the biggest of three numbers only compares the first two. What is missing?',options:['Nothing','A comparison with the third number','A step to print "done"'],answer:1,why:'All three numbers must be compared, or the biggest might be the one that was skipped.'},
-  {topic:'Debugging',type:'choice',q:'A recipe says: 1) Eat the cake 2) Mix ingredients 3) Bake for 30 min. What kind of bug is this?',options:['A sequencing bug (wrong order)','A spelling mistake','A missing IF statement'],answer:0,why:'The steps exist but are in the wrong order — a sequencing bug.'},
-  {topic:'Debugging',type:'choice',q:'Best way to find where an algorithm goes wrong?',options:['Guess randomly','Trace it step by step with a test value','Delete it and start again'],answer:1,why:'Tracing with a test value shows exactly which step produces the wrong result.'},
-];
-
-/* ===================== LAB 3 — TRAIN THE AI ===================== */
-const aiData={
-  fair:[
-    {color:'red',shape:'round',size:'small',label:'Apple',em:'🍎'},{color:'green',shape:'round',size:'small',label:'Apple',em:'🍏'},
-    {color:'yellow',shape:'long',size:'medium',label:'Banana',em:'🍌'},{color:'yellow',shape:'long',size:'medium',label:'Banana',em:'🍌'},
-    {color:'yellow',shape:'round',size:'small',label:'Lemon',em:'🍋'},{color:'orange',shape:'round',size:'medium',label:'Orange',em:'🍊'},
-    {color:'green',shape:'round',size:'medium',label:'Pear',em:'🍐'}],
-  biased:[
-    {color:'red',shape:'round',size:'small',label:'Apple',em:'🍎'},{color:'red',shape:'round',size:'small',label:'Apple',em:'🍎'},
-    {color:'yellow',shape:'long',size:'medium',label:'Banana',em:'🍌'},{color:'green',shape:'round',size:'medium',label:'Pear',em:'🍐'}]
-};
-const aiMysteries=[
-  {color:'red',shape:'round',size:'small',truth:'Apple',name:'Mystery 1'},
-  {color:'yellow',shape:'long',size:'medium',truth:'Banana',name:'Mystery 2'},
-  {color:'green',shape:'round',size:'small',truth:'Apple',name:'Mystery 3'},
-  {color:'yellow',shape:'round',size:'small',truth:'Lemon',name:'Mystery 4'},
-];
-function classify(train,m,feats){
-  if(!feats.length)return {label:null,matched:[],reason:'No features chosen — the AI has nothing to compare. Turn on at least one feature.'};
-  const matched=train.filter(r=>feats.every(f=>r[f]===m[f]));
-  if(!matched.length)return {label:null,matched:[],reason:`No training example has ${feats.map(f=>f+'='+m[f]).join(', ')}. The AI cannot decide — it has never seen anything like this.`};
-  const counts={}; matched.forEach(r=>counts[r.label]=(counts[r.label]||0)+1);
-  const label=Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0];
-  return {label,matched,reason:`Looking only at ${feats.join(' + ')}, ${matched.length} training example${matched.length>1?'s':''} matched, and most were ${label}.`};
-}
-function aiTry(pane){
-  let setName='fair', feats=['color','shape','size'], mi=0;
-  const host=el('div'); pane.appendChild(host); draw();
-  function draw(){
-    host.innerHTML=''; const train=aiData[setName];
-    const dataBtns=el('div',{class:'row'},
-      el('button',{class:'btn'+(setName==='fair'?' primary':''),onClick:()=>{setName='fair';draw();}},'Fair training data'),
-      el('button',{class:'btn'+(setName==='biased'?' primary':''),onClick:()=>{setName='biased';draw();}},'Biased training data (all apples are red)'));
-    const grid=el('div',{class:'train'});
-    train.forEach(r=>grid.appendChild(el('div',{class:'tr-item'},el('div',{class:'em'},r.em),el('div',{class:'lab'},r.label),el('div',{class:'ft'},`${r.color} · ${r.shape} · ${r.size}`))));
-    host.appendChild(el('div',{class:'panel'},el('div',{class:'lbl'},'Training data — what the AI learns from'),dataBtns,grid));
-    const chips=el('div',{class:'chips'});
-    ['color','shape','size'].forEach(f=>{ const c=el('button',{class:'chip'+(feats.includes(f)?' on':'')},f); c.addEventListener('click',()=>{ feats=feats.includes(f)?feats.filter(x=>x!==f):[...feats,f]; draw(); }); chips.appendChild(c); });
-    host.appendChild(el('div',{class:'panel'},el('div',{class:'lbl'},'Which features should the AI look at?'),chips));
-    const mTabs=el('div',{class:'levtabs'}); aiMysteries.forEach((m,k)=>{ const b=el('button',{class:'lev'+(k===mi?' on':'')},m.name); b.addEventListener('click',()=>{mi=k;draw();}); mTabs.appendChild(b); });
-    const m=aiMysteries[mi];
-    const mCard=el('div',{class:'tr-item',style:{maxWidth:'180px'}},el('div',{class:'em'},'❓'),el('div',{class:'lab'},'?'),el('div',{class:'ft'},`${m.color} · ${m.shape} · ${m.size}`));
-    const out=el('div',{class:'note'});
-    const go=el('button',{class:'btn primary'},'Ask the AI'); go.addEventListener('click',()=>{
-      const r=classify(train,m,feats); [...grid.children].forEach((n,k)=>n.classList.toggle('hit',r.matched.includes(train[k])));
-      out.innerHTML='';
-      if(!r.label){ out.appendChild(fb(false,r.reason)); return; }
-      const right=r.label===m.truth;
-      out.appendChild(fb(right,`AI says: <b>${r.label}</b>. ${r.reason}`+(right?' Correct!':` But it was really a ${m.truth}. ${setName==='biased'?'The training data had no green apples, so the AI learned "green = pear". Incomplete or one-sided data makes biased mistakes.':'Try turning on a more useful feature — shape separates bananas from round fruit, and colour alone confuses yellow fruit.'}`)));
-    });
-    host.appendChild(el('div',{class:'panel'},el('div',{class:'lbl'},'Mystery fruit — what will the AI say?'),mTabs,el('div',{class:'row'},mCard,go),out));
-  }
-}
-const aiChallenge=[
-  {topic:'AI',type:'choice',q:'An AI is trained only on photos of white cats. Then it sees a black cat. What is most likely?',options:['It labels it "cat" easily','It may fail, because it never saw black cats','It becomes smarter'],answer:1,why:'AI learns from examples. With no black cats in training, it may not recognise one. That is bias from incomplete data.'},
-  {topic:'AI',type:'choice',q:'To tell apples from bananas, which single feature is most useful?',options:['Colour only','Shape (round vs long)','The day it was picked'],answer:1,why:'Shape separates them cleanly. Colour alone confuses yellow apples, lemons and bananas.'},
-  {topic:'AI',type:'choice',q:'Why does giving an AI more varied examples usually help?',options:['It memorises the answers','It has seen more real variety, so it guesses better','It runs faster'],answer:1,why:'Varied, representative examples mean fewer things the AI has never seen before.'},
-  {topic:'AI',type:'choice',q:'An AI says a photo is a dog. Is it "thinking" like a person?',options:['Yes, it understands dogs','No — it is matching patterns from its training data'],answer:1,why:'AI finds patterns in data. It does not understand what a dog is the way you do.'},
-  {topic:'AI',type:'choice',q:'A school AI only saw examples from one class. What is the risk?',options:['It will be fair for everyone','It may make unfair predictions for other classes','It will need less data'],answer:1,why:'Training on a narrow group means the AI may not work well — or fairly — for people outside that group.'},
-];
-
-/* ===================== LAB 4 — IPO ===================== */
-const ipoScen=[
-  {name:'Voice assistant',input:'Microphone',process:'Recognise the words and find an answer',output:'Speaker plays the reply'},
-  {name:'Automatic door',input:'Motion sensor',process:'Decide if a person is close',output:'Motor opens the door'},
-  {name:'Digital thermometer',input:'Temperature sensor',process:'Turn the reading into a number',output:'Screen shows the temperature'},
-  {name:'Burglar alarm',input:'Motion sensor',process:'Check: is it armed AND is there motion?',output:'Siren sounds'},
-  {name:'Typing a message',input:'Keyboard',process:'Store the letters typed',output:'Screen shows the text'},
-];
-const ipoIn=['Microphone','Motion sensor','Temperature sensor','Keyboard','Camera'];
-const ipoPr=['Recognise the words and find an answer','Decide if a person is close','Turn the reading into a number','Check: is it armed AND is there motion?','Store the letters typed'];
-const ipoOut=['Speaker plays the reply','Motor opens the door','Screen shows the temperature','Siren sounds','Screen shows the text','Printer prints a page'];
-function ipoTry(pane){
-  let si=0; const host=el('div'); pane.appendChild(host); draw();
-  function draw(){
-    const sc=ipoScen[si]; host.innerHTML='';
-    const tabs=el('div',{class:'levtabs'}); ipoScen.forEach((s,k)=>{ const b=el('button',{class:'lev'+(k===si?' on':'')},s.name); b.addEventListener('click',()=>{si=k;draw();}); tabs.appendChild(b); }); host.appendChild(tabs);
-    host.appendChild(el('p',{class:'mut sm'},`Build the chain for: ${sc.name}. Pick the right part for each stage, then send data through.`));
-    const selI=selectEl(ipoIn),selP=selectEl(ipoPr),selO=selectEl(ipoOut);
-    const nI=el('div',{class:'node input'},el('div',{class:'nkind'},'INPUT — data comes in'),selI), aI=el('div',{class:'arrow'});
-    const nP=el('div',{class:'node process'},el('div',{class:'nkind'},'PROCESS — the thinking'),selP), aP=el('div',{class:'arrow'});
-    const nO=el('div',{class:'node output'},el('div',{class:'nkind'},'OUTPUT — the result'),selO);
-    host.appendChild(el('div',{class:'flow'},nI,aI,nP,aP,nO));
-    const msg=el('div',{class:'note'});
-    const run=el('button',{class:'btn primary'},'Send the data through'); run.addEventListener('click',()=>{
-      const okI=selI.value===sc.input,okP=selP.value===sc.process,okO=selO.value===sc.output;
-      [nI,nP,nO].forEach(n=>n.classList.remove('active','wrong')); [aI,aP].forEach(a=>a.classList.remove('active')); msg.innerHTML='';
-      if(!(okI&&okP&&okO)){ if(!okI)nI.classList.add('wrong'); if(!okP)nP.classList.add('wrong'); if(!okO)nO.classList.add('wrong');
-        const bad=!okI?'INPUT':!okP?'PROCESS':'OUTPUT';
-        msg.appendChild(fb(false,`The ${bad} stage is not right yet. Input is where data enters (a device or sensor), Process is the decision in the middle, Output is what you see, hear or feel at the end.`)); return; }
-      const seq=[nI,aI,nP,aP,nO]; let k=0;
-      (function tick(){ if(k>=seq.length){ msg.appendChild(fb(true,`Perfect chain. Data enters through the ${sc.input}, is processed ("${sc.process}"), and the result is: ${sc.output}.`)); return; } seq[k].classList.add('active'); k++; setTimeout(tick,420); })();
-    });
-    host.appendChild(el('div',{class:'row',style:{marginTop:'12px'}},run)); host.appendChild(msg);
-  }
-}
-const ipoChallenge=[
-  {topic:'IPO',type:'choice',q:'In a voice assistant, what is the INPUT?',options:['The speaker','The microphone','The reply'],answer:1,why:'Input is where data enters — your voice comes in through the microphone.'},
-  {topic:'IPO',type:'choice',q:'A doorbell camera shows video on your phone. What is the OUTPUT?',options:['The camera','Detecting a face','The phone screen showing video'],answer:2,why:'Output is the result you see or hear — the video on the screen.'},
-  {topic:'IPO',type:'choice',q:'In a digital thermometer, which part is the PROCESS?',options:['The temperature sensor','Turning the reading into a number to display','The screen'],answer:1,why:'Processing happens in the middle — the raw sensor reading is turned into a number.'},
-  {topic:'IPO',type:'choice',q:'A calculator: you press 2 + 3 and see 5. The "5" appearing is the…',options:['Input','Process','Output'],answer:2,why:'The answer shown on the screen is the output. Pressing keys was the input; adding was the process.'},
-  {topic:'IPO',type:'choice',q:'Which is the correct order?',options:['Output → Process → Input','Input → Process → Output','Process → Input → Output'],answer:1,why:'Data goes in, gets processed, and a result comes out: Input → Process → Output.'},
-];
-
-/* ===================== LAB 5 — INPUT DEVICES ===================== */
-const devices=[
-  {em:'⌨️',name:'Keyboard',data:'Letters, numbers and symbols you press',why:'Best for typing text and commands.'},
-  {em:'🖱️',name:'Mouse',data:'Movement and clicks (where the pointer is)',why:'Best for pointing, selecting and drawing.'},
-  {em:'📷',name:'Camera',data:'Images and video (patterns of light)',why:'Takes pictures; used for photos and recognising faces or objects.'},
-  {em:'🎤',name:'Microphone',data:'Sound — voices and noise',why:'Captures audio for calls, recording and voice control.'},
-  {em:'📱',name:'Touchscreen',data:'Where and how your finger touches',why:'Input and output on one surface — you tap what you see.'},
-  {em:'🌡️',name:'Temperature sensor',data:'How hot or cold it is',why:'Used in thermostats, fridges, weather stations.'},
-  {em:'💡',name:'Light sensor',data:'How bright or dark it is',why:'Turns street lights or screen brightness on and off automatically.'},
-  {em:'🚶',name:'Motion sensor',data:'Movement nearby',why:'Used for automatic doors, alarms and hallway lights.'},
-  {em:'📏',name:'Distance sensor',data:'How far away an object is',why:'Used in car parking sensors and robots to avoid bumping into things.'},
-];
-function devTry(pane){
-  const grid=el('div',{class:'devgrid'});
-  devices.forEach(d=>{ const c=el('button',{class:'devcard'},el('div',{class:'em'},d.em),el('div',{class:'nm'},d.name),el('div',{class:'detail',html:`<b>Collects:</b> ${d.data}<br><b>Why:</b> ${d.why}`})); c.addEventListener('click',()=>c.classList.toggle('open')); grid.appendChild(c); });
-  pane.appendChild(el('div',{class:'panel'},el('div',{class:'lbl'},'Tap a device to see what data it collects and why you would use it'),grid));
-}
-const devChallenge=[
-  {topic:'Input devices',type:'choice',q:'You want lights to switch on by themselves when it gets dark. Which sensor?',options:['Microphone','Light sensor','Keyboard'],answer:1,why:'A light sensor measures brightness, so it can tell when it is dark.'},
-  {topic:'Input devices',type:'choice',q:'A shop door should open when someone walks up to it. Which sensor?',options:['Motion sensor','Temperature sensor','Mouse'],answer:0,why:'A motion sensor detects movement nearby.'},
-  {topic:'Input devices',type:'choice',q:'To control a game by speaking, which device do you need?',options:['Microphone','Light sensor','Printer'],answer:0,why:'A microphone captures your voice as sound data.'},
-  {topic:'Input devices',type:'choice',q:'A robot must not bump into walls. Which sensor helps most?',options:['Distance sensor','Keyboard','Camera flash'],answer:0,why:'A distance sensor measures how far away objects are.'},
-  {topic:'Input devices',type:'choice',q:'Which of these is an OUTPUT device, not an input device?',options:['Camera','Speaker','Touchscreen tap'],answer:1,why:'A speaker sends sound out to you — that is output. Cameras and taps bring data in.'},
-  {topic:'Input devices',type:'choice',q:'A fridge needs to know if it is getting too warm. Which sensor?',options:['Light sensor','Temperature sensor','Microphone'],answer:1,why:'A temperature sensor measures how hot or cold it is.'},
-];
-
-/* ===================== LAB 6 — DATA STORAGE ===================== */
-function storageTry(pane){
-  let ram='',stored=''; const host=el('div'); pane.appendChild(host);
-  const input=el('input',{type:'text',class:'ti wide',placeholder:'Type a sentence here…'}); input.addEventListener('input',()=>{ram=input.value;renderState();});
-  const ramView=el('div',{class:'membox ram'}), stoView=el('div',{class:'membox store'}), msg=el('div',{class:'note'});
-  function renderState(){ ramView.innerHTML=''; ramView.append(el('div',{class:'mlbl'},'RAM — working memory (temporary)'),el('div',{class:'mval'},ram||'(empty)'));
-    stoView.innerHTML=''; stoView.append(el('div',{class:'mlbl'},'Storage — saved files (permanent)'),el('div',{class:'mval'},stored||'(empty)')); }
-  const bSave=el('button',{class:'btn primary'},'Save'); bSave.addEventListener('click',()=>{ stored=ram; msg.innerHTML=''; msg.appendChild(fb(true,'Saved. A copy moved from RAM into permanent storage. Now try switching the power off.')); renderState(); });
-  const bOff=el('button',{class:'btn'},'Switch power off'); bOff.addEventListener('click',()=>{ const lost=ram&&ram!==stored; ram=''; input.value=''; msg.innerHTML=''; msg.appendChild(fb(!lost,lost?'Power off wiped RAM — and that text was never saved, so it is gone. Storage still holds only what you saved.':'Power off wiped RAM. Storage still holds what you saved — nothing was lost.')); renderState(); });
-  const bOpen=el('button',{class:'btn'},'Open saved file'); bOpen.addEventListener('click',()=>{ ram=stored; input.value=stored; msg.innerHTML=''; msg.appendChild(fb(true,stored?'Opening a file copies it from storage back into RAM so you can work on it.':'Nothing saved yet — type something and press Save first.')); renderState(); });
-  host.appendChild(el('div',{class:'panel'},el('div',{class:'lbl'},'Type → RAM → Save → Storage. Then test what happens when the power goes off.'),input,el('div',{class:'row',style:{marginTop:'10px'}},bSave,bOpen,bOff),el('div',{class:'memrow'},ramView,stoView),msg));
-  const bits=[128,64,32,16,8,4,2,1], bstate=bits.map(()=>0); const out=el('span',{class:'mval big'},'0'); const row=el('div',{class:'bits'});
-  bits.forEach((b,idx)=>{ const cell=el('button',{class:'bit'},el('div',{class:'bv'},'0'),el('div',{class:'bw'},b)); cell.addEventListener('click',()=>{ bstate[idx]^=1; cell.classList.toggle('on',bstate[idx]===1); cell.querySelector('.bv').textContent=bstate[idx]; out.textContent=bstate.reduce((s,v,i)=>s+v*bits[i],0); }); row.appendChild(cell); });
-  host.appendChild(el('div',{class:'panel'},el('div',{class:'lbl'},'Binary explorer — inside, every piece of data is just 0s and 1s'),el('p',{class:'mut sm'},'Click the switches. Each switch that is ON adds its value. These 8 switches make one byte.'),row,el('div',{class:'row'},el('span',{class:'mut sm'},'This byte stores the number:'),out)));
-  renderState();
-}
-const storageChallenge=[
-  {topic:'Data storage',type:'choice',q:'You typed a story but did NOT save it. The power goes off. What happens?',options:['The story is safe','The story is lost — it was only in RAM','It moves to storage by itself'],answer:1,why:'RAM is temporary working memory. Without saving, switching off loses it.'},
-  {topic:'Data storage',type:'choice',q:'Which keeps data when the computer is switched off?',options:['RAM','Storage (hard drive, SSD, memory card)','The screen'],answer:1,why:'Storage is permanent. RAM is cleared when power is lost.'},
-  {topic:'Data storage',type:'choice',q:'When you OPEN a saved file, the data moves…',options:['From storage into RAM to work on','From RAM into the printer','Out of the computer'],answer:0,why:'Opening a file copies it from storage into RAM so the computer can work with it.'},
-  {topic:'Data storage',type:'choice',q:'Computers store everything using…',options:['Letters A to Z only','Two digits: 0 and 1 (binary)','Colours'],answer:1,why:'At the lowest level all data is 0s and 1s — binary.'},
-  {topic:'Data storage',type:'number',q:'In one byte, the switches for 4 and 1 are ON and the rest are OFF. What number is stored?',answer:5,why:'4 + 1 = 5. Each ON switch adds its value.'},
-  {topic:'Data storage',type:'choice',q:'Why is RAM useful if it forgets everything when switched off?',options:['It is not useful','It is very fast, so the computer uses it while working','It stores photos forever'],answer:1,why:'RAM is fast working space. Storage is slower but permanent — computers use both.'},
-];
-
-/* ===================== LAB 7 — DATA DETECTIVE ===================== */
-const canteen=[{item:'Sandwich',Mon:12,Tue:9,Wed:14,Thu:10,Fri:20},{item:'Fruit',Mon:8,Tue:11,Wed:7,Thu:9,Fri:6},{item:'Juice',Mon:15,Tue:13,Wed:16,Thu:12,Fri:22},{item:'Muffin',Mon:5,Tue:4,Wed:6,Thu:8,Fri:14}];
-const days=['Mon','Tue','Wed','Thu','Fri'];
-function dataTry(pane){
-  let sortKey='item',asc=true,showTotals=false; const host=el('div'); pane.appendChild(host);
-  const total=r=>days.reduce((s,d)=>s+r[d],0);
-  render();
-  function render(){
-    host.innerHTML='';
-    const tog=el('button',{class:'btn'+(showTotals?' primary':'')},(showTotals?'✓ ':'')+'Add a Total column (this is processing)'); tog.addEventListener('click',()=>{showTotals=!showTotals;render();});
-    const table=el('table',{class:'datatable'}); const cols=['item',...days,...(showTotals?['Total']:[])];
-    const head=el('tr'); cols.forEach(c=>{ const th=el('th',{},(c==='item'?'Item':c)+(sortKey===c?(asc?' ↑':' ↓'):'')); if(sortKey===c)th.classList.add('sorted'); th.addEventListener('click',()=>{ if(sortKey===c)asc=!asc; else{sortKey=c;asc=true;} render(); }); head.appendChild(th); }); table.appendChild(head);
-    const get=(r,k)=>k==='item'?r.item:k==='Total'?total(r):r[k];
-    [...canteen].sort((a,b)=>{const av=get(a,sortKey),bv=get(b,sortKey); return av<bv?(asc?-1:1):av>bv?(asc?1:-1):0;}).forEach(r=>{ const tr=el('tr'); tr.appendChild(el('td',{},r.item)); days.forEach(d=>tr.appendChild(el('td',{},r[d]))); if(showTotals)tr.appendChild(el('td',{class:'totcell'},total(r))); table.appendChild(tr); });
-    const best=[...canteen].sort((a,b)=>total(b)-total(a))[0]; const worst=[...canteen].sort((a,b)=>total(a)-total(b))[0];
-    const dayTotals=days.map(d=>canteen.reduce((s,r)=>s+r[d],0)); const busiest=days[dayTotals.indexOf(Math.max(...dayTotals))];
-    const info=showTotals? el('div',{class:'fb info2'},el('strong',{},'Information: '),`${best.item} is the best seller (${total(best)} this week) and ${worst.item} the slowest (${total(worst)}). Busiest day: ${busiest}. Now the canteen knows what to stock.`)
-      : el('div',{class:'fb info2'},el('strong',{},'Raw data. '),'These are just numbers. Click a column heading to sort, or add the Total column to process them into useful information.');
-    host.appendChild(el('div',{class:'panel'},el('div',{class:'lbl'},'Canteen sales this week — raw data → processing → information'),el('div',{class:'row'},tog),el('div',{class:'tablewrap'},table),info));
-  }
-}
-const dataChallenge=[
-  {topic:'Data processing',type:'choice',q:'Which item sold the MOST across the whole week?',options:['Sandwich','Juice','Muffin'],answer:1,why:'Add each row: Juice totals 78, the highest. Sandwich is 65, Muffin 37.'},
-  {topic:'Data processing',type:'number',q:'How many sandwiches were sold on Friday?',answer:20,why:'Read the Sandwich row, Friday column: 20. Finding one value is "selecting" data.'},
-  {topic:'Data processing',type:'number',q:'What is the total number of muffins sold all week? (5 + 4 + 6 + 8 + 14)',answer:37,why:'5 + 4 + 6 + 8 + 14 = 37. Adding up is processing.'},
-  {topic:'Data processing',type:'choice',q:'Raw numbers become useful "information" when we…',options:['Delete them','Process them — add, sort or compare — to find something out','Print them in a bigger font'],answer:1,why:'Processing (adding, sorting, comparing) turns raw data into information you can act on.'},
-  {topic:'Data processing',type:'number',q:'Temperatures this week: 18, 22, 15, 25, 19. What was the highest?',answer:25,why:'Scanning for the biggest value (the maximum) gives 25.'},
-  {topic:'Data processing',type:'choice',q:'The canteen wants to know which day to bake extra. Which processing helps most?',options:['Sort items alphabetically','Add up sales for each day and compare','Count the letters in each item name'],answer:1,why:'Totals per day, then a comparison, shows the busiest day — that is the information they need.'},
-];
-
-/* ===================== LAB 8 — SMART CITY ===================== */
-function cityTry(pane){
-  let light=70,motion=false,dark=40,r1=true,r2=true,r3=false; const host=el('div'); pane.appendChild(host);
-  const outputs=()=>({lights:r1&&light<dark,alarm:r2&&motion,door:r3&&motion});
-  const lightS=el('input',{type:'range',min:'0',max:'100',value:'70',class:'range'}), darkS=el('input',{type:'range',min:'0',max:'100',value:'40',class:'range'});
-  const lv=el('span',{class:'mono val'}), dv=el('span',{class:'mono val'});
-  const mBtn=el('button',{class:'btn ghost'},'Motion: none');
-  lightS.addEventListener('input',()=>{light=+lightS.value;update();}); darkS.addEventListener('input',()=>{dark=+darkS.value;update();}); mBtn.addEventListener('click',()=>{motion=!motion;update();});
-  const rule=(label,on,fn)=>{ const cb=el('input',{type:'checkbox'}); cb.checked=on; cb.addEventListener('change',()=>fn(cb.checked)); return el('label',{class:'check'},cb,el('span',{},label)); };
-  const scene=el('div',{class:'scene'}), ipo=el('div',{class:'note'});
-  host.append(
-    el('div',{class:'panel'},el('div',{class:'lbl'},'Sensors — the INPUTS (change them and watch the city react)'),
-      el('div',{class:'ctrl'},el('span',{},'Light level:'),lightS,lv),el('div',{class:'ctrl'},el('span',{},'"Dark" means below:'),darkS,dv),el('div',{class:'ctrl'},el('span',{},'Movement:'),mBtn)),
-    el('div',{class:'panel'},el('div',{class:'lbl'},'Rules — the PROCESS (tick a rule to switch it on)'),
-      rule('IF it is dark  →  street lights ON',r1,v=>{r1=v;update();}),rule('IF motion detected  →  alarm ON',r2,v=>{r2=v;update();}),rule('IF motion detected  →  door OPENS',r3,v=>{r3=v;update();})),
-    el('div',{class:'panel'},el('div',{class:'lbl'},'The city — the OUTPUTS'),scene,ipo));
-  function item(em,label,on){ return el('div',{class:'sceneitem'+(on?' on':'')},el('div',{class:'se-emoji'},em),el('div',{class:'se-lbl'},label)); }
-  function update(){
-    const o=outputs(); lv.textContent=`${light} ${light<dark?'🌙 dark':'☀️ bright'}`; dv.textContent=dark;
-    mBtn.textContent=motion?'Motion: DETECTED':'Motion: none'; mBtn.className='btn'+(motion?' primary':' ghost');
-    scene.innerHTML=''; scene.append(item('💡',o.lights?'Street lights ON':'Street lights off',o.lights),item(o.alarm?'🔔':'🔕',o.alarm?'Alarm RINGING':'Alarm quiet',o.alarm),item('🚪',o.door?'Door OPEN':'Door closed',o.door));
-    ipo.innerHTML=''; ipo.appendChild(el('div',{class:'fb info2'},el('strong',{},'IPO right now — '),`INPUT: light = ${light}, motion = ${motion?'yes':'no'}.  PROCESS: your ticked rules.  OUTPUT: lights ${o.lights?'ON':'off'}, alarm ${o.alarm?'ON':'off'}, door ${o.door?'open':'closed'}.`));
-  }
-  update();
-}
-const cityChallenge=[
-  {topic:'Sensors',type:'choice',q:'Rule: IF light level < 40 THEN street lights ON. The sensor reads 25. What happens?',options:['Lights stay off','Lights turn ON','The door opens'],answer:1,why:'25 is less than 40, so the condition is TRUE and the lights switch on.'},
-  {topic:'Sensors',type:'choice',q:'Rule: IF light level < 40 THEN lights ON. The sensor reads 60. What happens?',options:['Lights ON','Lights stay OFF'],answer:1,why:'60 is not below 40 — the condition is FALSE, so nothing happens.'},
-  {topic:'Sensors',type:'choice',q:'You want an alarm only at NIGHT when someone moves. The rule must check…',options:['Just motion','Just light','Both: it is dark AND motion is detected'],answer:2,why:'Two conditions joined with AND make the rule fire only when both are true.'},
-  {topic:'Sensors',type:'choice',q:'In the smart city, the light sensor reading is the…',options:['Input','Process','Output'],answer:0,why:'Sensor readings are inputs; the rules are the process; lights and alarms are the outputs.'},
-  {topic:'Sensors',type:'choice',q:'Which sensor would a smart bin use to know it is full?',options:['Distance sensor (measures how far the rubbish is from the lid)','Microphone','Keyboard'],answer:0,why:'A distance sensor can tell how close the rubbish is to the top.'},
-];
-
-/* ===================== LAB 9 — COMPUTER VS HUMAN ===================== */
-const cvhItems=[
-  {task:'Add up 1,000 numbers in a second',best:1,why:'Computers are brilliant at fast, exact, repetitive maths — no tiredness, no slips.'},
-  {task:'Understand a sarcastic joke',best:0,why:'Sarcasm needs feelings, tone and context. People get it; computers usually miss it.'},
-  {task:'Sort 10,000 names into alphabetical order',best:1,why:'A boring, repetitive, rule-based job — perfect for a computer.'},
-  {task:'Comfort a friend who is upset',best:0,why:'This needs real empathy and care, which computers do not truly have.'},
-  {task:'Find one face in a million photos',best:1,why:'Computers search huge amounts quickly — though they need lots of training and can still be fooled.'},
-  {task:'Decide what is fair in an argument',best:0,why:'Fairness is a human judgement about values, not a calculation.'},
-  {task:'Fly a plane on a long journey',best:2,why:'Autopilot handles steady flying; a human pilot handles surprises and big decisions. Together is safest.'},
-  {task:'Write a poem about how you feel today',best:0,why:'A computer can make poem-shaped text, but it does not feel anything. Real feeling comes from you.'},
-];
-const cvhOpts=['A human is better','A computer is better','Both, working together'];
-function cvhTry(pane){
-  cvhItems.forEach(it=>{ const row=el('div',{class:'opts'}), msg=el('div',{class:'note'});
-    cvhOpts.forEach((o,idx)=>{ const b=el('button',{class:'opt'},o); b.addEventListener('click',()=>{ [...row.children].forEach(c=>c.disabled=true); const ok=idx===it.best; if(ok)b.classList.add('good'); else{b.classList.add('bad');row.children[it.best].classList.add('good');} msg.innerHTML=''; msg.appendChild(fb(ok,it.why)); }); row.appendChild(b); });
-    pane.appendChild(el('div',{class:'panel'},el('p',{class:'qtext sm'},it.task),row,msg)); });
-}
-const cvhChallenge=[
-  {topic:'Computer vs human',type:'choice',q:'Which is a computer clearly BETTER at?',options:['Understanding feelings','Fast repetitive maths','Deciding what is fair'],answer:1,why:'Fast, exact, repetitive calculation is a computer strength.'},
-  {topic:'Computer vs human',type:'choice',q:'Which still needs a HUMAN?',options:['Sorting numbers','Understanding sarcasm and emotions','Searching millions of files'],answer:1,why:'Emotions, humour and values are human strengths that computers lack.'},
-  {topic:'Computer vs human',type:'choice',q:'"Computers are always smarter than people." This is…',options:['True','False — they are better at some things and worse at others'],answer:1,why:'Computers beat us at speed and repetition, but lack understanding, feelings and judgement.'},
-  {topic:'Computer vs human',type:'choice',q:'An AI recognises photos of cats. Why might it still make mistakes?',options:['It is being lazy','It matches patterns and can be fooled by unusual pictures','Cats are impossible to recognise'],answer:1,why:'AI works from patterns in its training data, so odd angles, lighting or new breeds can trip it up.'},
-];
-
-/* ===================== LAB 10 — FINAL ===================== */
-const finalChallenge=[
-  {topic:'Variables',type:'number',q:'A = 6, B = 2, A = A − B. What is A?',answer:4,why:'6 − 2 = 4, and the result goes back into box A.'},
-  {topic:'Operators',type:'number',q:'C = 4 × 3 + 2. What is C? (× before +)',answer:14,why:'4 × 3 = 12, then + 2 = 14.'},
-  {topic:'Selection',type:'choice',q:'A = 3, B = 9. IF A > B THEN R = 1 ELSE R = 2. What is R?',options:['1','2','9'],answer:1,why:'3 > 9 is FALSE, so the ELSE path runs and R = 2.'},
-  {topic:'Debugging',type:'choice',q:'Goal: fan ON when hot (30°C or more). Which test is correct?',options:['IF temp < 30','IF temp >= 30','IF temp == 0'],answer:1,why:'Hot means 30 or more, so temp >= 30.'},
-  {topic:'Debugging',type:'choice',q:'Algorithm: 1) Put on shoes 2) Put on socks 3) Go outside. What kind of bug?',options:['Wrong order (sequencing)','Missing variable','It works fine'],answer:0,why:'Socks must go on before shoes. The steps are in the wrong order.'},
-  {topic:'Input devices',type:'choice',q:'Turn on lights automatically at dusk — which sensor?',options:['Light sensor','Microphone','Mouse'],answer:0,why:'A light sensor measures brightness and can detect dusk.'},
-  {topic:'IPO',type:'choice',q:'In a voice assistant, the microphone is the…',options:['Output','Process','Input'],answer:2,why:'Your voice enters through the microphone — that is the input.'},
-  {topic:'IPO',type:'choice',q:'A smart doorbell: camera sees a person → decides someone is there → phone buzzes. The "decides" step is the…',options:['Input','Process','Output'],answer:1,why:'Deciding is the processing in the middle.'},
-  {topic:'Data storage',type:'choice',q:'Unsaved work + a power cut =',options:['Safe in storage','Lost from RAM','Automatically printed'],answer:1,why:'Unsaved work lives in RAM, which is cleared without power.'},
-  {topic:'Data storage',type:'number',q:'In one byte, only the 8 and 2 switches are ON. What number is stored?',answer:10,why:'8 + 2 = 10.'},
-  {topic:'Data processing',type:'number',q:'Scores: 4, 7, 2, 9, 3. What is the largest?',answer:9,why:'9 is the maximum value.'},
-  {topic:'Data processing',type:'choice',q:'Turning a list of daily sales into "Friday is the busiest day" is called…',options:['Raw data','Processing data into information','Deleting data'],answer:1,why:'Adding and comparing the raw numbers produced useful information.'},
-  {topic:'AI',type:'choice',q:'An AI trained only on red apples sees a green apple. Most likely?',options:['Recognises it easily','Might get it wrong — biased, incomplete data','Gets faster'],answer:1,why:'It never saw green apples, so incomplete training data causes mistakes.'},
-  {topic:'Sensors',type:'choice',q:'IF light < 40 THEN lights ON. Sensor = 60. Result?',options:['Lights ON','Lights OFF'],answer:1,why:'60 is not below 40, so the condition is false — lights stay off.'},
-  {topic:'Computer vs human',type:'choice',q:'Best done by a human?',options:['Sorting 10,000 numbers','Comforting a sad friend','Adding big numbers'],answer:1,why:'Empathy is a human strength.'},
-];
-
-/* ===================== SECTION REGISTRY ===================== */
-const learnHTML={
-  cpu:`<p>A <b>variable</b> is a labelled box in the computer's memory. It holds one value at a time.</p>
-<p><code>A = 5</code> means "put 5 into box A". The <code>=</code> sign is an <b>instruction</b>, not a maths question.</p>
-<p><code>A = A + B</code> means "take what is in A, add what is in B, and put the answer back into A". The old value is replaced.</p>
-<p><b>Operators</b> do the maths: <code>+</code> add, <code>-</code> subtract, <code>*</code> multiply, <code>/</code> divide.</p>
-<p><b>Selection</b> lets the computer choose: <code>IF A > B THEN … ELSE …</code>. It tests the condition. If it is TRUE it runs the THEN part; if FALSE it runs the ELSE part. Only one path runs.</p>
-<p>The CPU runs one line at a time, from top to bottom. To predict a program, be the CPU: trace each line and update the boxes.</p>`,
-  debug:`<p>An <b>algorithm</b> is a set of steps to reach a goal. A <b>bug</b> is a mistake that stops it working.</p>
-<p>Three common bugs:</p><ul><li><b>Wrong order</b> — the steps are right but in the wrong sequence (shoes before socks).</li><li><b>Wrong logic</b> — an IF test is backwards, like <code>&lt;</code> instead of <code>&gt;=</code>.</li><li><b>Missing or extra step</b> — something needed is left out, or something pointless is added.</li></ul>
-<p><b>Debugging</b> = testing with an example, watching where it goes wrong, then fixing that step. Always re-run to check the fix.</p>`,
-  ai:`<p><b>Artificial intelligence</b> learns from examples instead of following fixed rules. The examples are called <b>training data</b>.</p>
-<p>Each example has <b>features</b> (colour, shape, size) and a <b>label</b> (the answer). The AI looks for patterns: "long + yellow is usually a banana".</p>
-<p>When it sees something new, it compares it with what it has seen and guesses the label. This is called <b>classification</b>.</p>
-<p>AI is only as good as its data. If the examples are <b>incomplete or one-sided (biased)</b>, the AI makes confident mistakes — like never having seen a green apple.</p>`,
-  ipo:`<p>Every computer system follows the same cycle:</p>
-<p><span class="k in">INPUT</span> data comes in — from a keyboard, microphone, camera or sensor.</p>
-<p><span class="k pr">PROCESS</span> the computer works on it — calculating, comparing, deciding.</p>
-<p><span class="k out">OUTPUT</span> the result goes out — on a screen, through a speaker, or by moving a motor.</p>
-<p>Example: a voice assistant. Microphone (input) → recognise the words and find an answer (process) → speaker plays the reply (output).</p>`,
-  dev:`<p><b>Input devices</b> get data <i>into</i> a computer. <b>Output devices</b> send results <i>out</i>.</p>
-<p><b>Sensors</b> are input devices that measure the real world: light, temperature, movement, distance. They let computers react to what is happening around them.</p>
-<p>Choosing the right device means asking: <i>what data do I need?</i> To know if it is dark, you need light data — so a light sensor.</p>`,
-  storage:`<p>A computer uses two kinds of memory:</p>
-<p><b>RAM</b> is fast working memory — like a desk you spread your work on. It only keeps data while the power is on.</p>
-<p><b>Storage</b> (hard drive, SSD, memory card, cloud) is like a filing cabinet. It is slower, but keeps files even when the computer is off.</p>
-<p><b>Saving</b> copies your work from RAM into storage. <b>Opening</b> copies it back into RAM.</p>
-<p>Deep down, all data is stored as <b>binary</b> — patterns of 0 and 1. Eight of these (a byte) can store a number, a letter, or part of a picture.</p>`,
-  data:`<p><b>Raw data</b> is just numbers or words — sales figures, temperatures, scores. On their own they do not tell you much.</p>
-<p><b>Processing</b> turns raw data into <b>information</b> you can use:</p><ul><li><b>Sort</b> to put things in order</li><li><b>Add up</b> to find totals</li><li><b>Compare</b> to find the biggest, smallest or a pattern</li><li><b>Filter</b> to look at just part of the data</li></ul>
-<p>Information answers a question: "Which item sells best?" "Which day is busiest?"</p>`,
-  city:`<p>A <b>smart city</b> joins sensors, rules and devices into one system — an IPO cycle you can see.</p>
-<p><span class="k in">Sensors</span> measure light, movement and temperature. <span class="k pr">Rules</span> use IF/THEN to decide. <span class="k out">Devices</span> like lights, doors and alarms respond.</p>
-<p>A rule like <code>IF it is dark THEN street lights ON</code> is <b>selection</b> — the same IF/ELSE idea from programming, now controlling the real world.</p>
-<p>Rules can combine conditions: <code>IF dark AND motion THEN alarm ON</code>.</p>`,
-  cvh:`<p>Computers and people are good at different things.</p>
-<p><b>Computers</b> are fast, exact and never get bored. They are best at repetitive maths, sorting, searching, and spotting patterns in huge amounts of data.</p>
-<p><b>People</b> understand meaning, feelings, humour and fairness. We can handle new situations nobody trained us for.</p>
-<p>AI can copy patterns very well, but it does not truly understand or feel. So the best results often come from people and computers <b>working together</b>.</p>`,
-  final:`<p>This challenge mixes every lab: variables, operators, IF/ELSE, algorithms, devices, IPO, storage, data, AI, sensors and debugging.</p>
-<p>Read each scenario carefully and think like the CPU. At the end you will see your score and which topics to practise more.</p>`
-};
-function makeBuilder(key,tryFn,challenge,opts){ return function(root,sec){ const p=labShell(root,sec); p.learn.appendChild(el('div',{class:'panel prose',html:learnHTML[key]})); if(tryFn)tryFn(p.try); else p.try.appendChild(el('div',{class:'panel prose'},el('p',{},'Go straight to the Challenge — this lab is the final test.'))); runQuiz(p.challenge,sec,challenge,opts||{}); }; }
-const SECTIONS=[
-  {id:'cpu',n:1,title:'Be the CPU',tag:'Variables · operators · IF/ELSE',obj:'Run programs by hand. Predict what each line does, then step through and watch the memory change.',build:makeBuilder('cpu',cpuTry,cpuChallenge)},
-  {id:'debug',n:2,title:'Debug the Algorithm',tag:'Planning · sequencing · fixing',obj:'Find the faulty step in a broken algorithm, replace it, and run it to prove the fix works.',build:makeBuilder('debug',debugTry,debugChallenge)},
-  {id:'ai',n:3,title:'Train the AI',tag:'Classification · features · bias',obj:'Choose what a tiny AI looks at, watch it classify mystery fruit, and see how bad data leads to bad guesses.',build:makeBuilder('ai',aiTry,aiChallenge)},
-  {id:'ipo',n:4,title:'IPO Simulator',tag:'Input → Process → Output',obj:'Build the right chain for real devices and send data flowing through it.',build:makeBuilder('ipo',ipoTry,ipoChallenge)},
-  {id:'dev',n:5,title:'Input Device Lab',tag:'Devices · sensors',obj:'Explore what data each device and sensor collects, then pick the right one for the job.',build:makeBuilder('dev',devTry,devChallenge)},
-  {id:'storage',n:6,title:'Data Storage Lab',tag:'RAM · storage · binary',obj:'Type, save, switch off, and open a file to see where data lives — then build numbers from 0s and 1s.',build:makeBuilder('storage',storageTry,storageChallenge)},
-  {id:'data',n:7,title:'Data Detective',tag:'Sorting · totals · patterns',obj:'Sort and process a real dataset to turn raw numbers into useful information.',build:makeBuilder('data',dataTry,dataChallenge)},
-  {id:'city',n:8,title:'Smart City Sensor Lab',tag:'Sensors · rules · IPO',obj:'Change the sensors, tick the rules, and watch the city react — the whole IPO cycle in one place.',build:makeBuilder('city',cityTry,cityChallenge)},
-  {id:'cvh',n:9,title:'Computer vs Human',tag:'Strengths · limits of AI',obj:'Decide who is better suited to each task, and why. It is not always the computer.',build:makeBuilder('cvh',cvhTry,cvhChallenge)},
-  {id:'final',n:10,title:'Final CS Challenge',tag:'Everything, mixed',obj:'A scenario-based test across all topics. Get a score and see exactly what to revise.',build:makeBuilder('final',null,finalChallenge,{showTopics:true})},
-];
-
-/* ===================== nav ===================== */
-const mainEl=document.getElementById('main'), navEl=document.getElementById('nav'); let currentId=null;
-function refreshNav(){
-  [...navEl.children].forEach(n=>{ n.classList.toggle('on',n.dataset.id===currentId); n.querySelector('.navdot').classList.toggle('done',!!state.progress[n.dataset.id]); });
-  const done=SECTIONS.filter(s=>state.progress[s.id]).length;
-  document.getElementById('progress').textContent=`${done} / ${SECTIONS.length} labs complete`;
-  document.getElementById('bar').style.width=(100*done/SECTIONS.length)+'%';
-}
-function go(id){ currentId=id; const sec=SECTIONS.find(s=>s.id===id); mainEl.innerHTML=''; sec.build(mainEl,sec); window.scrollTo({top:0}); document.body.classList.remove('navopen'); refreshNav(); }
-SECTIONS.forEach(s=>{ const item=el('button',{class:'navitem'}); item.dataset.id=s.id;
-  item.append(el('span',{class:'no'},String(s.n).padStart(2,'0')),el('span',{class:'ninfo'},el('span',{class:'t'},s.title),el('span',{class:'tag'},s.tag)),el('span',{class:'navdot'}));
-  item.addEventListener('click',()=>go(s.id)); navEl.appendChild(item); });
-document.getElementById('menu').addEventListener('click',()=>document.body.classList.toggle('navopen'));
-document.getElementById('reset').addEventListener('click',()=>{ if(confirm('Reset all lab progress?')){ state.progress={}; store.set('cslab_progress',{}); refreshNav(); } });
-go(SECTIONS[0].id);
+$('#homeBtn').addEventListener('click',showHome);
+$('#unlock').addEventListener('click',()=>{ state.unlockAll=!state.unlockAll; save(); showHome(); });
+showHome();
 </script>
 </body>
 </html>
