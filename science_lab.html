@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Science Field Journal — Grade 4 · Term 1 2026</title>
+<style>
+  :root{--paper:#fbf6e9;--paper2:#f4edd9;--card:#fffdf7;--ink:#1f2a44;--ink2:#54608a;--green:#3a8f5c;--leaf:#a9d18e;--amber:#e9a53a;--sky:#3b8fd9;--rose:#d9534f;--grape:#8e6bbf;--line:#d9cfb3;--gold:#f0c24b;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:"Segoe UI","Trebuchet MS",system-ui,sans-serif;color:var(--ink);min-height:100dvh;line-height:1.45;
+    background:var(--paper);background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(59,143,217,.08) 31px 32px);}
+  button{font-family:inherit;cursor:pointer;} a{color:inherit;}
+  .top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(251,246,233,.94);backdrop-filter:blur(6px);border-bottom:3px double var(--line);flex-wrap:wrap;}
+  .brand{font-weight:900;font-size:18px;letter-spacing:-.3px;} .brand small{display:block;font-size:10.5px;color:var(--ink2);letter-spacing:1.5px;font-weight:700;}
+  .icon{width:38px;height:38px;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:17px;display:grid;place-items:center;}
+  .player{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;flex-wrap:wrap;}
+  .rank{background:var(--ink);color:var(--paper);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.3px;}
+  .stk{color:var(--ink2);} .backlink{font-size:12px;color:var(--ink2);text-decoration:none;}
+  main{max-width:980px;margin:0 auto;padding:22px 16px 70px;}
+  .hero{text-align:center;margin:6px 0 24px;} .hero h1{font-size:clamp(26px,5.5vw,42px);letter-spacing:-.6px;line-height:1.1;} .hero p{color:var(--ink2);margin-top:6px;max-width:60ch;margin-inline:auto;}
+  .exp{margin-bottom:26px;} .etitle{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;border-bottom:2px dashed var(--line);padding-bottom:6px;}
+  .etitle h2{font-size:20px;} .etitle span{color:var(--ink2);font-size:13px;}
+  .pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;}
+  .page{position:relative;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:6px 18px 6px 18px;padding:16px;color:var(--ink);box-shadow:3px 4px 0 rgba(31,42,68,.08);transition:transform .12s;}
+  .page:not(:disabled):hover{transform:translateY(-3px) rotate(-.4deg);border-color:var(--sky);} .page:disabled{opacity:.5;cursor:not-allowed;}
+  .page .pem{font-size:36px;} .page .pt{font-weight:900;font-size:16px;margin-top:6px;} .page .ptag{font-size:11.5px;color:var(--ink2);margin-top:2px;}
+  .page .pst{margin-top:10px;font-size:18px;letter-spacing:2px;color:#ddd4bd;} .page .pst b{color:var(--gold);text-shadow:0 1px 0 #b8901d;}
+  .page.final{grid-column:1/-1;background:linear-gradient(135deg,#fff8e6,#fffdf7);border-color:var(--gold);} .page.final .pem{font-size:48px;}
+  .lock{position:absolute;bottom:12px;right:14px;font-size:18px;}
+  .stickers{display:flex;flex-wrap:wrap;gap:12px;}
+  .sticker{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-size:28px;background:#fff;border:3px solid var(--line);transform:rotate(-6deg);box-shadow:2px 3px 0 rgba(0,0,0,.08);position:relative;}
+  .sticker.gold{border-color:var(--gold);box-shadow:0 0 0 3px #fff,0 0 0 5px var(--gold);} .sticker.empty{opacity:.22;filter:grayscale(1);}
+  .sticker .ss{position:absolute;bottom:-8px;font-size:9px;background:var(--ink);color:#fff;padding:1px 5px;border-radius:6px;letter-spacing:1px;transform:rotate(6deg);}
+  /* mission */
+  .mhead{margin-bottom:12px;} .mtitle{font-size:clamp(22px,4vw,30px);font-weight:900;} .mtag{color:var(--ink2);font-size:13px;}
+  .phases{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;} .ph{font-size:11.5px;font-weight:800;padding:4px 10px;border-radius:999px;border:1.5px solid var(--line);color:var(--ink2);background:var(--card);} .ph.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .pips{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;} .pip{width:14px;height:6px;border-radius:99px;background:#e7dfc7;} .pip.done{background:var(--green);} .pip.cur{background:var(--amber);}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:6px 18px 6px 18px;padding:18px;box-shadow:3px 4px 0 rgba(31,42,68,.06);} .card>*+*{margin-top:12px;}
+  .lbl{font-size:12.5px;font-weight:900;color:var(--ink2);letter-spacing:.3px;} .mut{color:var(--ink2);} .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;} .row.center{justify-content:center;}
+  .btn{border:2px solid var(--ink);background:#fff;color:var(--ink);padding:10px 18px;border-radius:12px;font-weight:800;font-size:14.5px;box-shadow:2px 3px 0 var(--ink);transition:transform .06s;}
+  .btn:active{transform:translate(2px,3px);box-shadow:none;} .btn:disabled{opacity:.4;cursor:default;} .btn.primary{background:var(--green);color:#fff;border-color:#2b6b45;box-shadow:2px 3px 0 #2b6b45;} .btn.ghost{background:transparent;box-shadow:none;}
+  .btn.sky{background:var(--sky);color:#fff;border-color:#2b6ba3;box-shadow:2px 3px 0 #2b6ba3;}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;}
+  .opt{text-align:left;border:2px solid var(--line);background:#fff;color:var(--ink);padding:12px 14px;border-radius:12px;font-size:14.5px;font-weight:700;}
+  .opt:hover:not(:disabled){border-color:var(--sky);} .opt.good{border-color:var(--green);background:#eaf6ee;} .opt.bad{border-color:var(--rose);background:#fbeceb;} .opt:disabled{cursor:default;}
+  .qkind{display:inline-block;font-size:11px;font-weight:900;letter-spacing:1px;color:#fff;background:var(--sky);padding:3px 9px;border-radius:999px;} .qkind.Predict{background:var(--grape);} .qkind.Data{background:var(--amber);} .qkind.Label{background:var(--green);}
+  .qtext{font-size:18px;font-weight:800;margin:8px 0 12px;max-width:65ch;} .msg{min-height:22px;font-weight:700;font-size:14.5px;}
+  .infocard{background:#f4f8ff;border-left:4px solid var(--sky);padding:10px 12px;border-radius:8px;font-size:14.5px;}
+  .objgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;}
+  .obj{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;color:var(--ink);} .obj-em{font-size:40px;} .obj-nm{font-weight:800;margin-top:4px;font-size:13px;}
+  .wobble{animation:wob .5s;} @keyframes wob{0%,100%{transform:rotate(0);}20%{transform:rotate(-6deg) scale(1.05);}40%{transform:rotate(6deg);}60%{transform:rotate(-4deg);}80%{transform:rotate(3deg);}}
+  .range{flex:1;min-width:150px;accent-color:var(--sky);} .wavecv{width:100%;height:auto;background:#fff;border:2px solid var(--line);border-radius:12px;}
+  .meter{flex:1;min-width:150px;height:16px;background:#eee6d0;border-radius:99px;overflow:hidden;border:1px solid var(--line);} .meterfill{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--amber),var(--rose));transition:width .3s;}
+  .bigval{font-size:22px;font-weight:900;min-width:44px;}
+  .tbl{border-collapse:collapse;width:100%;background:#fff;} .tbl th,.tbl td{border:1px solid var(--line);padding:7px 10px;text-align:left;font-size:14px;} .tbl th{background:var(--paper2);}
+  .bottles{display:flex;gap:12px;justify-content:center;align-items:flex-end;flex-wrap:wrap;}
+  .bottle{width:58px;height:120px;border:3px solid var(--ink);border-top-width:8px;border-radius:8px 8px 14px 14px;background:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;color:var(--ink);}
+  .water{background:linear-gradient(180deg,#8ec5f5,var(--sky));width:100%;} .bl{position:absolute;bottom:4px;width:100%;text-align:center;font-size:10px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000;}
+  .tbrow{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;} .tbrow .btn{padding:8px 14px;}
+  /* digestion */
+  .bodywrap{position:relative;max-width:360px;margin:0 auto;} .bodysvg{width:100%;height:auto;display:block;}
+  .skin{fill:#fde9d3;stroke:#e6c4a4;stroke-width:2;}
+  [data-organ]{cursor:pointer;transition:filter .2s;} [data-organ]:hover{filter:brightness(1.08);}
+  [data-organ] *{stroke-width:2;transition:.25s;}
+  [data-organ="mouth"] *{fill:#e06b7a;stroke:#a83b4a;} [data-organ="oes"] *{stroke:#e8a17a;} [data-organ="stomach"] *{fill:#f2a6a6;stroke:#c25a5a;} [data-organ="small"] *{stroke:#f5c48f;} [data-organ="large"] *{stroke:#c98a5b;} [data-organ="out"] *{fill:#b78a6a;stroke:#8a5f43;}
+  [data-organ].active *{filter:drop-shadow(0 0 6px var(--amber));animation:pulse 1s infinite;} @keyframes pulse{50%{opacity:.6;}}
+  [data-organ].done *{filter:drop-shadow(0 0 3px var(--green));}
+  [data-organ].shake{animation:wob .4s;}
+  .token{position:absolute;font-size:26px;transform:translate(-50%,-50%);transition:left .7s ease,top .7s ease;pointer-events:none;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3));}
+  .pin{position:absolute;transform:translate(-50%,-50%);background:#fff;border:2px solid var(--green);border-radius:8px;padding:2px 8px;font-size:11px;font-weight:900;white-space:nowrap;pointer-events:none;box-shadow:1px 2px 0 rgba(0,0,0,.15);}
+  .labels{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;} .labelchip{border:2px solid var(--ink);background:#fff;padding:8px 12px;border-radius:999px;font-weight:800;font-size:13px;} .labelchip.sel{background:var(--amber);} .labelchip:disabled{opacity:.35;}
+  .organ-q{background:#fff8e6;border:2px solid var(--amber);border-radius:14px;padding:14px;}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;}
+  /* plate */
+  .platewrap{position:relative;max-width:360px;margin:0 auto;} .platesvg{width:100%;height:auto;display:block;}
+  .wedge{stroke:#fff;stroke-width:3;transition:opacity .3s;cursor:default;}
+  .foodchip{position:absolute;transform:translate(-50%,-50%);font-size:24px;cursor:pointer;animation:popin .3s;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));} @keyframes popin{0%{transform:translate(-50%,-50%) scale(0);}100%{transform:translate(-50%,-50%) scale(1);}}
+  .pantry{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px;}
+  .food{background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 4px;text-align:center;color:var(--ink);} .food .fe{font-size:26px;} .food .fn{font-size:10px;font-weight:800;color:var(--ink2);}
+  .food:hover{border-color:var(--sky);} .food.fv{border-bottom-color:var(--green);} .food.carb{border-bottom-color:var(--amber);} .food.prot{border-bottom-color:var(--rose);} .food.dairy{border-bottom-color:var(--sky);} .food.fat{border-bottom-color:var(--grape);}
+  .balance{display:grid;grid-template-columns:1fr;gap:6px;} .grow{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;padding:6px 10px;border-radius:10px;background:#fff;border:1.5px solid var(--line);} .grow .dot{width:12px;height:12px;border-radius:50%;} .grow.ok{border-color:var(--green);background:#eaf6ee;} .grow.warn{border-color:var(--rose);background:#fbeceb;}
+  .goalcard{background:#fff8e6;border:2px dashed var(--amber);border-radius:14px;padding:12px 14px;font-weight:800;}
+  /* orbit */
+  .orbitsvg{width:100%;max-width:420px;height:auto;display:block;margin:0 auto;background:#0f1a3a;border-radius:16px;}
+  .seasons{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;} .season{background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px;text-align:center;color:var(--ink);min-height:110px;} .season .se{font-size:32px;} .season .sn{font-weight:900;} .season .sl{font-size:11px;color:var(--ink2);margin-top:6px;text-align:left;}
+  .season.target{border-color:var(--amber);background:#fff8e6;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;} .chip{border:2px solid var(--ink);background:#fff;padding:8px 12px;border-radius:999px;font-weight:800;font-size:13px;} .chip.sel{background:var(--amber);} .chip:disabled{opacity:.3;}
+  .chart{display:flex;gap:8px;align-items:flex-end;height:150px;justify-content:center;} .bar{flex:1;max-width:60px;display:flex;flex-direction:column;justify-content:flex-end;height:100%;} .barfill{background:linear-gradient(180deg,#fbd77a,var(--amber));border-radius:6px 6px 0 0;text-align:center;font-weight:900;font-size:13px;color:#4a3300;padding-top:3px;} .barlbl{font-size:11px;text-align:center;color:var(--ink2);margin-top:4px;}
+  .habs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;} .hab{background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px;text-align:center;color:var(--ink);} .hab .he{font-size:36px;} .hab .hn{font-weight:900;} .hab .hd{font-size:11px;color:var(--ink2);}
+  .creature{text-align:center;} .creature .ce{font-size:64px;} .creature .cn{font-weight:900;font-size:18px;}
+  .feature{display:grid;grid-template-columns:1fr 1fr;gap:10px;} .feat{background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px;text-align:center;color:var(--ink);font-weight:700;} .feat .fe{font-size:30px;display:block;} .feat.good{border-color:var(--green);background:#eaf6ee;} .feat.bad{border-color:var(--rose);background:#fbeceb;}
+  .chain{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;min-height:50px;} .chain .slotc{width:64px;height:64px;border:2px dashed var(--line);border-radius:12px;display:grid;place-items:center;font-size:30px;background:#fff;} .arrowc{font-size:22px;color:var(--ink2);}
+  /* results + journal */
+  .results{text-align:center;padding:22px 10px;} .results>*+*{margin-top:14px;} .rtitle{font-size:clamp(26px,5vw,38px);font-weight:900;}
+  .strow{display:flex;justify-content:center;gap:10px;} .bigst{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;font-size:34px;background:#fff;border:3px solid var(--line);opacity:.3;transform:rotate(-6deg);} .bigst.lit{opacity:1;border-color:var(--gold);box-shadow:0 0 0 3px #fff,0 0 0 5px var(--gold);animation:stamp .5s both;}
+  @keyframes stamp{0%{transform:scale(2) rotate(-20deg);opacity:0;}100%{transform:scale(1) rotate(-6deg);opacity:1;}}
+  .rscore{font-size:20px;color:var(--ink2);font-weight:700;}
+  .jentry{background:#fff;border-left:4px solid var(--green);padding:8px 12px;border-radius:6px;font-size:14px;} .jsec{margin-bottom:18px;} .jsec h3{margin-bottom:8px;font-size:17px;} .jsec>.jentry+.jentry{margin-top:6px;}
+  .jempty{color:var(--ink2);font-style:italic;font-size:13.5px;}
+  #confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:50;} .cf{position:absolute;top:-10px;width:10px;height:14px;border-radius:2px;animation:fall 2.2s linear forwards;} @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.2;}}
+  @media (max-width:700px){.two{grid-template-columns:1fr;} .feature{grid-template-columns:1fr;}}
+  @media print{.top,.noprint{display:none!important;} body{background:#fff;}}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="icon" id="homeBtn" title="Expedition map">🧭</button>
+  <div class="brand">Science Field Journal<small>GRADE 4 · TERM 1 · 2026</small></div>
+  <div class="player"><span class="rank" id="rank">Rookie Explorer</span><span class="stk">🏷️ <span id="stkTot">0</span>/33 stickers</span></div>
+  <button class="icon" id="journalBtn" title="My journal">📓</button>
+  <button class="icon" id="mute" title="Sound">🔊</button>
+  <a class="backlink" href="index.html">Subjects</a>
+</header>
+<main id="screen"></main>
+<div id="confetti"></div>
+
+<script>
+/* ===== helpers ===== */
+const $=s=>document.querySelector(s);
+function el(tag,attrs,...kids){const n=document.createElement(tag);for(const [k,v] of Object.entries(attrs||{})){if(k==='class')n.className=v;else if(k==='html')n.innerHTML=v;else if(k==='style'&&typeof v==='object')Object.assign(n.style,v);else if(k.startsWith('on')&&typeof v==='function')n.addEventListener(k.slice(2).toLowerCase(),v);else if(v!=null)n.setAttribute(k,v);}for(const kid of kids.flat()){if(kid==null)continue;n.appendChild(typeof kid==='object'?kid:document.createTextNode(String(kid)));}return n;}
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1)); const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+let timers=[]; const later=(fn,ms)=>{const t=setTimeout(fn,ms);timers.push(t);return t;}; function clearTimers(){timers.forEach(clearTimeout);timers=[];}
+function setPips(i,n){const p=$('#pips');if(!p)return;p.innerHTML='';for(let k=0;k<n;k++)p.appendChild(el('span',{class:'pip'+(k<i?' done':k===i?' cur':'')}));}
+function setPhase(name){document.querySelectorAll('.ph').forEach(p=>p.classList.toggle('on',p.textContent===name));}
+function confetti(){const c=$('#confetti');const cols=['#3a8f5c','#e9a53a','#3b8fd9','#d9534f','#8e6bbf'];for(let i=0;i<60;i++){const d=el('div',{class:'cf',style:{left:Math.random()*100+'vw',background:cols[i%5],animationDelay:(Math.random()*.6)+'s'}});c.appendChild(d);setTimeout(()=>d.remove(),3000);}}
+/* sound */
+let muted=false,actx=null,osc=null,gainN=null;
+function ensureAudio(){if(!actx){try{actx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(actx&&actx.state==='suspended')actx.resume();}
+function tone(f,dur=0.4,vol=0.15,type='sine'){if(muted||!actx)return;try{const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,actx.currentTime);g.gain.exponentialRampToValueAtTime(0.0001,actx.currentTime+dur);o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+dur);}catch(e){}}
+function startTone(f,v){ensureAudio();stopTone();if(!actx||muted)return;try{osc=actx.createOscillator();gainN=actx.createGain();osc.frequency.value=f;gainN.gain.value=v;osc.connect(gainN);gainN.connect(actx.destination);osc.start();}catch(e){}}
+function setTone(f,v){if(osc){osc.frequency.value=f;gainN.gain.value=v;}} function stopTone(){if(osc){try{osc.stop();}catch(e){}osc=null;}}
+const sYes=()=>{tone(660,0.12,0.08);setTimeout(()=>tone(880,0.16,0.08),90);}, sNo=()=>tone(180,0.25,0.08,'triangle'), sPop=()=>tone(520,0.08,0.06), sFan=()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,0.16,0.08,'triangle'),i*110));
+$('#mute').addEventListener('click',()=>{muted=!muted;$('#mute').textContent=muted?'🔇':'🔊';if(muted)stopTone();});
+/* state */
+function safeStorage(){try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return{get:k=>{try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};}catch(e){const m={};return{get:k=>(k in m?m[k]:null),set:(k,v)=>{m[k]=v;}};}}
+const store=safeStorage(); const state=Object.assign({stickers:{},journal:{},name:''},store.get('scijournal')||{}); const save=()=>store.set('scijournal',state);
+const stk=id=>state.stickers[id]||0; let curMission=null;
+function addFact(id,text){if(!id||!text)return;const list=state.journal[id]=state.journal[id]||[];if(!list.includes(text)){list.push(text);save();}}
+function rankName(){const t=MISSIONS.reduce((s,m)=>s+stk(m.id),0);return t>=22?'Chief Explorer':t>=11?'Field Scientist':'Rookie Explorer';}
+function refreshHeader(){$('#rank').textContent=rankName();$('#stkTot').textContent=MISSIONS.reduce((s,m)=>s+stk(m.id),0);}
+/* quiz */
+function quiz(host,qs,onDone){let i=0,score=0;const box=el('div');host.appendChild(box);show();
+  function show(){box.innerHTML='';if(i>=qs.length){onDone(score);return;}const q=qs[i];setPips(i,qs.length);const row=el('div',{class:'opts'}),msg=el('div',{class:'msg'});
+    q.opts.forEach((o,k)=>{const b=el('button',{class:'opt'},o);b.addEventListener('click',()=>{[...row.children].forEach(x=>x.disabled=true);const ok=k===q.ans;if(ok){score++;sYes();b.classList.add('good');}else{sNo();b.classList.add('bad');row.children[q.ans].classList.add('good');}msg.innerHTML=(ok?'✅ ':'❌ ')+q.why;if(q.fact)addFact(curMission,q.fact);box.appendChild(el('div',{class:'row',style:{marginTop:'10px'}},el('button',{class:'btn primary',onClick:()=>{i++;show();}},i+1>=qs.length?'Finish ✓':'Next ▶')));});row.appendChild(b);});
+    box.append(el('span',{class:'qkind '+(q.kind||'Explain')},q.kind||'Explain'),el('div',{class:'qtext'},q.q),row,msg);}}
+const quizCard=(qs,cb,title)=>{const h=el('div',{class:'card'});if(title)h.appendChild(el('div',{class:'lbl'},title));quiz(h,qs,cb);return h;};
+
+/* ================= SOUND LAB ================= */
+function playVibration(body,done){setPhase('Investigate');
+  const objs=[{em:'🥁',name:'Drum',part:'the drum skin',how:'Hit it — the skin bounces up and down very fast.',f:120,t:'triangle'},{em:'🎸',name:'Guitar',part:'the string',how:'Pluck it — the string wobbles side to side.',f:330,t:'sine'},{em:'🔔',name:'Bell',part:'the metal of the bell',how:'Strike it — the metal shivers and rings.',f:900,t:'sine'},{em:'🗣️',name:'Your voice',part:'the vocal cords in your throat',how:'Hum with a hand on your throat — feel the buzz!',f:220,t:'sine'}];
+  const grid=el('div',{class:'objgrid'}),info=el('div',{class:'infocard'},'Tap each object to make it vibrate. Watch what moves — and listen.'); const seen=new Set();
+  objs.forEach(o=>{const b=el('button',{class:'obj'},el('div',{class:'obj-em'},o.em),el('div',{class:'obj-nm'},o.name));b.addEventListener('click',()=>{b.classList.remove('wobble');void b.offsetWidth;b.classList.add('wobble');tone(o.f,0.6,0.12,o.t);info.innerHTML=`<b>${o.name}:</b> ${o.how}<br>What vibrates: <b>${o.part}</b>.`;addFact(curMission,`${o.name}: ${o.part} vibrates to make the sound.`);seen.add(o.name);next.disabled=seen.size<objs.length;});grid.appendChild(b);});
+  const next=el('button',{class:'btn primary'},'Record what I found ▶');next.disabled=true;next.addEventListener('click',record);
+  body.appendChild(el('div',{class:'card'},el('div',{class:'lbl'},'🔍 INVESTIGATE — every sound starts with a VIBRATION. Try all four.'),grid,info,next));
+  function record(){body.innerHTML='';setPhase('Record');body.appendChild(quizCard([
+    {kind:'Predict',q:'If you grab a ringing bell so it stops vibrating, what happens to the sound?',opts:['The sound stops','The sound gets louder','Nothing changes'],ans:0,why:'No vibration = no sound. All sounds are made by vibrations.',fact:'Sounds are made when something vibrates. Stop the vibration and the sound stops.'},
+    {kind:'Explain',q:'What vibrates when you pluck a guitar?',opts:['The string','The floor','Only the air'],ans:0,why:'The string vibrates, and it makes the air around it vibrate too.',fact:'A plucked string vibrates and passes the vibration into the air.'},
+    {kind:'Explain',q:'How does the sound of a drum reach your ear?',opts:['Vibrations travel through the air to your ear','The drum moves closer to your ear','Light carries the sound'],ans:0,why:'Vibrations spread out through the air as sound waves and reach your eardrum.',fact:'Sound travels as vibrations through the air (and through solids and liquids) to our ears.'},
+    {kind:'Explain',q:'Hand on your throat, you hum and feel a buzz. Why?',opts:['Your vocal cords are vibrating','Sound has no vibration','Your throat is heating up'],ans:0,why:'Your vocal cords vibrate to make your voice.',fact:'Our voice is made by vocal cords vibrating in the throat.'},
+    {kind:'Predict',q:'Can sound travel through a solid, like a wooden table?',opts:['Yes — vibrations pass through solids','No — only through air','Only if the table is wet'],ans:0,why:'Put your ear on a table and tap it: vibrations travel through solids very well.',fact:'Sound can travel through solids, liquids and gases.'}],s=>done(s,5),'📝 RECORD — 5 questions'));}
+}
+function playWave(body,done){setPhase('Investigate');let amp=5,fr=5,playing=false,t=0,score=0;const max=6;
+  const cv=el('canvas',{width:'600',height:'200',class:'wavecv'});const ctx=cv.getContext?cv.getContext('2d'):null;
+  const aS=el('input',{type:'range',min:'1',max:'10',value:'5',class:'range'}),fS=el('input',{type:'range',min:'1',max:'10',value:'5',class:'range'}),aV=el('b',{},'5'),fV=el('b',{},'5');
+  const fq=()=>120+fr*80,vol=()=>amp*0.03; const playBtn=el('button',{class:'btn sky'},'▶ Play sound');
+  aS.addEventListener('input',()=>{amp=+aS.value;aV.textContent=amp;if(playing)setTone(fq(),vol());});fS.addEventListener('input',()=>{fr=+fS.value;fV.textContent=fr;if(playing)setTone(fq(),vol());});
+  playBtn.addEventListener('click',()=>{playing=!playing;if(playing){startTone(fq(),vol());playBtn.textContent='⏹ Stop';}else{stopTone();playBtn.textContent='▶ Play sound';}});
+  function draw(){if(!ctx||!cv.isConnected)return;ctx.clearRect(0,0,600,200);ctx.strokeStyle='#d9cfb3';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,100);ctx.lineTo(600,100);ctx.stroke();ctx.strokeStyle='#3b8fd9';ctx.lineWidth=4;ctx.beginPath();for(let x=0;x<=600;x+=2){const y=100-Math.sin((x/600)*Math.PI*2*fr*1.3-t)*amp*8.5;if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();t+=0.06+fr*0.02;requestAnimationFrame(draw);}
+  const tasks=[{t:'Make a LOUD, LOW sound',test:()=>amp>=7&&fr<=3,why:'Loud = big amplitude (tall wave). Low pitch = low frequency (waves spread out).'},{t:'Make a QUIET, HIGH sound',test:()=>amp<=3&&fr>=7,why:'Quiet = small amplitude (short wave). High pitch = high frequency (waves squashed together).'},{t:'Make a LOUD, HIGH sound',test:()=>amp>=7&&fr>=7,why:'Tall AND squashed-together waves.'},{t:'Make a QUIET, LOW sound',test:()=>amp<=3&&fr<=3,why:'Short AND spread-out waves.'}];
+  let ti=0;const goal=el('div',{class:'goalcard'}),msg=el('div',{class:'msg'}),chk=el('button',{class:'btn primary'},'✓ Check my sound');
+  function showTask(){if(ti>=tasks.length){stopTone();later(record,600);return;}setPips(ti,tasks.length);goal.textContent='🎯 Challenge '+(ti+1)+': '+tasks[ti].t;msg.textContent='';}
+  chk.addEventListener('click',()=>{const tk=tasks[ti];if(tk.test()){score++;sYes();msg.textContent='✅ '+tk.why;addFact(curMission,'Amplitude (wave height) = volume. Frequency (waves per second) = pitch.');ti++;later(showTask,1300);}else{sNo();msg.textContent='❌ Not yet — adjust the two dials and check again. Volume = amplitude dial, pitch = frequency dial.';}});
+  body.appendChild(el('div',{class:'card'},el('div',{class:'lbl'},'🔍 INVESTIGATE — the Wave Machine. Turn the dials, play the sound, watch the wave.'),cv,el('div',{class:'row'},el('span',{},'🔊 Amplitude (volume)'),aS,aV),el('div',{class:'row'},el('span',{},'🎵 Frequency (pitch)'),fS,fV),el('div',{class:'row'},playBtn),goal,el('div',{class:'row'},chk),msg));
+  showTask();draw();
+  function record(){body.innerHTML='';setPhase('Explain');body.appendChild(quizCard([
+    {kind:'Explain',q:'Which change makes a sound LOUDER?',opts:['Bigger vibrations (bigger amplitude)','Faster vibrations','Slower vibrations'],ans:0,why:'Volume depends on the SIZE of the vibration.',fact:'Louder sounds have bigger vibrations (larger amplitude).'},
+    {kind:'Explain',q:'Which change makes a sound HIGHER in pitch?',opts:['Faster vibrations (higher frequency)','Bigger vibrations','Quieter vibrations'],ans:0,why:'Pitch depends on how FAST something vibrates.',fact:'Higher-pitched sounds come from faster vibrations (higher frequency).'}],s=>done(score+s,max),'📝 EXPLAIN'));}
+}
+function playVolume(body,done){setPhase('Predict');let score=0;const max=6;const mats=[{n:'No cover',m:1,em:'🔔'},{n:'Paper',m:0.8,em:'📄'},{n:'Wooden box',m:0.55,em:'🪵'},{n:'Cotton wool',m:0.25,em:'☁️'},{n:'Thick foam',m:0.12,em:'🧽'}];
+  const pred=el('div',{class:'card'},el('div',{class:'lbl'},'🔮 PREDICT — a buzzer will be covered with each material. Which will muffle it the MOST?'));const row=el('div',{class:'opts'});
+  mats.slice(1).forEach(m=>{const b=el('button',{class:'opt'},m.em+' '+m.n);b.addEventListener('click',()=>{[...row.children].forEach(x=>x.disabled=true);const ok=m.n==='Thick foam';if(ok){score++;sYes();b.classList.add('good');}else{sNo();b.classList.add('bad');}pred.appendChild(el('div',{class:'msg'},ok?'✅ Good prediction — now test it!':'Prediction noted — scientists are often surprised. Now test it!'));pred.appendChild(el('div',{class:'row'},el('button',{class:'btn primary',onClick:investigate},'Test it ▶')));});row.appendChild(b);});pred.appendChild(row);body.appendChild(pred);
+  function investigate(){body.innerHTML='';setPhase('Investigate');const results={};const meter=el('div',{class:'meter'},el('div',{class:'meterfill'})),val=el('div',{class:'bigval'},'—'),table=el('table',{class:'tbl'});table.innerHTML='<tr><th>Material over buzzer</th><th>Loudness (0–100)</th></tr>';
+    const nextBtn=el('button',{class:'btn primary'},'Record my results ▶');nextBtn.disabled=true;nextBtn.addEventListener('click',()=>{addFact(curMission,'Soft, thick materials (foam, cotton wool) muffle sound best — they absorb the vibrations.');record();});
+    const btns=el('div',{class:'opts'});mats.forEach(m=>{const b=el('button',{class:'opt'},m.em+' Test: '+m.n);b.addEventListener('click',()=>{const L=Math.round(m.m*100);tone(700,0.5,0.25*m.m,'square');meter.firstChild.style.width=L+'%';val.textContent=L;if(!results[m.n]){results[m.n]=L;const tr=el('tr');tr.append(el('td',{},m.em+' '+m.n),el('td',{},L));table.appendChild(tr);}b.classList.add('good');nextBtn.disabled=Object.keys(results).length<mats.length;});btns.appendChild(b);});
+    const dist=el('input',{type:'range',min:'1',max:'10',value:'1',class:'range'}),dV=el('b',{},'1 m');dist.addEventListener('input',()=>{dV.textContent=dist.value+' m';tone(700,0.3,0.25/dist.value,'square');});
+    body.appendChild(el('div',{class:'card'},el('div',{class:'lbl'},'🔍 INVESTIGATE — a FAIR TEST: same buzzer, same distance; change only the material'),btns,el('div',{class:'row'},el('span',{},'Loudness meter'),meter,val),el('div',{class:'lbl'},'Results table (fills in as you test)'),table,el('div',{class:'lbl'},'Extra: walk away from the buzzer'),el('div',{class:'row'},el('span',{},'Distance:'),dist,dV),nextBtn));}
+  function record(){body.innerHTML='';setPhase('Explain');body.appendChild(quizCard([
+    {kind:'Data',q:'Look at your table. Which material was the best sound INSULATOR?',opts:['Thick foam','Paper','No cover'],ans:0,why:'It gave the lowest loudness reading.',fact:'Sound insulators (like foam) reduce volume by absorbing vibrations.'},
+    {kind:'Explain',q:'Why do soft, thick materials muffle sound well?',opts:['They absorb the vibrations','They make the buzzer vibrate more','They add more air'],ans:0,why:'Soft materials soak up vibration energy, so less reaches your ear.',fact:'Soft materials absorb vibrations; hard, thin ones let them through.'},
+    {kind:'Explain',q:'To make a drum LOUDER you should…',opts:['Hit it harder — bigger vibrations','Hit it more gently','Cover it with foam'],ans:0,why:'Bigger vibrations = bigger amplitude = louder.',fact:'Hitting, plucking or blowing harder makes bigger vibrations and a louder sound.'},
+    {kind:'Predict',q:'What happens to loudness as you move further from the sound?',opts:['It gets quieter','It gets louder','It stays the same'],ans:0,why:'Sound spreads out as it travels, so less reaches your ear.',fact:'Sound gets quieter the further it travels from the source.'},
+    {kind:'Explain',q:'In your fair test, what was kept the SAME?',opts:['The buzzer and the distance','The material','Nothing'],ans:0,why:'Change one thing (the material); keep everything else the same.',fact:'Fair test: change only one thing and keep everything else the same.'}],s=>done(score+s,max),'📝 EXPLAIN'));}
+}
+function playPitch(body,done){setPhase('Predict');let score=0;const max=8;const bottles=[{w:10,f:700},{w:30,f:560},{w:50,f:440},{w:70,f:350},{w:90,f:280}];
+  const pred=el('div',{class:'card'},el('div',{class:'lbl'},'🔮 PREDICT — five bottles with different amounts of water. Tap each one. Which will have the HIGHEST pitch?'));const row=el('div',{class:'opts'});
+  [['The bottle with the LEAST water',true],['The bottle with the MOST water',false],['They will all sound the same',false]].forEach(([o,ok])=>{const b=el('button',{class:'opt'},o);b.addEventListener('click',()=>{[...row.children].forEach(x=>x.disabled=true);if(ok){score++;sYes();b.classList.add('good');}else{sNo();b.classList.add('bad');}pred.appendChild(el('div',{class:'row'},el('button',{class:'btn primary',onClick:investigate},'Test it ▶')));});row.appendChild(b);});pred.appendChild(row);body.appendChild(pred);
+  function investigate(){body.innerHTML='';setPhase('Investigate');const bRow=el('div',{class:'bottles'}),info=el('div',{class:'infocard'},'Tap the bottles. Listen: more water = ?'),msg=el('div',{class:'msg'});let order=[],ordering=false;
+    bottles.forEach(b=>{const bt=el('button',{class:'bottle'},el('div',{class:'water',style:{height:b.w+'%'}}),el('div',{class:'bl'},b.w+'%'));bt.addEventListener('click',()=>{tone(b.f,0.7,0.15);bt.classList.remove('wobble');void bt.offsetWidth;bt.classList.add('wobble');if(ordering){order.push(b.w);msg.textContent='Tapped: '+order.join(' → ');if(order.length===5){ordering=false;const correct=[90,70,50,30,10];const right=order.filter((v,k)=>v===correct[k]).length;const pts=right===5?2:right>=3?1:0;score+=pts;if(pts===2){sYes();msg.textContent='✅ Perfect — lowest to highest: most water → least water.';}else{sNo();msg.textContent=`❌ The order is 90% → 70% → 50% → 30% → 10%. More water = lower pitch.`;}addFact(curMission,'Tapping bottles: MORE water = LOWER pitch, less water = higher pitch.');later(strings,1800);}}});bRow.appendChild(bt);});
+    const start=el('button',{class:'btn primary'},'🎯 Challenge: tap them from LOWEST to HIGHEST pitch');start.addEventListener('click',()=>{order=[];ordering=true;start.disabled=true;msg.textContent='Go! Tap all five in order.';});
+    body.appendChild(el('div',{class:'card'},el('div',{class:'lbl'},'🔍 INVESTIGATE — bottle xylophone'),bRow,info,el('div',{class:'row'},start),msg));}
+  function strings(){body.innerHTML='';setPhase('Investigate');let len=5,tight=5,thick=5;const L=el('input',{type:'range',min:'1',max:'10',value:'5',class:'range'}),T=el('input',{type:'range',min:'1',max:'10',value:'5',class:'range'}),K=el('input',{type:'range',min:'1',max:'10',value:'5',class:'range'});
+    const f=()=>200+ (11-len)*30 + tight*30 - thick*20; const pluck=el('button',{class:'btn sky'},'🎸 Pluck');pluck.addEventListener('click',()=>tone(f(),0.8,0.15,'triangle'));
+    L.addEventListener('input',()=>{len=+L.value;tone(f(),0.3,0.1,'triangle');});T.addEventListener('input',()=>{tight=+T.value;tone(f(),0.3,0.1,'triangle');});K.addEventListener('input',()=>{thick=+K.value;tone(f(),0.3,0.1,'triangle');});
+    const msg=el('div',{class:'msg'});const chk=el('button',{class:'btn primary'},'✓ Check: is this the HIGHEST pitch?');chk.addEventListener('click',()=>{if(len<=2&&tight>=9&&thick<=2){score++;sYes();msg.textContent='✅ Short + tight + thin = fastest vibration = highest pitch!';addFact(curMission,'Strings: shorter, tighter and thinner = higher pitch. Longer, looser, thicker = lower pitch.');later(record,1500);}else{sNo();msg.textContent='❌ Think: which length, tightness and thickness make the string vibrate FASTEST?';}});
+    body.appendChild(el('div',{class:'card'},el('div',{class:'lbl'},'🔍 INVESTIGATE — guitar string. Move a slider, hear the pitch change.'),el('div',{class:'row'},el('span',{},'📏 Length (short → long)'),L),el('div',{class:'row'},el('span',{},'🔧 Tightness (loose → tight)'),T),el('div',{class:'row'},el('span',{},'🧵 Thickness (thin → thick)'),K),el('div',{class:'row'},pluck),el('div',{class:'goalcard'},'🎯 Challenge: set the sliders to make the HIGHEST possible pitch'),el('div',{class:'row'},chk),msg));}
+  function record(){body.innerHTML='';setPhase('Explain');body.appendChild(quizCard([
+    {kind:'Predict',q:'You shorten a guitar string. The pitch will…',opts:['Go higher','Go lower','Stay the same'],ans:0,why:'Shorter strings vibrate faster → higher pitch.',fact:'Shorter = higher pitch.'},
+    {kind:'Explain',q:'Which string gives the LOWEST note?',opts:['A thick, loose, long string','A thin, tight, short string','All the same'],ans:0,why:'Thick, loose and long all slow the vibration down.',fact:'Thicker, looser, longer = lower pitch.'},
+    {kind:'Predict',q:'You add MORE water to a bottle and tap it. The pitch will…',opts:['Go lower','Go higher','Stay the same'],ans:0,why:'More water = heavier = slower vibration = lower.',fact:'More water in a tapped bottle = lower pitch.'},
+    {kind:'Explain',q:'Pitch depends on…',opts:['How FAST something vibrates','How BIG the vibration is','How far away you are'],ans:0,why:'Speed of vibration = pitch. Size of vibration = volume.',fact:'Pitch = speed of vibration (frequency); volume = size of vibration (amplitude).'}],s=>done(score+s,max),'📝 EXPLAIN'));}
+}
+
+/* ================= BODY LAB ================= */
+const ORGANS=[
+  {id:'mouth',name:'Mouth',pos:[150,62],tok:'🍎',info:'Teeth CHEW food into small pieces. Saliva makes it wet and starts breaking it down.',fact:'Mouth: teeth chew the food and saliva starts digestion.',q:{q:'What happens in the MOUTH?',opts:['Teeth chew the food and saliva starts to break it down','Nutrients pass into the blood','Water is removed from waste'],ans:0}},
+  {id:'oes',name:'Oesophagus',pos:[150,135],tok:'🥣',info:'A muscular tube. Its muscles SQUEEZE the food down to the stomach — it even works upside down!',fact:'Oesophagus: a muscular tube that squeezes food down to the stomach.',q:{q:'What does the OESOPHAGUS do?',opts:['Squeezes food down to the stomach','Mixes food with acid','Absorbs nutrients into the blood'],ans:0}},
+  {id:'stomach',name:'Stomach',pos:[178,200],tok:'🥣',info:'CHURNS the food and mixes it with acid and digestive juices until it is a thick liquid.',fact:'Stomach: churns food and mixes it with acid into a liquid.',q:{q:'What happens in the STOMACH?',opts:['Food is churned and mixed with acid into a liquid','Food is chewed by teeth','Waste leaves the body'],ans:0}},
+  {id:'small',name:'Small intestine',pos:[150,268],tok:'🫧',info:'A very long, folded tube. NUTRIENTS pass through its thin walls into the BLOOD, which carries them round the body.',fact:'Small intestine: nutrients are absorbed into the blood.',q:{q:'What happens in the SMALL INTESTINE?',opts:['Nutrients are absorbed into the blood','Water is absorbed and waste forms','Food is stored for later'],ans:0}},
+  {id:'large',name:'Large intestine',pos:[105,300],tok:'✨',info:'WATER is absorbed back into the body. What is left becomes solid waste (faeces).',fact:'Large intestine: water is absorbed and solid waste is formed.',q:{q:'What happens in the LARGE INTESTINE?',opts:['Water is absorbed and waste is formed','Nutrients enter the blood','Saliva is made'],ans:0}},
+  {id:'out',name:'Rectum & anus',pos:[150,352],tok:'🟤',info:'Waste is stored in the rectum and leaves the body through the anus.',fact:'Waste leaves the body through the anus.'}];
+const BODY_SVG=`<svg viewBox="0 0 300 380" class="bodysvg" xmlns="http://www.w3.org/2000/svg">
+<circle cx="150" cy="40" r="32" class="skin"/><path d="M102,78 Q96,95 100,120 L100,330 Q100,352 122,356 L178,356 Q200,352 200,330 L200,120 Q204,95 198,78 Z" class="skin"/>
+<g data-organ="large"><path d="M105,325 L105,232 L195,232 L195,325" fill="none" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/></g>
+<g data-organ="small"><path d="M150,222 C112,224 112,248 150,248 C188,248 188,270 150,270 C112,270 112,292 150,292 C180,292 180,308 158,310" fill="none" stroke-width="13" stroke-linecap="round"/></g>
+<g data-organ="oes"><path d="M150,70 L150,178" fill="none" stroke-width="14" stroke-linecap="round"/></g>
+<g data-organ="stomach"><ellipse cx="178" cy="200" rx="38" ry="25" transform="rotate(-25 178 200)"/></g>
+<g data-organ="mouth"><ellipse cx="150" cy="62" rx="14" ry="6"/></g>
+<g data-organ="out"><rect x="140" y="336" width="20" height="18" rx="7"/></g>
+</svg>`;
+function playDigest(body,done){setPhase('Investigate');let score=0;const max=17;let mode='explore',step=0,selLabel=null,labelsDone=0;
+  const wrap=el('div',{class:'bodywrap',html:BODY_SVG});const token=el('div',{class:'token'});wrap.appendChild(token);
+  const info=el('div',{class:'infocard'},'👆 Tap any organ to see what it does. All 6 explored — then start the journey.');const qbox=el('div');const prompt=el('div',{class:'goalcard'},'Explore mode — tap each organ once.');
+  const startBtn=el('button',{class:'btn primary'},'🍎 Start the food\u2019s journey ▶');
+  const side=el('div',{class:'card'},el('div',{class:'lbl'},'🔍 THE DIGESTIVE SYSTEM'),prompt,info,qbox,el('div',{class:'row'},startBtn));
+  body.appendChild(el('div',{class:'two'},el('div',{class:'card'},wrap),side));
+  const organEl=id=>wrap.querySelector(`[data-organ="${id}"]`); const place=(o)=>{token.style.left=(o.pos[0]/300*100)+'%';token.style.top=(o.pos[1]/380*100)+'%';};
+  ORGANS.forEach(o=>organEl(o.id).addEventListener('click',()=>onOrgan(o)));
+  startBtn.addEventListener('click',()=>{mode='journey';step=0;startBtn.disabled=true;setPhase('Investigate');token.textContent='🍎';place(ORGANS[0]);ORGANS.forEach(o=>organEl(o.id).classList.remove('active','done'));organEl('mouth').classList.add('active');prompt.textContent='🍎 The apple is in the mouth. Tap the mouth to see what happens.';info.textContent='';});
+  function onOrgan(o){ if(mode==='explore'){ORGANS.forEach(x=>organEl(x.id).classList.remove('active'));organEl(o.id).classList.add('active');info.innerHTML=`<b>${o.name}:</b> ${o.info}`;sPop();addFact(curMission,o.fact);return;}
+    if(mode!=='journey')return; const expected=ORGANS[step]; if(o.id!==expected.id){organEl(o.id).classList.add('shake');later(()=>organEl(o.id).classList.remove('shake'),400);sNo();info.innerHTML=`❌ Not the ${o.name} yet. Where does the food go straight after the <b>${step?ORGANS[step-1].name:'start'}</b>?`;return;}
+    score++;sYes();mode='question';token.textContent=o.tok;place(o);organEl(o.id).classList.remove('active');organEl(o.id).classList.add('done');info.innerHTML=`<b>${o.name}:</b> ${o.info}`;addFact(curMission,o.fact);
+    if(!o.q){prompt.textContent='✅ Journey complete! Now label the diagram.';later(labelPhase,1200);return;}
+    const row=el('div',{class:'opts'}),msg=el('div',{class:'msg'});const card=el('div',{class:'organ-q'},el('div',{class:'lbl'},'What happens here?'),el('div',{class:'qtext'},o.q.q),row,msg);
+    o.q.opts.forEach((opt,k)=>{const b=el('button',{class:'opt'},opt);b.addEventListener('click',()=>{[...row.children].forEach(x=>x.disabled=true);const ok=k===o.q.ans;if(ok){score++;sYes();b.classList.add('good');}else{sNo();b.classList.add('bad');row.children[o.q.ans].classList.add('good');}msg.textContent=ok?'✅ Correct!':'❌ '+o.q.opts[o.q.ans];later(()=>{qbox.innerHTML='';step++;mode='journey';const nx=ORGANS[step];organEl(nx.id).classList.add('active');prompt.textContent=`Where does the food go next? Tap the next organ.`;},1100);});row.appendChild(b);});
+    qbox.innerHTML='';qbox.appendChild(card);prompt.textContent='Answer the question to continue.';}
+  function labelPhase(){setPhase('Record');mode='label';token.textContent='';qbox.innerHTML='';ORGANS.forEach(o=>organEl(o.id).classList.remove('done','active'));
+    const names=ORGANS.slice(0,5);const chips=el('div',{class:'labels'});shuffle(names).forEach(o=>{const c=el('button',{class:'labelchip'},o.name);c.addEventListener('click',()=>{[...chips.children].forEach(x=>x.classList.remove('sel'));c.classList.add('sel');selLabel={o,c};prompt.textContent=`Now tap the organ that is the ${o.name}.`;});chips.appendChild(c);});
+    prompt.textContent='🏷️ LABEL THE DIAGRAM — tap a label, then tap the matching organ.';info.textContent='';qbox.appendChild(chips);
+    ORGANS.forEach(o=>{organEl(o.id).addEventListener('click',()=>{if(mode!=='label'||!selLabel)return;if(o.id===selLabel.o.id){score++;sYes();labelsDone++;selLabel.c.disabled=true;selLabel.c.classList.remove('sel');organEl(o.id).classList.add('done');const pin=el('div',{class:'pin'},o.name);pin.style.left=(o.pos[0]/300*100+(o.id==='stomach'?14:o.id==='large'?-12:16))+'%';pin.style.top=(o.pos[1]/380*100)+'%';wrap.appendChild(pin);selLabel=null;prompt.textContent=labelsDone<5?'✅ Pinned! Pick the next label.':'✅ All labelled!';if(labelsDone===5){addFact(curMission,'Order of digestion: mouth → oesophagus → stomach → small intestine → large intestine → rectum/anus.');later(explain,1000);}}else{organEl(o.id).classList.add('shake');later(()=>organEl(o.id).classList.remove('shake'),400);sNo();prompt.textContent=`❌ That is the ${o.name}. Try again.`;}});});}
+  function explain(){body.innerHTML='';setPhase('Explain');body.appendChild(quizCard([
+    {kind:'Explain',q:'Why is it important to chew food well?',opts:['Smaller pieces are easier to digest','Chewing makes food heavier','It makes the food warmer'],ans:0,why:'Chewing breaks food into small pieces with more surface for digestive juices to work on.',fact:'Chewing breaks food into small pieces so it can be digested more easily.'},
+    {kind:'Explain',q:'Where do nutrients pass into the blood?',opts:['Small intestine','Stomach','Mouth'],ans:0,why:'The small intestine has thin walls and is very long, so nutrients can be absorbed.',fact:'Nutrients are absorbed into the blood in the small intestine.'}],s=>done(score+s,max),'📝 EXPLAIN'));}
+}
+/* Plate Builder */
+const GROUPS={fv:{name:'Fruit & vegetables',col:'#3a8f5c',a0:0,a1:144,why:'give VITAMINS and MINERALS to keep us healthy, and FIBRE to help digestion.',ideal:'2 or more'},carb:{name:'Carbohydrates',col:'#e9a53a',a0:144,a1:259,why:'give us ENERGY for the whole day.',ideal:'1 or more'},prot:{name:'Proteins',col:'#d9534f',a0:259,a1:313,why:'help us GROW and REPAIR our bodies.',ideal:'1'},dairy:{name:'Dairy',col:'#3b8fd9',a0:313,a1:342,why:'give CALCIUM for strong bones and teeth.',ideal:'1'},fat:{name:'Fats & sugars',col:'#8e6bbf',a0:342,a1:360,why:'give energy but only a LITTLE is needed — too much is unhealthy.',ideal:'at most 1'}};
+const FOODS=[['🍎','Apple','fv'],['🥦','Broccoli','fv'],['🥕','Carrot','fv'],['🍌','Banana','fv'],['🍞','Bread','carb'],['🍚','Rice','carb'],['🍝','Pasta','carb'],['🥔','Potato','carb'],['🍗','Chicken','prot'],['🐟','Fish','prot'],['🥚','Egg','prot'],['🫘','Beans','prot'],['🥛','Milk','dairy'],['🧀','Cheese','dairy'],['🍦','Ice cream','fat'],['🍫','Chocolate','fat'],['🍟','Chips','fat'],['🍬','Sweets','fat']];
+function wedgePath(cx,cy,r,r0,a0,a1){const p=(a,rad)=>[cx+rad*Math.cos((a-90)*Math.PI/180),cy+rad*Math.sin((a-90)*Math.PI/180)];const[x0,y0]=p(a0,r),[x1,y1]=p(a1,r),[x2,y2]=p(a1,r0),[x3,y3]=p(a0,r0);const L=a1-a0>180?1:0;return `M${x0},${y0} A${r},${r} 0 ${L} 1 ${x1},${y1} L${x2},${y2} A${r0},${r0} 0 ${L} 0 ${x3},${y3} Z`;}
+function playPlate(body,done){setPhase('Investigate');let score=0;const max=12;let plate=[],water=false,gi=0,seenGroup=new Set();
+  const goals=[{t:'Build a balanced lunch: at least ONE food from EVERY group — and no more than ONE fats & sugars.',test:c=>['fv','carb','prot','dairy'].every(g=>c[g]>=1)&&c.fat>=1&&c.fat<=1,preset:[]},
+    {t:'Uh-oh! This plate is ALL fats and sugars. Remove the extras and fix it so it is balanced.',test:c=>['fv','carb','prot','dairy'].every(g=>c[g]>=1)&&c.fat<=1,preset:['🍟','🍫','🍬']},
+    {t:"Athlete\u2019s lunch: an energy meal. TWO carbohydrates, every other group, still only ONE treat — and don\u2019t forget water!",test:c=>c.carb>=2&&['fv','prot','dairy'].every(g=>c[g]>=1)&&c.fat<=1&&water,preset:[]}];
+  const wrap=el('div',{class:'platewrap'});const svgNS='http://www.w3.org/2000/svg';const svg=document.createElementNS(svgNS,'svg');svg.setAttribute('viewBox','0 0 300 300');svg.setAttribute('class','platesvg');
+  const rim=document.createElementNS(svgNS,'circle');rim.setAttribute('cx',150);rim.setAttribute('cy',150);rim.setAttribute('r',138);rim.setAttribute('fill','#fff');rim.setAttribute('stroke','#d9cfb3');rim.setAttribute('stroke-width','6');svg.appendChild(rim);
+  const wedges={};Object.entries(GROUPS).forEach(([k,g])=>{const p=document.createElementNS(svgNS,'path');p.setAttribute('d',wedgePath(150,150,120,34,g.a0,g.a1));p.setAttribute('fill',g.col);p.setAttribute('class','wedge');p.style.opacity=.25;svg.appendChild(p);wedges[k]=p;
+    const mid=(g.a0+g.a1)/2,tx=150+128*Math.cos((mid-90)*Math.PI/180),ty=150+128*Math.sin((mid-90)*Math.PI/180);const t=document.createElementNS(svgNS,'text');t.setAttribute('x',tx);t.setAttribute('y',ty);t.setAttribute('font-size','9');t.setAttribute('font-weight','800');t.setAttribute('fill',g.col);t.setAttribute('text-anchor',mid>180?'end':'start');t.setAttribute('dominant-baseline','middle');t.textContent=g.name;svg.appendChild(t);});
+  const centre=document.createElementNS(svgNS,'text');centre.setAttribute('x',150);centre.setAttribute('y',156);centre.setAttribute('text-anchor','middle');centre.setAttribute('font-size','22');centre.textContent='🥤';centre.style.opacity=.25;svg.appendChild(centre);
+  wrap.appendChild(svg);
+  const pantry=el('div',{class:'pantry'}),balance=el('div',{class:'balance'}),goal=el('div',{class:'goalcard'}),msg=el('div',{class:'msg'}),tip=el('div',{class:'infocard'},'Tap a food to put it on the plate. Tap a food ON the plate to take it off.');
+  FOODS.forEach(([em,nm,g])=>{const b=el('button',{class:'food '+g},el('div',{class:'fe'},em),el('div',{class:'fn'},nm));b.addEventListener('click',()=>add(em,nm,g));pantry.appendChild(b);});
+  const wBtn=el('button',{class:'food dairy'},el('div',{class:'fe'},'💧'),el('div',{class:'fn'},'Water'));wBtn.addEventListener('click',()=>{water=!water;centre.style.opacity=water?1:.25;sPop();if(water){tip.innerHTML='<b>💧 Water</b> keeps every part of the body working. Drink plenty every day.';addFact(curMission,'Water is essential — drink plenty every day.');}render();});pantry.appendChild(wBtn);
+  const chk=el('button',{class:'btn primary'},'✓ Check my plate');chk.addEventListener('click',check);
+  body.appendChild(el('div',{class:'two'},el('div',{class:'card'},goal,wrap,el('div',{class:'row center'},chk),msg),el('div',{class:'card'},el('div',{class:'lbl'},'🧺 PANTRY'),pantry,tip,el('div',{class:'lbl'},'⚖️ BALANCE CHECK'),balance)));
+  function counts(){const c={fv:0,carb:0,prot:0,dairy:0,fat:0};plate.forEach(f=>c[f.g]++);return c;}
+  function add(em,nm,g){if(plate.length>=14)return;plate.push({em,nm,g});sPop();if(!seenGroup.has(g)){seenGroup.add(g);tip.innerHTML=`<b>${em} ${nm} — ${GROUPS[g].name}</b> ${GROUPS[g].why}`;addFact(curMission,`${GROUPS[g].name} ${GROUPS[g].why}`);}render();}
+  function render(){wrap.querySelectorAll('.foodchip').forEach(x=>x.remove());const c=counts();const idx={fv:0,carb:0,prot:0,dairy:0,fat:0};
+    plate.forEach((f,i)=>{const g=GROUPS[f.g];const n=idx[f.g]++;const span=g.a1-g.a0;const ang=g.a0+span*((n%3+1)/4);const r=95-Math.floor(n/3)*24;const x=150+r*Math.cos((ang-90)*Math.PI/180),y=150+r*Math.sin((ang-90)*Math.PI/180);const chip=el('div',{class:'foodchip',title:'Tap to remove'},f.em);chip.style.left=(x/300*100)+'%';chip.style.top=(y/300*100)+'%';chip.addEventListener('click',()=>{plate.splice(i,1);sPop();render();});wrap.appendChild(chip);});
+    Object.entries(GROUPS).forEach(([k,g])=>{wedges[k].style.opacity=c[k]?Math.min(.95,.45+c[k]*.18):.25;});
+    balance.innerHTML='';Object.entries(GROUPS).forEach(([k,g])=>{const bad=k==='fat'?c.fat>1:c[k]<1;const row=el('div',{class:'grow '+(bad?'warn':'ok')},el('span',{class:'dot',style:{background:g.col}}),el('span',{},`${g.name}: ${c[k]}`),el('span',{class:'mut',style:{marginLeft:'auto',fontSize:'11px'}},k==='fat'?(c.fat>1?'too many!':'ok'):(c[k]<1?'missing':'✓')));balance.appendChild(row);});
+    balance.appendChild(el('div',{class:'grow '+(water?'ok':'warn')},el('span',{class:'dot',style:{background:'#8ec5f5'}}),el('span',{},'Water: '+(water?'yes':'no'))));}
+  function setGoal(){if(gi>=goals.length){later(sortPhase,600);return;}setPips(gi,goals.length);const g=goals[gi];goal.textContent='🎯 Goal '+(gi+1)+' of 3: '+g.t;plate=g.preset.map(em=>{const f=FOODS.find(x=>x[0]===em);return{em:f[0],nm:f[1],g:f[2]};});water=false;centre.style.opacity=.25;msg.textContent='';chk.disabled=false;render();}
+  function check(){const g=goals[gi];const c=counts();if(g.test(c)){score++;sYes();chk.disabled=true;msg.textContent='✅ Balanced! '+(gi===2?'A champion\u2019s plate.':'Every group is there in the right amount.');confettiSmall();gi++;later(setGoal,1500);}else{sNo();const missing=['fv','carb','prot','dairy'].filter(k=>c[k]<1).map(k=>GROUPS[k].name);const parts=[];if(missing.length)parts.push('missing: '+missing.join(', '));if(c.fat>1)parts.push('too many fats & sugars (max 1)');if(gi===2&&c.carb<2)parts.push('needs 2 carbohydrates');if(gi===2&&!water)parts.push('add water');msg.textContent='❌ Not balanced yet — '+parts.join(' · ')+'.';}}
+  function confettiSmall(){for(let i=0;i<14;i++){const d=el('div',{class:'cf',style:{left:(30+Math.random()*40)+'vw',background:['#3a8f5c','#e9a53a','#3b8fd9','#d9534f'][i%4]}});$('#confetti').appendChild(d);setTimeout(()=>d.remove(),2500);}}
+  setGoal();
+  function sortPhase(){body.innerHTML='';setPhase('Record');const picks=shuffle(FOODS).slice(0,6);const qs=picks.map(([em,nm,g])=>({kind:'Label',q:`${em} ${nm} belongs to which food group?`,opts:Object.values(GROUPS).map(x=>x.name),ans:Object.keys(GROUPS).indexOf(g),why:`${nm} is in ${GROUPS[g].name} — they ${GROUPS[g].why}`}));
+    body.appendChild(quizCard(qs,s=>{score+=s;cases();},'📝 RECORD — sort the foods'));}
+  function cases(){body.innerHTML='';setPhase('Explain');body.appendChild(quizCard([
+    {kind:'Explain',q:'🕵️ Sam eats only crisps, chips and cola. What is MISSING and why does it matter?',opts:['Fruit & veg, protein and dairy — no vitamins, no growth, weak bones','Nothing — it gives energy','Only water'],ans:0,why:'A diet of fats and sugars alone lacks vitamins, minerals, protein and calcium.',fact:'An unbalanced diet (too much fat/sugar, too little of other groups) makes us unhealthy.'},
+    {kind:'Explain',q:'🕵️ Priya is growing fast and plays football. Which food group does her body need for GROWTH and REPAIR?',opts:['Proteins (eggs, fish, beans)','Sweets','Only water'],ans:0,why:'Proteins build and repair the body.',fact:'Proteins are needed for growth and repair.'},
+    {kind:'Explain',q:'🕵️ Why should fats & sugars be the SMALLEST part of the plate?',opts:['We need only a little energy from them; too much is unhealthy','They have no energy','They are the most important'],ans:0,why:'Small amounts are fine; large amounts lead to poor health.',fact:'Fats and sugars should be only a small part of a balanced diet.'}],s=>done(score+s,max),'📝 EXPLAIN — Diet Detective'));}
+}
+
+/* ================= PLANET & WILD ================= */
+function playOrbit(body,done){setPhase('Investigate');let month=0,spinDone=false,orbitDone=false;const svgNS='http://www.w3.org/2000/svg';const svg=document.createElementNS(svgNS,'svg');svg.setAttribute('viewBox','0 0 420 300');svg.setAttribute('class','orbitsvg');
+  const mk=(t,a)=>{const n=document.createElementNS(svgNS,t);Object.entries(a).forEach(([k,v])=>n.setAttribute(k,v));return n;};
+  svg.append(mk('ellipse',{cx:210,cy:150,rx:170,ry:95,fill:'none',stroke:'#3a4a7a','stroke-dasharray':'4 6'}),mk('circle',{cx:210,cy:150,r:26,fill:'#ffd23f'}),mk('text',{x:210,y:190,'text-anchor':'middle',fill:'#ffd23f','font-size':'11'}));svg.lastChild.textContent='SUN';
+  const earthG=mk('g',{});const earth=mk('circle',{cx:0,cy:0,r:16,fill:'#3b8fd9'});const land=mk('circle',{cx:-5,cy:-4,r:6,fill:'#3a8f5c'});const night=mk('path',{d:'M0,-16 A16,16 0 0 1 0,16 Z',fill:'rgba(0,0,0,.55)'});const axis=mk('line',{x1:0,y1:-24,x2:0,y2:24,stroke:'#fff','stroke-width':'1.5',transform:'rotate(23)'});const marker=mk('circle',{cx:0,cy:-14,r:3,fill:'#fff'});
+  earthG.append(earth,land,marker,night,axis);svg.appendChild(earthG);const lbl=mk('text',{x:210,y:20,'text-anchor':'middle',fill:'#fff','font-size':'12','font-weight':'800'});svg.appendChild(lbl);
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function pos(m){const a=(m/12)*Math.PI*2-Math.PI/2;const x=210+170*Math.cos(a),y=150+95*Math.sin(a);earthG.setAttribute('transform',`translate(${x},${y})`);const toSun=Math.atan2(150-y,210-x)*180/Math.PI;night.setAttribute('transform',`rotate(${toSun+90})`);lbl.textContent=`Month: ${months[Math.floor(m)%12]}  ·  Earth is ${Math.floor(m)===0?'starting':'travelling'} round the Sun`;}
+  const slider=el('input',{type:'range',min:'0',max:'11.99',step:'0.05',value:'0',class:'range'});slider.addEventListener('input',()=>{month=+slider.value;pos(month);});
+  const dayCount=el('b',{},'Days: 0');let spinAng=0;const spinBtn=el('button',{class:'btn sky'},'🔄 Spin Earth once (1 rotation = 1 DAY)');spinBtn.addEventListener('click',()=>{spinBtn.disabled=true;let k=0;(function tick(){spinAng+=15;k++;marker.setAttribute('transform',`rotate(${spinAng})`);if(k<24)later(tick,40);else{spinBtn.disabled=false;spinDone=true;dayCount.textContent='Days: '+(+dayCount.textContent.split(' ')[1]+1);info.innerHTML='<b>One spin (rotation) = one day and night.</b> The side facing the Sun has day; the side facing away has night.';addFact(curMission,'Earth spins (rotates) once every 24 hours — this gives us day and night.');check();}})();});
+  const orbitBtn=el('button',{class:'btn sky'},'🌍 Orbit the Sun once (1 orbit = 1 YEAR)');orbitBtn.addEventListener('click',()=>{orbitBtn.disabled=true;let m=0;(function tick(){m+=0.12;if(m>=12){m=0;pos(0);slider.value=0;orbitBtn.disabled=false;orbitDone=true;info.innerHTML='<b>One trip round the Sun (orbit) = one year</b> — about 365 days. Earth spins about 365 times during one orbit!';addFact(curMission,'Earth orbits the Sun once every year (about 365 days).');check();return;}pos(m);slider.value=m;later(tick,30);})();});
+  const info=el('div',{class:'infocard'},'Drag the month slider, then try both buttons. Notice the dark half of Earth always faces AWAY from the Sun.');const next=el('button',{class:'btn primary'},'Record what I found ▶');next.disabled=true;next.addEventListener('click',record);
+  function check(){next.disabled=!(spinDone&&orbitDone);}
+  body.appendChild(el('div',{class:'card'},el('div',{class:'lbl'},'🔍 INVESTIGATE — Earth, Sun, day and year'),svg,el('div',{class:'row'},el('span',{},'📅 Month'),slider),el('div',{class:'row'},spinBtn,dayCount),el('div',{class:'row'},orbitBtn),info,next));pos(0);
+  function record(){body.innerHTML='';setPhase('Record');body.appendChild(quizCard([
+    {kind:'Explain',q:'What causes DAY and NIGHT?',opts:['Earth spinning (rotating) on its axis','Earth moving round the Sun','The Sun moving round the Earth'],ans:0,why:'As Earth spins, your side turns to face the Sun (day) and then away (night).',fact:'Day and night are caused by Earth rotating on its axis.'},
+    {kind:'Explain',q:'How long does ONE orbit of the Sun take?',opts:['One year (about 365 days)','One day (24 hours)','One month'],ans:0,why:'One trip around the Sun = one year.',fact:'One orbit of the Sun = one year.'},
+    {kind:'Explain',q:'How long does ONE rotation (spin) take?',opts:['24 hours','365 days','1 hour'],ans:0,why:'One full spin = one day = 24 hours.',fact:'One rotation = 24 hours = one day.'},
+    {kind:'Explain',q:'The Earth moves around the…',opts:['Sun','Moon','Stars'],ans:0,why:'Earth orbits the Sun; the Moon orbits Earth.',fact:'The Earth orbits the Sun.'},
+    {kind:'Predict',q:'It is midday in Singapore. On the opposite side of Earth it is…',opts:['Night — that side faces away from the Sun','Also midday','Morning'],ans:0,why:'Only the half facing the Sun has daylight.',fact:'Only the side of Earth facing the Sun has daylight.'}],s=>done(s,5),'📝 RECORD'));}
+}
+function playSeasons(body,done){setPhase('Investigate');let score=0;const max=10;const seasons=[{n:'Spring',e:'🌱'},{n:'Summer',e:'☀️'},{n:'Autumn',e:'🍂'},{n:'Winter',e:'❄️'}];
+  const facts=[['Longest days and warmest weather','Summer'],['Leaves change colour and fall','Autumn'],['New leaves and flowers grow; days get longer','Spring'],['Shortest days and coldest weather','Winter'],['Many trees are bare; some animals hibernate','Winter'],['Fruit and seeds are ready to harvest','Autumn'],['Baby animals are born; birds build nests','Spring'],['People wear light clothes; plants grow fast','Summer']];
+  let sel=null,left=facts.length;const cards=el('div',{class:'seasons'}),chips=el('div',{class:'chips'}),msg=el('div',{class:'msg'});
+  seasons.forEach(s=>{const c=el('button',{class:'season'},el('div',{class:'se'},s.e),el('div',{class:'sn'},s.n),el('div',{class:'sl'}));c.addEventListener('click',()=>{if(!sel)return;const ok=sel.ans===s.n;if(ok){score++;sYes();c.querySelector('.sl').appendChild(el('div',{},'✓ '+sel.txt));sel.chip.remove();left--;addFact(curMission,`${s.n}: ${sel.txt.toLowerCase()}.`);msg.textContent='✅ Matched!';if(left===0)later(graph,900);}else{sNo();msg.textContent=`❌ "${sel.txt}" — think about which season that describes.`;}sel=null;[...chips.children].forEach(x=>x.classList.remove('sel'));cards.querySelectorAll('.season').forEach(x=>x.classList.remove('target'));});cards.appendChild(c);});
+  shuffle(facts).forEach(([txt,ans])=>{const ch=el('button',{class:'chip'},txt);ch.addEventListener('click',()=>{[...chips.children].forEach(x=>x.classList.remove('sel'));ch.classList.add('sel');sel={txt,ans,chip:ch};cards.querySelectorAll('.season').forEach(x=>x.classList.add('target'));msg.textContent='Now tap the season it belongs to.';});chips.appendChild(ch);});
+  body.appendChild(el('div',{class:'card'},el('div',{class:'lbl'},'🔍 INVESTIGATE — tap a clue, then tap its season'),chips,cards,msg));
+  function graph(){body.innerHTML='';setPhase('Record');const data=[['Jan',8],['Mar',12],['Jun',16],['Sep',12],['Dec',8]];const chart=el('div',{class:'chart'});data.forEach(([m,h])=>chart.appendChild(el('div',{class:'bar'},el('div',{class:'barfill',style:{height:(h/16*100)+'%'}},h+'h'),el('div',{class:'barlbl'},m))));
+    body.appendChild(el('div',{class:'card'},el('div',{class:'lbl'},'📊 DATA — hours of daylight in a year (a place far from the equator)'),chart));
+    body.appendChild(quizCard([{kind:'Data',q:'Which month has the MOST daylight?',opts:['June','December','March'],ans:0,why:'16 hours — the longest days are in summer.',fact:'Summer has the longest days; winter the shortest.'},{kind:'Data',q:'How many MORE hours of daylight in June than in December?',opts:['8 hours','4 hours','16 hours'],ans:0,why:'16 − 8 = 8 hours.',fact:'Daylight hours change with the seasons.'}],s=>done(score+s,max),'📝 RECORD'));}
+}
+function playHabitat(body,done){setPhase('Investigate');let score=0;const max=12;const habs=[{id:'desert',e:'🏜️',n:'Desert',d:'very hot, very dry'},{id:'arctic',e:'🧊',n:'Arctic',d:'freezing, snow and ice'},{id:'ocean',e:'🌊',n:'Ocean',d:'salty water, currents'}];
+  const creatures=[{e:'🐪',n:'Camel',h:'desert',ad:['Stores fat in its hump; wide feet for sand; long eyelashes keep sand out','Thick white fur','Gills to breathe underwater'],why:'Fat in the hump gives energy when food is scarce; wide feet stop it sinking in sand.'},{e:'🌵',n:'Cactus',h:'desert',ad:['Stores water in its thick stem; spines instead of leaves lose less water','Fins to swim','Blubber to keep warm'],why:'Spines lose far less water than leaves, and the stem stores water for dry months.'},{e:'🐻‍❄️',n:'Polar bear',h:'arctic',ad:['Thick fur and a layer of fat keep it warm; white fur is camouflage on snow','Stores water in its hump','Spines instead of leaves'],why:'Fur and fat trap heat; white camouflage helps it sneak up on prey.'},{e:'🦊',n:'Arctic fox',h:'arctic',ad:['Small ears and thick fur lose less heat; white winter coat for camouflage','Gills','Wide feet for sand'],why:'Small ears lose less heat than big ones; the white coat hides it in snow.'},{e:'🐟',n:'Fish',h:'ocean',ad:['Gills take oxygen from water; fins and a streamlined shape for swimming','Thick fur','Long eyelashes'],why:'Gills work in water; a streamlined body moves through water easily.'},{e:'🐋',n:'Whale',h:'ocean',ad:['A thick layer of blubber keeps it warm; a blowhole to breathe at the surface','Spines','Hump of fat'],why:'Blubber keeps warm in cold seas; the blowhole lets it breathe air quickly.'}];
+  let ci=0;const stage=el('div');body.appendChild(el('div',{class:'card'},stage));
+  function show(){stage.innerHTML='';if(ci>=creatures.length){later(record,600);return;}setPips(ci,creatures.length);const c=creatures[ci];const habRow=el('div',{class:'habs'}),msg=el('div',{class:'msg'}),step2=el('div');
+    habs.forEach(h=>{const b=el('button',{class:'hab'},el('div',{class:'he'},h.e),el('div',{class:'hn'},h.n),el('div',{class:'hd'},h.d));b.addEventListener('click',()=>{[...habRow.children].forEach(x=>x.disabled=true);const ok=h.id===c.h;if(ok){score++;sYes();b.style.borderColor='var(--green)';}else{sNo();b.style.borderColor='var(--rose)';}msg.textContent=ok?`✅ ${c.n} lives in the ${habs.find(x=>x.id===c.h).n}. Now — which adaptation helps it survive there?`:`❌ The ${c.n} lives in the ${habs.find(x=>x.id===c.h).n}. Now — which adaptation helps it survive there?`;const ops=el('div',{class:'opts'});shuffle(c.ad.map((a,k)=>[a,k===0])).forEach(([a,ok2])=>{const o=el('button',{class:'opt'},a);o.addEventListener('click',()=>{[...ops.children].forEach(x=>x.disabled=true);if(ok2){score++;sYes();o.classList.add('good');}else{sNo();o.classList.add('bad');}msg.textContent=(ok2?'✅ ':'❌ ')+c.why;addFact(curMission,`${c.n} (${habs.find(x=>x.id===c.h).n}): ${c.ad[0]}.`);ci++;later(show,1800);});ops.appendChild(o);});step2.appendChild(ops);});habRow.appendChild(b);});
+    stage.append(el('div',{class:'lbl'},'🔍 INVESTIGATE — where does it live, and what helps it survive there?'),el('div',{class:'creature'},el('div',{class:'ce'},c.e),el('div',{class:'cn'},c.n)),habRow,msg,step2);}
+  show();
+  function record(){body.innerHTML='';setPhase('Explain');body.appendChild(quizCard([{kind:'Explain',q:'An "adaptation" is…',opts:['A feature that helps a living thing survive in its environment','A type of food','A kind of weather'],ans:0,why:'Adaptations are body features or behaviours suited to where the living thing lives.',fact:'An adaptation is a feature that helps a plant or animal survive in its environment.'}],s=>{score+=s;done(score,max);},'📝 EXPLAIN'));}
+}
+function playPredPrey(body,done){setPhase('Investigate');let score=0;const max=10;
+  const builds=[{who:'PREDATOR (a hunter)',e:'🦁',picks:[{q:'Eyes',a:['👀 Front of the head — judges distance to pounce','👁️ Sides of the head — sees all around'],ans:0},{q:'Teeth',a:['🦷 Sharp, pointed — for gripping and tearing meat','🦷 Flat, wide — for grinding plants'],ans:0},{q:'Body',a:['🐆 Fast, strong, sharp claws and camouflage to sneak up','🐇 Long ears and a twitchy nose to sense danger'],ans:0}],fact:'Predators: forward-facing eyes, sharp teeth and claws, speed and camouflage for hunting.'},
+    {who:'PREY (gets hunted)',e:'🦌',picks:[{q:'Eyes',a:['👁️ Sides of the head — sees nearly all around to spot danger','👀 Front of the head — judges distance'],ans:0},{q:'Teeth',a:['🦷 Flat, wide — for grinding plants','🦷 Sharp, pointed — for tearing meat'],ans:0},{q:'Defence',a:['🏃 Fast running, living in herds, camouflage to hide','🐾 Sharp claws to attack'],ans:0}],fact:'Prey: eyes on the sides, flat teeth, speed, herds and camouflage to avoid being eaten.'}];
+  let bi=0,pi=0;const stage=el('div');body.appendChild(el('div',{class:'card'},stage));
+  function show(){if(bi>=builds.length){later(chain,600);return;}const b=builds[bi];if(pi>=b.picks.length){addFact(curMission,b.fact);bi++;pi=0;later(show,900);return;}stage.innerHTML='';setPips(bi*3+pi,6);const p=b.picks[pi];const row=el('div',{class:'feature'}),msg=el('div',{class:'msg'});
+    shuffle(p.a.map((a,k)=>[a,k===p.ans])).forEach(([a,ok])=>{const f=el('button',{class:'feat'},a);f.addEventListener('click',()=>{[...row.children].forEach(x=>x.disabled=true);if(ok){score++;sYes();f.classList.add('good');}else{sNo();f.classList.add('bad');}msg.textContent=ok?'✅ Good design!':'❌ '+p.a[p.ans];pi++;later(show,1200);});row.appendChild(f);});
+    stage.append(el('div',{class:'lbl'},`🔍 DESIGN A ${b.who}`),el('div',{class:'creature'},el('div',{class:'ce'},b.e),el('div',{class:'cn'},'Choose its '+p.q.toLowerCase())),row,msg);}
+  show();
+  function chain(){stage.innerHTML='';setPhase('Record');const chains=[['🌿','🐇','🦊'],['🌱','🐛','🐦']];let k=0;const chainEl=el('div',{class:'chain'}),msg=el('div',{class:'msg'}),pool=el('div',{class:'chips'});let picked=[];
+    function draw(){chainEl.innerHTML='';for(let i=0;i<3;i++){chainEl.appendChild(el('div',{class:'slotc'},picked[i]||''));if(i<2)chainEl.appendChild(el('span',{class:'arrowc'},'→'));}}
+    function start(){if(k>=chains.length){later(explain,700);return;}picked=[];pool.innerHTML='';shuffle(chains[k]).forEach(e=>{const c=el('button',{class:'chip'},e);c.addEventListener('click',()=>{c.disabled=true;picked.push(e);draw();if(picked.length===3){const ok=picked.every((v,i)=>v===chains[k][i]);if(ok){score++;sYes();msg.textContent='✅ Producer → prey → predator. The arrow means "is eaten by".';}else{sNo();msg.textContent='❌ Order: '+chains[k].join(' → ')+'. Start with the plant (producer).';}addFact(curMission,'Food chain: plant (producer) → prey → predator. The arrow means "is eaten by".');k++;later(start,1600);}});pool.appendChild(c);});draw();msg.textContent='Tap in order: who is eaten by whom?';}
+    stage.append(el('div',{class:'lbl'},'🔗 FOOD CHAIN — put them in order (arrow = "is eaten by")'),chainEl,pool,msg);start();}
+  function explain(){body.innerHTML='';setPhase('Explain');body.appendChild(quizCard([{kind:'Explain',q:'Why do rabbits have eyes on the SIDES of their head?',opts:['To see almost all around and spot predators','To judge distance when pouncing','To see better in the dark'],ans:0,why:'A wide field of view helps prey spot danger early.',fact:'Prey animals have eyes on the sides for a wide view.'},{kind:'Predict',q:'A new predator arrives that is faster than the foxes. What is most likely to happen to the rabbits?',opts:['Fewer rabbits survive — the fastest and best-camouflaged live longer','Rabbits grow sharp teeth','Nothing changes'],ans:0,why:'Adaptations like speed and camouflage matter more when predators are stronger.',fact:'Better-adapted animals are more likely to survive.'}],s=>done(score+s,max),'📝 EXPLAIN'));}
+}
+/* ================= SCIENCE FAIR ================= */
+const FAIR=[
+  {m:'vib',kind:'Explain',q:'All sounds are made by…',opts:['Vibrations','Light','Heat'],ans:0,why:'Something must vibrate to make a sound.'},
+  {m:'wave',kind:'Explain',q:'To make a sound QUIETER, the vibrations must be…',opts:['Smaller','Faster','Slower'],ans:0,why:'Volume depends on the size (amplitude) of the vibration.'},
+  {m:'wave',kind:'Explain',q:'A high-pitched sound has…',opts:['Fast vibrations','Big vibrations','Slow vibrations'],ans:0,why:'Pitch depends on how fast something vibrates.'},
+  {m:'vol',kind:'Data',q:'Results: foam 12, paper 80, no cover 100. Which is the best insulator?',opts:['Foam','Paper','No cover'],ans:0,why:'Lowest loudness reading = best insulator.'},
+  {m:'pitch',kind:'Predict',q:'You tighten a guitar string. The pitch…',opts:['Goes higher','Goes lower','Stays the same'],ans:0,why:'Tighter = faster vibration = higher.'},
+  {m:'digest',kind:'Label',q:'Which organ absorbs NUTRIENTS into the blood?',opts:['Small intestine','Stomach','Large intestine'],ans:0,why:'The small intestine has thin walls for absorption.'},
+  {m:'digest',kind:'Explain',q:'What is the correct order?',opts:['Mouth → oesophagus → stomach → small intestine → large intestine','Mouth → stomach → oesophagus → large intestine → small intestine','Stomach → mouth → intestines'],ans:0,why:'Food follows this path through the digestive system.'},
+  {m:'plate',kind:'Explain',q:'Which food group gives us most of our ENERGY?',opts:['Carbohydrates','Dairy','Fats & sugars only'],ans:0,why:'Bread, rice, pasta and potatoes provide energy.'},
+  {m:'plate',kind:'Explain',q:'A diet with NO fruit or vegetables lacks…',opts:['Vitamins, minerals and fibre','Energy only','Nothing important'],ans:0,why:'Fruit and veg provide vitamins, minerals and fibre.'},
+  {m:'orbit',kind:'Explain',q:'Day and night happen because…',opts:['Earth spins on its axis','Earth orbits the Sun','The Sun switches off'],ans:0,why:'Rotation turns each side toward and away from the Sun.'},
+  {m:'orbit',kind:'Explain',q:'One orbit of the Sun takes…',opts:['One year','One day','One week'],ans:0,why:'About 365 days.'},
+  {m:'season',kind:'Data',q:'Daylight: June 16h, December 8h. Which season has the LONGEST days?',opts:['Summer','Winter','Autumn'],ans:0,why:'June is summer in this place.'},
+  {m:'habitat',kind:'Explain',q:'Why does a cactus have spines instead of leaves?',opts:['Spines lose less water','Spines make food','Spines attract insects'],ans:0,why:'Leaves lose water; spines save it in the dry desert.'},
+  {m:'predprey',kind:'Explain',q:'Sharp, pointed teeth are an adaptation for…',opts:['Tearing meat (predator)','Grinding grass (prey)','Drinking water'],ans:0,why:'Predators need to grip and tear their prey.'}];
+function playFair(body,done){setPhase('Record');const qs=shuffle(FAIR);const missed=new Set();const wrapped=qs.map(q=>({...q,why:q.why}));let idx=0;
+  const h=el('div',{class:'card'});h.appendChild(el('div',{class:'lbl'},'🏆 THE SCIENCE FAIR — 14 exam-style questions across every unit'));body.appendChild(h);
+  // wrap quiz to track misses per mission
+  let i=0,score=0;const box=el('div');h.appendChild(box);show();
+  function show(){box.innerHTML='';if(i>=qs.length){body.appendChild(el('div',{class:'card'},el('div',{class:'lbl'},'📚 REVISE THESE PAGES'),missed.size?el('div',{class:'row'},...[...missed].map(m=>{const mm=MISSIONS.find(x=>x.id===m);return el('button',{class:'btn',onClick:()=>startMission(m)},mm.emoji+' '+mm.title);})):el('div',{class:'msg'},'✅ Nothing missed — every page is solid!')));done(score,qs.length);return;}
+    const q=qs[i];setPips(i,qs.length);const row=el('div',{class:'opts'}),msg=el('div',{class:'msg'});
+    q.opts.forEach((o,k)=>{const b=el('button',{class:'opt'},o);b.addEventListener('click',()=>{[...row.children].forEach(x=>x.disabled=true);const ok=k===q.ans;if(ok){score++;sYes();b.classList.add('good');}else{sNo();b.classList.add('bad');row.children[q.ans].classList.add('good');missed.add(q.m);}msg.textContent=(ok?'✅ ':'❌ ')+q.why;box.appendChild(el('div',{class:'row',style:{marginTop:'10px'}},el('button',{class:'btn primary',onClick:()=>{i++;show();}},i+1>=qs.length?'Finish ✓':'Next ▶')));});row.appendChild(b);});
+    box.append(el('span',{class:'qkind '+q.kind},q.kind),el('div',{class:'qtext'},q.q),row,msg);}
+}
+
+/* ================= registry / screens ================= */
+const MISSIONS=[
+  {id:'vib',exp:1,emoji:'🥁',title:'Vibration Station',tag:'2.1 How are sounds made?',play:playVibration},
+  {id:'wave',exp:1,emoji:'〰️',title:'The Wave Machine',tag:'2.2 Volume and pitch',play:playWave},
+  {id:'vol',exp:1,emoji:'🔉',title:'Volume Changer',tag:'2.3 Changing the volume of sound',play:playVolume},
+  {id:'pitch',exp:1,emoji:'🎸',title:'Pitch Changer',tag:'2.4 Changing the pitch of sound',play:playPitch},
+  {id:'digest',exp:2,emoji:'🍎',title:'Digestion Journey',tag:'4.1 Parts and functions of the digestive system',play:playDigest},
+  {id:'plate',exp:2,emoji:'🍽️',title:'Plate Builder',tag:'4.2 Balanced diets',play:playPlate},
+  {id:'orbit',exp:3,emoji:'🌍',title:'Orbit Simulator',tag:'6.1 The Earth moves around the Sun',play:playOrbit},
+  {id:'season',exp:3,emoji:'🍂',title:'Season Cycle',tag:'6.2 Seasonal changes',play:playSeasons},
+  {id:'habitat',exp:3,emoji:'🐪',title:'Habitat Match',tag:'6.3 Adapted to different environments',play:playHabitat},
+  {id:'predprey',exp:3,emoji:'🦊',title:'Predator & Prey',tag:'6.4 Adaptations of predators and prey',play:playPredPrey},
+  {id:'fair',exp:4,emoji:'🏆',title:'The Science Fair',tag:'All units · exam-style',play:playFair,final:true}];
+const EXPS=[[1,'🔊 Expedition 1 · The Sound Lab','Unit 2 · Sound'],[2,'🍎 Expedition 2 · The Body Lab','Unit 4 · The digestive system'],[3,'🌍 Expedition 3 · Planet & Wild','Unit 6 · Seasons and adaptations'],[4,'🏆 The Science Fair','Unlocks when every page has a sticker']];
+const unlocked=m=>!m.final||MISSIONS.filter(x=>!x.final).every(x=>stk(x.id)>0);
+function showHome(){clearTimers();stopTone();const s=$('#screen');s.innerHTML='';
+  s.appendChild(el('div',{class:'hero'},el('h1',{},'Predict. Investigate. Record. Explain.'),el('p',{},'Every page is a real investigation. Get it right and the fact is written into YOUR journal — your own revision notes for the test.')));
+  EXPS.forEach(([e,t,sub])=>{const pages=el('div',{class:'pages'});MISSIONS.filter(m=>m.exp===e).forEach(m=>{const st=stk(m.id),un=unlocked(m);const b=el('button',{class:'page'+(m.final?' final':'')},el('div',{class:'pem'},m.emoji),el('div',{class:'pt'},m.title),el('div',{class:'ptag'},m.tag),el('div',{class:'pst',html:'<b>'+'🏷️'.repeat(st)+'</b>'+'🏷️'.repeat(3-st)}));if(!un){b.disabled=true;b.appendChild(el('span',{class:'lock'},'🔒'));}b.addEventListener('click',()=>startMission(m.id));pages.appendChild(b);});s.appendChild(el('section',{class:'exp'},el('div',{class:'etitle'},el('h2',{},t),el('span',{},sub)),pages));});
+  const shelf=el('div',{class:'stickers'});MISSIONS.forEach(m=>{const st=stk(m.id);shelf.appendChild(el('div',{class:'sticker'+(st===3?' gold':st?'':' empty'),title:m.title},m.emoji,st?el('span',{class:'ss'},'★'.repeat(st)):null));});
+  s.appendChild(el('section',{class:'exp'},el('div',{class:'etitle'},el('h2',{},'Sticker collection'),el('span',{},'Gold ring = 3-sticker investigation')),shelf));refreshHeader();window.scrollTo(0,0);}
+function startMission(id){clearTimers();stopTone();ensureAudio();const m=MISSIONS.find(x=>x.id===id);if(!unlocked(m)){showHome();return;}curMission=id;const s=$('#screen');s.innerHTML='';
+  s.appendChild(el('div',{class:'mhead'},el('div',{class:'mtitle'},m.emoji+' '+m.title),el('div',{class:'mtag'},m.tag),el('div',{class:'phases'},...['Predict','Investigate','Record','Explain'].map(p=>el('span',{class:'ph'},p))),el('div',{class:'pips',id:'pips'})));
+  const body=el('div');s.appendChild(body);window.scrollTo(0,0);m.play(body,(score,max)=>finish(m,score,max));}
+function finish(m,score,max){clearTimers();stopTone();const ratio=max?score/max:0;const st=ratio>=0.9?3:ratio>=0.6?2:1;if(st>stk(m.id))state.stickers[m.id]=st;save();refreshHeader();if(st===3)confetti();sFan();
+  const s=$('#screen');const row=el('div',{class:'strow'});for(let i=0;i<3;i++)row.appendChild(el('div',{class:'bigst'+(i<st?' lit':''),style:{animationDelay:(i*.25)+'s'}},'🏷️'));const k=MISSIONS.indexOf(m);const nx=MISSIONS.slice(k+1).find(unlocked);
+  s.appendChild(el('div',{class:'card results'},el('div',{class:'rtitle'},st===3?'Brilliant investigation!':st===2?'Good science!':'Page complete'),row,el('div',{class:'rscore'},`${score} / ${max}`),el('p',{class:'mut'},`${(state.journal[m.id]||[]).length} facts written into your journal.`),
+    el('div',{class:'row center'},el('button',{class:'btn',onClick:()=>startMission(m.id)},'↻ Redo'),el('button',{class:'btn sky',onClick:showJournal},'📓 Journal'),nx?el('button',{class:'btn primary',onClick:()=>startMission(nx.id)},'Next page ▶'):el('button',{class:'btn primary',onClick:showHome},'Map'))));window.scrollTo(0,document.body.scrollHeight);}
+function showJournal(){clearTimers();stopTone();const s=$('#screen');s.innerHTML='';const nameIn=el('input',{type:'text',placeholder:'Your name',value:state.name||'',style:{padding:'8px 12px',border:'2px solid var(--line)',borderRadius:'10px',fontSize:'15px'}});nameIn.addEventListener('input',()=>{state.name=nameIn.value;save();hd.textContent=(state.name||'My')+'\u2019s Science Journal';});
+  const hd=el('h1',{style:{fontSize:'28px'}},(state.name||'My')+'\u2019s Science Journal');
+  s.append(el('div',{class:'row noprint',style:{marginBottom:'12px'}},nameIn,el('button',{class:'btn primary',onClick:()=>window.print()},'🖨️ Print my notes'),el('button',{class:'btn ghost',onClick:showHome},'Map')),el('div',{class:'card'},hd,el('p',{class:'mut'},`Rank: ${rankName()} · ${MISSIONS.reduce((a,m)=>a+stk(m.id),0)}/33 stickers · Grade 4 · Term 1 2026`)));
+  EXPS.slice(0,3).forEach(([e,t])=>{const sec=el('div',{class:'card jsec',style:{marginTop:'14px'}},el('h3',{},t));MISSIONS.filter(m=>m.exp===e).forEach(m=>{const facts=state.journal[m.id]||[];sec.appendChild(el('div',{class:'lbl',style:{marginTop:'10px'}},m.emoji+' '+m.title+' — '+m.tag));if(!facts.length)sec.appendChild(el('div',{class:'jempty'},'No notes yet — complete this page to fill it in.'));facts.forEach(f=>sec.appendChild(el('div',{class:'jentry'},f)));});s.appendChild(sec);});}
+$('#homeBtn').addEventListener('click',showHome);$('#journalBtn').addEventListener('click',showJournal);showHome();
+</script>
+</body>
+</html>
