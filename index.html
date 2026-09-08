@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 4 · Term 1 2026 — Learning Labs</title>
+<style>
+  :root{
+    --bg:#0f1424; --bg2:#131a2e; --panel:#1b2340;
+    --line:#2b3663; --ink:#eaeefb; --mut:#93a0c8;
+    --teal:#3fd0c9; --amber:#ffb347; --green:#5fd08a; --coral:#ff6b8a; --violet:#a78bff; --blue:#5b8cff;
+    --sans:system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"SF Mono",ui-monospace,"JetBrains Mono",Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:var(--sans);color:var(--ink);min-height:100dvh;
+    background:
+      radial-gradient(1100px 500px at 80% -10%, rgba(91,140,255,.14), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(167,139,255,.12), transparent 55%),
+      var(--bg);
+    background-attachment:fixed;
+    display:flex;flex-direction:column;align-items:center;padding:6vh 20px 40px;
+  }
+  /* faint blueprint grid */
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:44px 44px;}
+  .wrap{width:min(1000px,100%);position:relative;z-index:1;}
+  header.top{margin-bottom:40px;}
+  .readout{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:13px;
+    color:var(--teal);border:1px solid var(--line);background:rgba(63,208,201,.06);
+    padding:6px 13px;border-radius:999px;letter-spacing:.5px;}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);}
+  h1{font-size:clamp(38px,8vw,68px);line-height:1.02;letter-spacing:-1.5px;margin:16px 0 10px;font-weight:800;}
+  h1 .yr{color:var(--mut);font-weight:600;}
+  .lede{color:var(--mut);font-size:clamp(15px,2.5vw,18px);max-width:52ch;line-height:1.55;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:14px;}
+  a.subject{display:flex;flex-direction:column;text-decoration:none;color:inherit;
+    background:linear-gradient(180deg,var(--panel),#171e37);border:1px solid var(--line);
+    border-radius:18px;overflow:hidden;position:relative;transition:border-color .18s, transform .18s;}
+  a.subject:hover,a.subject:focus-visible{transform:translateY(-3px);outline:none;}
+  a.subject::before{content:"";height:5px;display:block;}
+  a.math::before{background:linear-gradient(90deg,var(--amber),var(--coral));}
+  a.cs::before{background:linear-gradient(90deg,var(--teal),var(--violet));}
+  a.subject:hover.math{border-color:var(--amber);}
+  a.subject:hover.cs{border-color:var(--teal);}
+  .subject .body{padding:24px;display:flex;flex-direction:column;gap:14px;height:100%;}
+  .glyph{width:54px;height:54px;border-radius:13px;display:grid;place-items:center;font-size:27px;
+    border:1px solid var(--line);}
+  .math .glyph{background:rgba(255,179,71,.1);}
+  .cs .glyph{background:rgba(63,208,201,.1);}
+  .subject h2{font-size:24px;letter-spacing:-.3px;}
+  .subject p{color:var(--mut);font-size:14.5px;line-height:1.6;flex:1;}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;}
+  .chip{font-size:11.5px;font-family:var(--mono);color:var(--mut);border:1px solid var(--line);
+    padding:4px 9px;border-radius:7px;background:rgba(255,255,255,.02);}
+  .go{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14.5px;margin-top:2px;}
+  .math .go{color:var(--amber);} .cs .go{color:var(--teal);}
+  .go svg{transition:transform .18s;} a.subject:hover .go svg{transform:translateX(4px);}
+
+  .soon{opacity:.5;pointer-events:none;}
+  .soon::before{background:var(--line);}
+  .soon .glyph{background:rgba(255,255,255,.03);}
+  .badge-soon{font-family:var(--mono);font-size:11px;color:var(--mut);border:1px dashed var(--line);
+    padding:4px 9px;border-radius:7px;align-self:flex-start;}
+
+  footer{margin-top:40px;color:var(--mut);font-size:13px;line-height:1.6;}
+  footer b{color:var(--ink);}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <span class="readout"><span class="dot"></span>GRADE 4 · TERM 1 · 2026</span>
+      <h1>Learning Labs <span class="yr"></span></h1>
+      <p class="lede">Pick a subject to jump into. Each one is a hands-on lab — you learn by trying things, predicting what happens, and fixing mistakes.</p>
+    </header>
+
+    <main class="grid">
+      <a class="subject math" href="math_air_hockey.html">
+        <div class="body">
+          <div class="glyph">🏒</div>
+          <h2>Mathematics</h2>
+          <p>Math Air Hockey. Slip the puck past the keeper, then answer a Cambridge-style question to bank the point. Bonus rounds keep it lively — multiball, turbo, and a defence mode where you answer to cancel the keeper's goals.</p>
+          <div class="chips">
+            <span class="chip">Place value</span><span class="chip">Decimals</span>
+            <span class="chip">Sequences</span><span class="chip">Angles</span>
+            <span class="chip">Coordinates</span><span class="chip">+ more</span>
+          </div>
+          <span class="go">Play the game
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a class="subject cs" href="cs_lab.html">
+        <div class="body">
+          <div class="glyph">🖥️</div>
+          <h2>Computing</h2>
+          <p>An interactive CS laboratory. Be the CPU and run programs by hand, debug broken algorithms, train a tiny AI, wire sensors into a smart city, and follow data through the Input → Process → Output cycle.</p>
+          <div class="chips">
+            <span class="chip">Variables</span><span class="chip">IF / ELSE</span>
+            <span class="chip">Algorithms</span><span class="chip">IPO</span>
+            <span class="chip">Sensors</span><span class="chip">AI</span>
+          </div>
+          <span class="go">Enter the lab
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <div class="subject soon">
+        <div class="body">
+          <div class="glyph">🔬</div>
+          <h2>Science</h2>
+          <p>Coming soon. Space is reserved so new subjects slot straight into this hub.</p>
+          <span class="badge-soon">In development</span>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      Built for <b>Grade 4 · Term 1 2026</b>. Keep these files in the same folder so the subjects link up. New subjects can be added as extra cards here.
+    </footer>
+  </div>
+</body>
+</html>
