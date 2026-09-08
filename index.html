@@ -45,6 +45,9 @@
   a.subject::before{content:"";height:5px;display:block;}
   a.math::before{background:linear-gradient(90deg,var(--amber),var(--coral));}
   a.cs::before{background:linear-gradient(90deg,var(--teal),var(--violet));}
+  a.sci::before{background:linear-gradient(90deg,var(--green),#e9a53a);}
+  a.subject:hover.sci{border-color:var(--green);}
+  .sci .glyph{background:rgba(95,208,138,.1);} .sci .go{color:var(--green);}
   a.subject:hover.math{border-color:var(--amber);}
   a.subject:hover.cs{border-color:var(--teal);}
   .subject .body{padding:24px;display:flex;flex-direction:column;gap:14px;height:100%;}
@@ -112,18 +115,26 @@
         </div>
       </a>
 
-      <div class="subject soon">
+      <a class="subject sci" href="science_lab.html">
         <div class="body">
           <div class="glyph">🔬</div>
           <h2>Science</h2>
-          <p>Coming soon. Space is reserved so new subjects slot straight into this hub.</p>
-          <span class="badge-soon">In development</span>
+          <p>A Science Field Journal. Predict, investigate, record and explain your way through the Sound Lab, the Body Lab and Planet &amp; Wild — every correct finding is written into your own printable revision notes.</p>
+          <div class="chips">
+            <span class="chip">Sound</span><span class="chip">Volume &amp; pitch</span>
+            <span class="chip">Digestion</span><span class="chip">Balanced diet</span>
+            <span class="chip">Earth &amp; Sun</span><span class="chip">Adaptations</span>
+          </div>
+          <span class="go">Open the journal
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
         </div>
-      </div>
+      </a>
+</div>
     </main>
 
     <footer>
-      Built for <b>Grade 4 · Term 1 2026</b>. Keep these files in the same folder so the subjects link up. New subjects can be added as extra cards here.
+      Built for <b>Grade 4 · Term 1 2026</b>. Keep these files in the same folder so the subjects link up. Three subjects are live; more can be added as extra cards here.
     </footer>
   </div>
 </body>
